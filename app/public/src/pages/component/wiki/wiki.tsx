@@ -12,6 +12,7 @@ import WikiStatus from "./wiki-status"
 import WikiTutorials from "./wiki-tutorials"
 import WikiTypes from "./wiki-types"
 import WikiWeather from "./wiki-weather"
+import WikiAbout from "./wiki-about"
 import "./wiki.css"
 
 export default function Wiki({ inGame = false }: { inGame: boolean }) {
@@ -45,6 +46,9 @@ export default function Wiki({ inGame = false }: { inGame: boolean }) {
             </TabPanel>
             <TabPanel key="tutorials">
               <WikiTutorials />
+            </TabPanel>
+            <TabPanel key="about">
+              <WikiAbout />
             </TabPanel>
           </>
         )}
