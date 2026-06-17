@@ -27,7 +27,7 @@ export default function Auth() {
       {isSupposedlyMobile && (
         <p className="mobile-warning">{t("mobile_warning")}</p>
       )}
-      <img className="logo" src="assets/ui/pal_logo.svg" />
+      <img className="logo" src="assets/ui/pokemon_autochess_final.svg" />
       <header>
         <h1>{t("pokemon_auto_chess")}</h1>
         <div className="disclaimer">
