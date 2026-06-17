@@ -24,6 +24,7 @@ export default function Wiki({ inGame = false }: { inGame: boolean }) {
             <>
               <Tab key="title-faq">{t("faq.faq")}</Tab>
               <Tab key="title-tutorials">{t("how_to_play")}</Tab>
+              <Tab key="title-about">About</Tab>
             </>
           )}
           <Tab key="title-pokemon">{t("pokemons_label")}</Tab>
