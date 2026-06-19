@@ -89,7 +89,7 @@ export function MainSidebar(props: MainSidebarProps) {
     <Sidebar collapsed={collapsed} className="sidebar" ref={sidebarRef}>
       <Menu>
         <div className="sidebar-logo" onClick={() => setCollapsed(!collapsed)}>
-          <img src={`assets/ui/colyseus-icon.png`} />
+          <img src={`assets/ui/pal-logo.png`} />
           <div>
             <h1>Pokemon Auto Chess</h1>
             <small>v{version}</small>
