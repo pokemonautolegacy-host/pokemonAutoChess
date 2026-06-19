@@ -380,4 +380,8 @@
   #wiki-page .wiki-types li[role="tab"] {
     padding: 4px;
   }
+  
+  .about-box {
+    margin: 4px;
+  }
 }
