@@ -8,7 +8,7 @@ exports.default = TeamComp;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_i18next_1 = require("react-i18next");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const synergy_icon_1 = __importDefault(require("../icons/synergy-icon"));
 function rankType(a, b, types) {
     const sa = types[a];
@@ -46,7 +46,7 @@ function TeamComp(props) {
                             display: "flex",
                             flexFlow: "column",
                             alignItems: "center"
-                        }, children: [(0, jsx_runtime_1.jsx)("img", { className: "pokemon-portrait", src: (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[pokemon]) }), (0, jsx_runtime_1.jsx)("span", { children: (((_a = props.team.pokemons[pokemon]) !== null && _a !== void 0 ? _a : 0) * 100).toFixed(0) + "%" })] }, pokemon));
+                        }, children: [(0, jsx_runtime_1.jsx)("img", { className: "pokemon-portrait", src: (0, utils_1.getPortraitSrc)(Pokemon_1.PkmIndex[pokemon]) }), (0, jsx_runtime_1.jsx)("span", { children: (((_a = props.team.pokemons[pokemon]) !== null && _a !== void 0 ? _a : 0) * 100).toFixed(0) + "%" })] }, pokemon));
                 }) })] }));
 }
 //# sourceMappingURL=team-comp.js.map

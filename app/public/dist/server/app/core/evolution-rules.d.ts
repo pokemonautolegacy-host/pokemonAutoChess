@@ -39,5 +39,4 @@ export declare class ConditionBasedEvolutionRule extends EvolutionRule {
     canEvolve(pokemon: Pokemon, player: Player, stageLevel: number): boolean;
     evolve(pokemon: Pokemon, player: Player, stageLevel: number): Pokemon;
 }
-export declare function carryOverPermanentStats(pokemonEvolved: Pokemon, pokemonsBeforeEvolution: Pokemon[]): void;
 export {};

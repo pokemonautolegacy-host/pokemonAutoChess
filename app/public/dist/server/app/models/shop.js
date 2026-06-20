@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPoolSize = getPoolSize;
-exports.getRegularsTier1 = getRegularsTier1;
 exports.getAdditionalsTier1 = getAdditionalsTier1;
 exports.getSellPrice = getSellPrice;
 exports.getBuyPrice = getBuyPrice;
@@ -108,6 +107,10 @@ function getSellPrice(pokemon, specialGameRule) {
     else {
         price = Config_1.RarityCost[pokemon.rarity] * stars;
     }
+    if (specialGameRule === SpecialGameRule_1.SpecialGameRule.RARE_IS_EXPENSIVE &&
+        name !== Pokemon_1.Pkm.EGG) {
+        price = (0, number_1.min)(0)(price - 1);
+    }
     return price;
 }
 function getBuyPrice(name, specialGameRule) {
@@ -122,6 +125,9 @@ function getBuyPrice(name, specialGameRule) {
     }
     else {
         price = Config_1.RarityCost[(0, precomputed_pokemon_data_1.getPokemonData)(name).rarity];
+    }
+    if (specialGameRule === SpecialGameRule_1.SpecialGameRule.RARE_IS_EXPENSIVE) {
+        price = (0, number_1.min)(0)(price - 1);
     }
     return price;
 }
@@ -254,7 +260,7 @@ class Shop {
         }
         for (let i = 0; i < Config_1.NB_UNIQUE_PROPOSITIONS; i++) {
             const synergy = synergies[i];
-            let candidates = propositions.filter((m) => {
+            const candidates = propositions.filter((m) => {
                 const pkm = m in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[m][0] : m;
                 if (pkm === Pokemon_1.Pkm.TAPU_BULU)
                     return synergy === Synergy_1.Synergy.GRASS;
@@ -272,8 +278,6 @@ class Shop {
                     return synergy === Synergy_1.Synergy.AQUATIC;
                 return (0, precomputed_pokemon_data_1.getPokemonData)(pkm).types.includes(synergy);
             });
-            (0, random_1.shuffleArray)(candidates);
-            candidates = candidates.filter((p, index) => candidates.findIndex((p2) => Pokemon_1.PkmFamily[p2] === Pokemon_1.PkmFamily[p]) === index);
             let selectedProposition = (0, random_1.pickRandomIn)(candidates.length > 0 ? candidates : propositions);
             if (stageLevel === Config_1.PortalCarouselStages[0] &&
                 player.pokemonsProposition.includes(Pokemon_1.Pkm.KECLEON) === false &&
@@ -339,8 +343,8 @@ class Shop {
             return Pokemon_1.Pkm.DITTO;
         }
         if (player.effects.has(Effect_1.Effect.LIGHT_SCREEN) &&
-            shopIndex === 5 &&
-            (player.rerollCount + state.stageLevel) % 3 === 0) {
+            shopIndex === 0 &&
+            player.rerollCount % 5 === 0) {
             const unowns = (0, Pokemon_1.getUnownsPoolPerStage)(state.stageLevel);
             return (0, random_1.pickRandomIn)(unowns);
         }
@@ -375,12 +379,11 @@ class Shop {
             logger_1.logger.error(`error in shop while picking seed = ${rarity_seed}, threshold = ${threshold}`);
             return Pokemon_1.Pkm.MAGIKARP;
         }
-        const repeatBallHolders = (0, schemas_1.values)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
-        const totalRerolls = player.rerollCount + state.stageLevel;
+        const repeatBalls = (0, schemas_1.values)(player.board).filter((p) => p.items.has(Item_1.Item.REPEAT_BALL));
         if (shopIndex >= 0 &&
-            shopIndex < repeatBallHolders.length &&
-            totalRerolls % 2 === 0) {
-            specificTypesWanted = (0, schemas_1.values)(repeatBallHolders[shopIndex].types);
+            shopIndex < repeatBalls.length &&
+            player.rerollCount % 2 === 0) {
+            specificTypesWanted = (0, schemas_1.values)(repeatBalls[shopIndex].types);
             rarity =
                 (_a = [
                     Game_1.Rarity.COMMON,
@@ -388,20 +391,16 @@ class Shop {
                     Game_1.Rarity.RARE,
                     Game_1.Rarity.EPIC,
                     Game_1.Rarity.ULTRA
-                ][Math.floor(totalRerolls / 30)]) !== null && _a !== void 0 ? _a : Game_1.Rarity.ULTRA;
-            if (totalRerolls >= 140 && totalRerolls % 10 === 0) {
-                let legendaryCandidates = Config_1.LegendaryShop.filter((p) => !(p in Pokemon_1.PkmDuos) &&
+                ][Math.floor(player.rerollCount / 30)]) !== null && _a !== void 0 ? _a : Game_1.Rarity.ULTRA;
+            if (player.rerollCount >= 130 && player.rerollCount % 10 === 0) {
+                const legendaryCandidates = Config_1.LegendaryShop.filter((p) => !(p in Pokemon_1.PkmDuos) &&
                     (0, precomputed_pokemon_data_1.getPokemonData)(p).types.some((type) => specificTypesWanted === null || specificTypesWanted === void 0 ? void 0 : specificTypesWanted.includes(type)));
-                (0, random_1.shuffleArray)(legendaryCandidates);
-                legendaryCandidates = legendaryCandidates.filter((p, index) => legendaryCandidates.findIndex((p2) => Pokemon_1.PkmFamily[p2] === Pokemon_1.PkmFamily[p]) === index);
                 if (legendaryCandidates.length > 0)
                     return (0, random_1.pickRandomIn)(legendaryCandidates);
             }
-            else if (totalRerolls >= 100 && totalRerolls % 10 === 0) {
-                let uniqueCandidates = Config_1.UniqueShop.filter((p) => !(p in Pokemon_1.PkmDuos) &&
+            else if (player.rerollCount >= 90 && player.rerollCount % 10 === 0) {
+                const uniqueCandidates = Config_1.UniqueShop.filter((p) => !(p in Pokemon_1.PkmDuos) &&
                     (0, precomputed_pokemon_data_1.getPokemonData)(p).types.some((type) => specificTypesWanted === null || specificTypesWanted === void 0 ? void 0 : specificTypesWanted.includes(type)));
-                (0, random_1.shuffleArray)(uniqueCandidates);
-                uniqueCandidates = uniqueCandidates.filter((p, index) => uniqueCandidates.findIndex((p2) => Pokemon_1.PkmFamily[p2] === Pokemon_1.PkmFamily[p]) === index);
                 if (uniqueCandidates.length > 0)
                     return (0, random_1.pickRandomIn)(uniqueCandidates);
             }

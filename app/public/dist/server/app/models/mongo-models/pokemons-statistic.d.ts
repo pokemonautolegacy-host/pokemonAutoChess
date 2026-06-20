@@ -10,7 +10,7 @@ export interface IPokemonsStatistic {
 declare const _default: import("mongoose").Model<IPokemonsStatistic, {}, {}, {}, import("mongoose").Document<unknown, {}, IPokemonsStatistic> & IPokemonsStatistic & {
     _id: import("mongoose").Types.ObjectId;
 } & {
-    __v: number;
+    __v?: number;
 }, any>;
 export default _default;
 export declare function fetchMetaPokemons(): Promise<IPokemonsStatistic[]>;

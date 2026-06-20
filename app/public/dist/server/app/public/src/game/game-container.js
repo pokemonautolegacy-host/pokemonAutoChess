@@ -18,7 +18,7 @@ const utils_1 = require("../pages/utils/utils");
 const preferences_1 = require("../preferences");
 const stores_1 = __importDefault(require("../stores"));
 const GameStore_1 = require("../stores/GameStore");
-const avatar_1 = require("../../../utils/avatar");
+const utils_2 = require("../utils");
 const board_manager_1 = require("./components/board-manager");
 const game_scene_1 = __importDefault(require("./scenes/game-scene"));
 class GameContainer {
@@ -93,7 +93,6 @@ class GameContainer {
             "wound",
             "enraged",
             "locked",
-            "blinded",
             "magicBounce",
             "tree"
         ];
@@ -146,22 +145,28 @@ class GameContainer {
             "crit",
             "dodgeCount",
             "ult",
+            "petalDanceCount",
+            "futureSightCount",
+            "earthquakeCount",
             "fieldCount",
             "soundCount",
+            "growGroundCount",
             "fightingBlockCount",
             "fairyCritCount",
             "powerLensCount",
             "starDustCount",
+            "mindBlownCount",
             "spellBlockedCount",
             "manaBurnCount",
             "moneyCount",
             "amuletCoinCount",
-            "bottleCapCount",
             "attackCount",
             "tripleAttackCount",
             "upgradeCount",
             "soulDewCount",
             "defensiveRibbonCount",
+            "attackOrderCount",
+            "healOrderCount",
             "magmarizerCount"
         ];
         fieldsCount.forEach((field) => {
@@ -316,8 +321,7 @@ class GameContainer {
                     "hp",
                     "atk",
                     "ap",
-                    "shiny",
-                    "skill"
+                    "shiny"
                 ];
                 fields.forEach((field) => {
                     pokemon.listen(field, (value, previousValue) => {
@@ -333,7 +337,7 @@ class GameContainer {
             if (pokemon.stars > 1) {
                 const config = player.pokemonCollection.get(pokemon.index);
                 const i = react_1.default.createElement("img", {
-                    src: (0, avatar_1.getPortraitSrc)(pokemon.index, config === null || config === void 0 ? void 0 : config.selectedShiny, config === null || config === void 0 ? void 0 : config.selectedEmotion)
+                    src: (0, utils_2.getPortraitSrc)(pokemon.index, config === null || config === void 0 ? void 0 : config.selectedShiny, config === null || config === void 0 ? void 0 : config.selectedEmotion)
                 }, null);
                 (0, react_toastify_1.toast)(i, {
                     containerId: player.rank.toString(),

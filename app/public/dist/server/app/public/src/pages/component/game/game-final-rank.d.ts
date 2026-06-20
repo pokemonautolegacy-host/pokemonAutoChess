@@ -4,4 +4,4 @@ export default function GameFinalRank(props: {
     visible: boolean;
     hide: () => void;
     leave: () => void;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element | null;

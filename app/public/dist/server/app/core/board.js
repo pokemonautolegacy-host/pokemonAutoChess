@@ -293,21 +293,6 @@ class Board {
             return this.effects[this.columns * y + x];
         }
     }
-    getClosestAvailablePlace(targetX, targetY) {
-        var _a;
-        const candidateCells = new Array();
-        this.forEach((x, y, value) => {
-            if (value === undefined) {
-                candidateCells.push({
-                    x,
-                    y,
-                    distance: (0, distance_1.distanceM)(x, y, targetX, targetY)
-                });
-            }
-        });
-        candidateCells.sort((a, b) => a.distance - b.distance);
-        return (_a = candidateCells[0]) !== null && _a !== void 0 ? _a : null;
-    }
     getFarthestTargetCoordinateAvailablePlace(pokemon, targetAlly = false) {
         const candidateCells = new Array();
         this.forEach((x, y, value) => {

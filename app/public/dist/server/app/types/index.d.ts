@@ -60,7 +60,7 @@ export declare enum Transfer {
     ADD_BOT = "ADD_BOT",
     REMOVE_BOT = "REMOVE_BOT",
     TOGGLE_READY = "TOGGLE_READY",
-    CHANGE_NO_ELO = "CHANGE_NO_ELO",
+    TOGGLE_NO_ELO = "TOGGLE_NO_ELO",
     REFRESH = "REFRESH",
     SPECTATE = "SPECTATE",
     LOCK = "LOCK",
@@ -73,7 +73,6 @@ export declare enum Transfer {
     CHANGE_ROOM_NAME = "CHANGE_ROOM_NAME",
     CHANGE_ROOM_PASSWORD = "CHANGE_ROOM_PASSWORD",
     CHANGE_ROOM_RANKS = "CHANGE_ROOM_RANKS",
-    CHANGE_SPECIAL_RULE = "CHANGE_SPECIAL_RULE",
     BUY_EMOTION = "BUY_EMOTION",
     BOOSTER_CONTENT = "BOOSTER_CONTENT",
     USER = "USER",
@@ -131,7 +130,6 @@ export declare enum AttackSprite {
     DARK_RANGE = "DARK/range",
     DRAGON_MELEE = "DRAGON/melee",
     DRAGON_RANGE = "DRAGON/range",
-    DRAGON_GREEN_RANGE = "DRAGON_GREEN/range",
     ELECTRIC_MELEE = "ELECTRIC/melee",
     ELECTRIC_RANGE = "ELECTRIC/range",
     FAIRY_MELEE = "FAIRY/melee",
@@ -315,7 +313,6 @@ export interface IPlayer {
     totalPlayerDamageDealt: number;
     wildChance: number;
     eggChance: number;
-    goldenEggChance: number;
     lightX: number;
     lightY: number;
 }
@@ -344,7 +341,6 @@ export interface IPokemon {
     skill: Ability;
     passive: Passive;
     items: SetSchema<Item>;
-    tm: Ability | null;
     shiny: boolean;
     emotion: Emotion;
     additional: boolean;
@@ -399,20 +395,18 @@ export interface IPokemonEntity {
     refToBoardPokemon: IPokemon;
     get player(): IPlayer | undefined;
     applyStat(stat: Stat, value: number): void;
-    addAbilityPower(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
-    addLuck(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
+    addAbilityPower(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
+    addLuck(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
     addPP(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
-    addAttack(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
-    addAttackSpeed(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
-    addMaxHP(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
+    addAttack(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
+    addAttackSpeed(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
+    addMaxHP(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
     addShield(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
-    addDefense(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
-    addSpecialDefense(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean, permanent?: boolean): void;
+    addDefense(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
+    addSpecialDefense(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
     addCritChance(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
     addCritPower(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
     addDodgeChance(value: number, caster: IPokemonEntity, apBoost: number, crit: boolean): void;
-    addItem(item: Item, permanent?: boolean): void;
-    removeItem(item: Item, permanent?: boolean): void;
     update(dt: number, board: Board, weather: string, player: Player | undefined): void;
     skydiveTo(x: number, y: number, board: Board): void;
     toIdleState(): void;
@@ -467,6 +461,7 @@ export interface IPokemonEntity {
     commands: ISimulationCommand[];
 }
 export interface IStatus {
+    magmaStorm: boolean;
     burn: boolean;
     silence: boolean;
     fatigue: boolean;
@@ -481,7 +476,6 @@ export interface IStatus {
     paralysis: boolean;
     pokerus: boolean;
     locked: boolean;
-    blinded: boolean;
     armorReduction: boolean;
     runeProtect: boolean;
     electricField: boolean;
@@ -492,10 +486,12 @@ export interface IStatus {
 export interface ICount {
     crit: number;
     ult: number;
+    petalDanceCount: number;
     fieldCount: number;
     soundCount: number;
     fairyCritCount: number;
     attackCount: number;
+    growGroundCount: number;
     fightingBlockCount: number;
     dodgeCount: number;
     powerLensCount: number;
@@ -503,9 +499,14 @@ export interface ICount {
     tripleAttackCount: number;
     staticHolderCount: number;
     defensiveRibbonCount: number;
+    earthquakeCount: number;
+    mindBlownCount: number;
     spellBlockedCount: number;
     manaBurnCount: number;
     moneyCount: number;
+    futureSightCount: number;
+    healOrderCount: number;
+    attackOrderCount: number;
     magmarizerCount: number;
 }
 export interface IPreparationMetadata {

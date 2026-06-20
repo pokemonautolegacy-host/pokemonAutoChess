@@ -5,7 +5,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_circular_progressbar_1 = require("react-circular-progressbar");
 require("react-circular-progressbar/dist/styles.css");
 const react_i18next_1 = require("react-i18next");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const game_1 = require("../../game");
 const jsx_1 = require("../../utils/jsx");
 require("./game-player-loading.css");
@@ -17,7 +17,7 @@ function GamePlayerLoadingBar(props) {
     return ((0, jsx_runtime_1.jsxs)("div", { className: (0, jsx_1.cc)("game-player-loading", {
             self: selfPlayerId === props.player.id
         }), children: [(0, jsx_runtime_1.jsx)("div", { className: "game-player-loading-icon", style: {
-                    backgroundImage: `url('${(0, avatar_1.getAvatarSrc)(props.player.avatar)}')`
+                    backgroundImage: `url('${(0, utils_1.getAvatarSrc)(props.player.avatar)}')`
                 }, children: (0, jsx_runtime_1.jsx)(react_circular_progressbar_1.CircularProgressbar, { value: loadingPercent, styles: (0, react_circular_progressbar_1.buildStyles)({
                         pathTransitionDuration: 0
                     }) }) }), (0, jsx_runtime_1.jsx)("p", { style: { fontWeight: "500" }, children: props.player.name }), (0, jsx_runtime_1.jsxs)("p", { children: [t("elo"), ": ", (0, jsx_runtime_1.jsx)("b", { children: props.player.elo })] })] }));

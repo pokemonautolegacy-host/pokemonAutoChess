@@ -12,7 +12,7 @@ export default class LobbyState extends Schema {
     createTournament(name: string, startDate: string): Promise<import("mongoose").Document<unknown, {}, import("../../types/interfaces/Tournament").ITournament> & import("../../types/interfaces/Tournament").ITournament & {
         _id: import("mongoose").Types.ObjectId;
     } & {
-        __v: number;
+        __v?: number;
     }>;
     removeTournament(id: string): void;
 }

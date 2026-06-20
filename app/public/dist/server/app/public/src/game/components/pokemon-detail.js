@@ -15,7 +15,7 @@ const Passive_1 = require("../../../../types/enum/Passive");
 const Pokemon_1 = require("../../../../types/enum/Pokemon");
 const ability_tooltip_1 = require("../../pages/component/ability/ability-tooltip");
 const descriptions_1 = require("../../pages/utils/descriptions");
-const avatar_1 = require("../../../../utils/avatar");
+const utils_1 = require("../../utils");
 class PokemonDetail extends phaser_1.GameObjects.DOMElement {
     constructor(scene, x, y, name, rarity, hp, atk, def, speDef, range, atkSpeed, critChance, critPower, ap, pp, luck, types, skill, passive, emotion, shiny, index, stars, evolution) {
         super(scene, x, y);
@@ -50,13 +50,13 @@ class PokemonDetail extends phaser_1.GameObjects.DOMElement {
         this.pp.innerHTML = pp.toString();
         const avatar = document.createElement("img");
         avatar.className = "game-pokemon-detail-portrait";
-        avatar.src = (0, avatar_1.getPortraitSrc)(index, shiny, emotion);
+        avatar.src = (0, utils_1.getPortraitSrc)(index, shiny, emotion);
         avatar.style.borderColor = Config_1.RarityColor[rarity];
         wrap.appendChild(avatar);
         if (index === Pokemon_1.PkmIndex[Pokemon_1.Pkm.EGG]) {
             const eggHint = document.createElement("img");
             eggHint.className = "game-pokemon-detail-portrait-hint";
-            eggHint.src = (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[evolution]);
+            eggHint.src = (0, utils_1.getPortraitSrc)(Pokemon_1.PkmIndex[evolution]);
             wrap.appendChild(eggHint);
         }
         const entry = document.createElement("div");
@@ -99,7 +99,7 @@ class PokemonDetail extends phaser_1.GameObjects.DOMElement {
             typesList.appendChild(ty);
         });
         wrap.appendChild(typesList);
-        let stats = [
+        const stats = [
             { stat: Game_1.Stat.HP, elm: this.hp },
             { stat: Game_1.Stat.DEF, elm: this.def },
             { stat: Game_1.Stat.ATK, elm: this.atk },
@@ -111,13 +111,6 @@ class PokemonDetail extends phaser_1.GameObjects.DOMElement {
             { stat: Game_1.Stat.RANGE, elm: this.range },
             { stat: Game_1.Stat.CRIT_CHANCE, elm: this.critChance }
         ];
-        if (passive === Passive_1.Passive.INANIMATE) {
-            stats = [
-                { stat: Game_1.Stat.HP, elm: this.hp },
-                { stat: Game_1.Stat.DEF, elm: this.def },
-                { stat: Game_1.Stat.SPE_DEF, elm: this.speDef }
-            ];
-        }
         const statsElm = document.createElement("div");
         statsElm.className = "game-pokemon-detail-stats";
         for (const { stat, elm } of stats) {

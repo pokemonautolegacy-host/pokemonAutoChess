@@ -9,7 +9,6 @@ export declare enum CloseCodes {
     USER_NOT_AUTHENTICATED = 4004,
     USER_RANK_TOO_LOW = 4005,
     USER_RANK_TOO_HIGH = 4006,
-    USER_TIMEOUT = 4007,
     ROOM_FULL = 4010,
     ROOM_EMPTY = 4011,
     ROOM_DELETED = 4012

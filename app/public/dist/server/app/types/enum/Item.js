@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AbilityPerTM = exports.HMs = exports.TMs = exports.OgerponMasks = exports.NonHoldableItems = exports.NonSpecialItemComponents = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyStones = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Berries = exports.ItemRecipe = exports.ItemComponents = exports.FishingRods = exports.SpecialItems = exports.AllItems = exports.Item = void 0;
+exports.OgerponMasks = exports.NonHoldableItems = exports.NonSpecialItemComponents = exports.SynergyGivenByItem = exports.SynergyItems = exports.SynergyStones = exports.CraftableItems = exports.WeatherByWeatherRocks = exports.WeatherRocksByWeather = exports.WeatherRocks = exports.ShinyItems = exports.ArtificialItems = exports.Berries = exports.ItemRecipe = exports.ItemComponents = exports.FishingRods = exports.SpecialItems = exports.AllItems = exports.Item = void 0;
 const map_1 = require("../../utils/map");
-const Ability_1 = require("./Ability");
 const Synergy_1 = require("./Synergy");
 const Weather_1 = require("./Weather");
 var Item;
@@ -129,23 +128,6 @@ var Item;
     Item["WELLSPRING_MASK"] = "WELLSPRING_MASK";
     Item["CORNERSTONE_MASK"] = "CORNERSTONE_MASK";
     Item["HEARTHFLAME_MASK"] = "HEARTHFLAME_MASK";
-    Item["ZYGARDE_CUBE"] = "ZYGARDE_CUBE";
-    Item["TM_RAGE"] = "TM_RAGE";
-    Item["TM_BRICK_BREAK"] = "TM_BRICK_BREAK";
-    Item["TM_TAUNT"] = "TM_TAUNT";
-    Item["TM_BULK_UP"] = "TM_BULK_UP";
-    Item["TM_BIDE"] = "TM_BIDE";
-    Item["TM_PSYCH_UP"] = "TM_PSYCH_UP";
-    Item["TM_RETALIATE"] = "TM_RETALIATE";
-    Item["TM_PAYDAY"] = "TM_PAYDAY";
-    Item["HM_CUT"] = "HM_CUT";
-    Item["HM_FLY"] = "HM_FLY";
-    Item["HM_SURF"] = "HM_SURF";
-    Item["HM_STRENGTH"] = "HM_STRENGTH";
-    Item["HM_FLASH"] = "HM_FLASH";
-    Item["HM_ROCK_SMASH"] = "HM_ROCK_SMASH";
-    Item["HM_WHIRLPOOL"] = "HM_WHIRLPOOL";
-    Item["HM_WATERFALL"] = "HM_WATERFALL";
 })(Item || (exports.Item = Item = {}));
 exports.AllItems = Object.values(Item);
 exports.SpecialItems = [
@@ -155,7 +137,6 @@ exports.SpecialItems = [
     Item.WELLSPRING_MASK,
     Item.CORNERSTONE_MASK,
     Item.HEARTHFLAME_MASK,
-    Item.ZYGARDE_CUBE,
     Item.BERRY_JUICE,
     Item.FIRE_SHARD,
     Item.OLD_ROD,
@@ -376,7 +357,6 @@ exports.NonHoldableItems = [
     ...exports.WeatherRocks,
     ...exports.FishingRods,
     Item.METEORITE,
-    Item.ZYGARDE_CUBE,
     Item.FIRE_SHARD
 ];
 exports.OgerponMasks = [
@@ -385,42 +365,4 @@ exports.OgerponMasks = [
     Item.CORNERSTONE_MASK,
     Item.HEARTHFLAME_MASK
 ];
-exports.TMs = [
-    Item.TM_RAGE,
-    Item.TM_BRICK_BREAK,
-    Item.TM_TAUNT,
-    Item.TM_BULK_UP,
-    Item.TM_BIDE,
-    Item.TM_PSYCH_UP,
-    Item.TM_RETALIATE,
-    Item.TM_PAYDAY
-];
-exports.HMs = [
-    Item.HM_CUT,
-    Item.HM_FLY,
-    Item.HM_SURF,
-    Item.HM_STRENGTH,
-    Item.HM_FLASH,
-    Item.HM_ROCK_SMASH,
-    Item.HM_WATERFALL,
-    Item.HM_WHIRLPOOL
-];
-exports.AbilityPerTM = {
-    [Item.TM_RAGE]: Ability_1.Ability.RAGE,
-    [Item.TM_BRICK_BREAK]: Ability_1.Ability.BRICK_BREAK,
-    [Item.TM_TAUNT]: Ability_1.Ability.TAUNT,
-    [Item.TM_BULK_UP]: Ability_1.Ability.BULK_UP,
-    [Item.TM_BIDE]: Ability_1.Ability.BIDE,
-    [Item.TM_PSYCH_UP]: Ability_1.Ability.PSYCH_UP,
-    [Item.TM_RETALIATE]: Ability_1.Ability.RETALIATE,
-    [Item.TM_PAYDAY]: Ability_1.Ability.PAYDAY,
-    [Item.HM_CUT]: Ability_1.Ability.CUT,
-    [Item.HM_FLY]: Ability_1.Ability.FLY,
-    [Item.HM_SURF]: Ability_1.Ability.SURF,
-    [Item.HM_STRENGTH]: Ability_1.Ability.STRENGTH,
-    [Item.HM_FLASH]: Ability_1.Ability.FLASH,
-    [Item.HM_ROCK_SMASH]: Ability_1.Ability.ROCK_SMASH,
-    [Item.HM_WATERFALL]: Ability_1.Ability.WATERFALL,
-    [Item.HM_WHIRLPOOL]: Ability_1.Ability.WHIRLPOOL
-};
 //# sourceMappingURL=Item.js.map

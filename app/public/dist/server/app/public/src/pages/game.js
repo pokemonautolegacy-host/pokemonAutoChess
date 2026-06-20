@@ -33,7 +33,6 @@ const hooks_1 = require("../hooks");
 const stores_1 = __importDefault(require("../stores"));
 const GameStore_1 = require("../stores/GameStore");
 const NetworkStore_1 = require("../stores/NetworkStore");
-const avatar_1 = require("../../../utils/avatar");
 const game_dps_meter_1 = __importDefault(require("./component/game/game-dps-meter"));
 const game_final_rank_1 = __importDefault(require("./component/game/game-final-rank"));
 const game_items_proposition_1 = __importDefault(require("./component/game/game-items-proposition"));
@@ -72,13 +71,7 @@ function Game() {
     const [loaded, setLoaded] = (0, react_1.useState)(false);
     const [connectError, setConnectError] = (0, react_1.useState)("");
     const [finalRank, setFinalRank] = (0, react_1.useState)(0);
-    let FinalRankVisibility;
-    (function (FinalRankVisibility) {
-        FinalRankVisibility[FinalRankVisibility["HIDDEN"] = 0] = "HIDDEN";
-        FinalRankVisibility[FinalRankVisibility["VISIBLE"] = 1] = "VISIBLE";
-        FinalRankVisibility[FinalRankVisibility["CLOSED"] = 2] = "CLOSED";
-    })(FinalRankVisibility || (FinalRankVisibility = {}));
-    const [finalRankVisibility, setFinalRankVisibility] = (0, react_1.useState)(FinalRankVisibility.HIDDEN);
+    const [finalRankVisible, setFinalRankVisible] = (0, react_1.useState)(false);
     const container = (0, react_1.useRef)(null);
     const MAX_ATTEMPS_RECONNECT = 3;
     const connectToGame = (0, react_1.useCallback)((...args_1) => __awaiter(this, [...args_1], void 0, function* (attempts = 1) {
@@ -175,7 +168,7 @@ function Game() {
                     p.board.forEach((pokemon) => {
                         if (pokemon.positionY != 0) {
                             afterPlayer.pokemons.push({
-                                avatar: (0, avatar_1.getAvatarString)(pokemon.index, pokemon.shiny, pokemon.emotion),
+                                avatar: (0, utils_1.getPortraitPath)(pokemon),
                                 items: pokemon.items.toArray(),
                                 name: pokemon.name
                             });
@@ -186,10 +179,10 @@ function Game() {
             });
         }
         const elligibleToXP = nbPlayers >= 2 &&
-            ((_c = room === null || room === void 0 ? void 0 : room.state.stageLevel) !== null && _c !== void 0 ? _c : 0) >= Config_1.MinStageLevelForGameToCount;
+            ((_c = room === null || room === void 0 ? void 0 : room.state.stageLevel) !== null && _c !== void 0 ? _c : 0) >= Config_1.RequiredStageLevelForXpElligibility;
         const elligibleToELO = elligibleToXP &&
             !(room === null || room === void 0 ? void 0 : room.state.noElo) &&
-            afterPlayers.filter((p) => p.role !== types_1.Role.BOT).length >= 2;
+            afterPlayers.filter((p) => p.role !== types_1.Role.BOT).length >= 4;
         const r = yield client.create("after-game", {
             players: afterPlayers,
             idToken: token,
@@ -259,7 +252,7 @@ function Game() {
             });
             room.onMessage(types_1.Transfer.FINAL_RANK, (finalRank) => {
                 setFinalRank(finalRank);
-                setFinalRankVisibility(FinalRankVisibility.VISIBLE);
+                setFinalRankVisible(true);
             });
             room.onMessage(types_1.Transfer.PRELOAD_MAPS, (maps) => __awaiter(this, void 0, void 0, function* () {
                 logger_1.logger.info("preloading maps", maps);
@@ -372,9 +365,6 @@ function Game() {
             room.state.listen("noElo", (value) => {
                 dispatch((0, GameStore_1.setNoELO)(value));
             });
-            room.state.listen("specialGameRule", (value) => {
-                dispatch((0, GameStore_1.setSpecialGameRule)(value));
-            });
             room.state.additionalPokemons.onAdd(() => {
                 dispatch((0, GameStore_1.setAdditionalPokemons)([...room.state.additionalPokemons]));
             });
@@ -455,9 +445,8 @@ function Game() {
                     if (value <= 0 &&
                         value !== previousValue &&
                         player.id === uid &&
-                        !spectate
-                        && finalRankVisibility === FinalRankVisibility.HIDDEN) {
-                        setFinalRankVisibility(FinalRankVisibility.VISIBLE);
+                        !spectate) {
+                        setFinalRankVisible(true);
                     }
                 });
                 player.listen("experienceManager", (experienceManager) => {
@@ -531,7 +520,6 @@ function Game() {
                     "totalMoneyEarned",
                     "totalPlayerDamageDealt",
                     "eggChance",
-                    "goldenEggChance",
                     "wildChance"
                 ];
                 fields.forEach((field) => {
@@ -582,6 +570,6 @@ function Game() {
         connectToGame,
         leave
     ]);
-    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", children: [loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: () => setFinalRankVisibility(FinalRankVisibility.CLOSED), leave: leave, visible: finalRankVisibility === FinalRankVisibility.VISIBLE }), !spectate && (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_items_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_pokemons_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {})] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)("div", { id: "game", ref: container })] }));
+    return ((0, jsx_runtime_1.jsxs)("main", { id: "game-wrapper", children: [loaded ? ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)(main_sidebar_1.MainSidebar, { page: "game", leave: leave, leaveLabel: t("leave_game") }), (0, jsx_runtime_1.jsx)(game_final_rank_1.default, { rank: finalRank, hide: () => setFinalRankVisible(false), leave: leave, visible: finalRankVisible }), !spectate && (0, jsx_runtime_1.jsx)(game_shop_1.default, {}), (0, jsx_runtime_1.jsx)(game_stage_info_1.default, {}), (0, jsx_runtime_1.jsx)(game_players_1.default, { click: (id) => playerClick(id) }), (0, jsx_runtime_1.jsx)(game_synergies_1.default, {}), (0, jsx_runtime_1.jsx)(game_items_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_pokemons_proposition_1.default, {}), (0, jsx_runtime_1.jsx)(game_dps_meter_1.default, {}), (0, jsx_runtime_1.jsx)(game_toasts_1.default, {})] })) : ((0, jsx_runtime_1.jsx)(game_loading_screen_1.default, { connectError: connectError })), (0, jsx_runtime_1.jsx)("div", { id: "game", ref: container })] }));
 }
 //# sourceMappingURL=game.js.map

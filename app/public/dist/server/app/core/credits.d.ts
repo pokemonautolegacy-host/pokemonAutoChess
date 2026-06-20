@@ -10,6 +10,6 @@ export interface Credit {
 }
 export declare function useCredits(): {
     loading: boolean;
-    creditsNames: ICreditName[];
-    spriteCredits: Record<string, PokemonCredits>;
+    creditsNames: ICreditName[] | undefined;
+    spriteCredits: Record<string, PokemonCredits> | undefined;
 };

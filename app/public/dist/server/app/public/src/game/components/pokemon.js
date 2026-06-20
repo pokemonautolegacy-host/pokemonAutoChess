@@ -15,23 +15,13 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -59,7 +49,7 @@ const pokemon_detail_1 = __importDefault(require("./pokemon-detail"));
 const power_bar_1 = __importDefault(require("./power-bar"));
 class PokemonSprite extends draggable_object_1.default {
     constructor(scene, x, y, pokemon, playerId, inBattle, flip) {
-        var _a, _b;
+        var _a;
         super(scene, x, y, 75, 75, playerId !== scene.uid);
         this.types = new Set();
         this.detail = null;
@@ -133,12 +123,9 @@ class PokemonSprite extends draggable_object_1.default {
         this.height = this.sprite.height;
         this.width = this.sprite.width;
         this.itemsContainer = new items_container_1.default(scene, (_a = p.items) !== null && _a !== void 0 ? _a : new schema_1.SetSchema(), this.width / 2 + 25, -35, this.id, playerId);
-        const hasShadow = ((_b = Pokemon_1.AnimationConfig[pokemon.name]) === null || _b === void 0 ? void 0 : _b.noShadow) !== true;
-        if (hasShadow) {
-            this.shadow = new phaser_1.GameObjects.Sprite(scene, 0, 5, textureIndex);
-            this.shadow.setScale(2, 2).setDepth(2);
-            this.add(this.shadow);
-        }
+        this.shadow = new phaser_1.GameObjects.Sprite(scene, 0, 5, textureIndex);
+        this.shadow.setScale(2, 2).setDepth(2);
+        this.add(this.shadow);
         this.add(this.sprite);
         if ((0, types_1.instanceofPokemonEntity)(pokemon)) {
             if (p.status.light) {
@@ -160,8 +147,7 @@ class PokemonSprite extends draggable_object_1.default {
         this.add(this.itemsContainer);
         if ((0, types_1.instanceofPokemonEntity)(pokemon)) {
             this.setLifeBar(p, scene);
-            if (pokemon.maxPP > 0)
-                this.setPowerBar(p, scene);
+            this.setPowerBar(p, scene);
         }
         this.draggable = playerId === scene.uid && !inBattle;
         if ((0, types_1.instanceofPokemonEntity)(pokemon)) {
@@ -269,31 +255,21 @@ class PokemonSprite extends draggable_object_1.default {
         const startX = isRange ? this.positionX : targetX;
         const startY = isRange ? this.positionY : targetY;
         const LATENCY_COMPENSATION = 20;
-        let attackSprite = this.attackSprite;
-        let tint = 0xffffff;
-        if (attackSprite === types_1.AttackSprite.DRAGON_GREEN_RANGE) {
-            attackSprite = types_1.AttackSprite.DRAGON_RANGE;
-            tint = 0x80ff80;
-        }
         if (startX != null && startY != null) {
             const coordinates = (0, utils_1.transformAttackCoordinate)(startX, startY, this.flip);
-            const projectile = this.scene.add.sprite(coordinates[0], coordinates[1], "attacks", `${attackSprite}/000.png`);
-            const scale = types_1.AttackSpriteScale[attackSprite];
-            projectile
-                .setScale(scale[0], scale[1])
-                .setTint(tint)
-                .setDepth(6)
-                .setVisible(false);
+            const projectile = this.scene.add.sprite(coordinates[0], coordinates[1], "attacks", `${this.attackSprite}/000.png`);
+            const scale = types_1.AttackSpriteScale[this.attackSprite];
+            projectile.setScale(scale[0], scale[1]).setDepth(6).setVisible(false);
             if (!isRange) {
                 projectile.anims.play({
-                    key: attackSprite,
+                    key: this.attackSprite,
                     showOnStart: true,
                     delay: delayBeforeShoot - LATENCY_COMPENSATION
                 });
                 projectile.once(phaser_1.default.Animations.Events.ANIMATION_COMPLETE, () => projectile.destroy());
             }
             else {
-                projectile.anims.play({ key: attackSprite });
+                projectile.anims.play({ key: this.attackSprite });
                 const coordinatesTarget = (0, utils_1.transformAttackCoordinate)(targetX, targetY, this.flip);
                 this.scene.tweens.add({
                     targets: projectile,
@@ -540,21 +516,6 @@ class PokemonSprite extends draggable_object_1.default {
         if (this.locked) {
             this.remove(this.locked, true);
             this.locked = undefined;
-        }
-    }
-    addBlinded() {
-        if (!this.blinded) {
-            this.blinded = this.scene.add
-                .sprite(0, -30, "status", "BLINDED/000.png")
-                .setScale(2);
-            this.blinded.anims.play("BLINDED");
-            this.add(this.blinded);
-        }
-    }
-    removeBlinded() {
-        if (this.blinded) {
-            this.remove(this.blinded, true);
-            this.blinded = undefined;
         }
     }
     addArmorReduction() {

@@ -51,7 +51,7 @@ class MovingState extends pokemon_state_1.default {
         let x = undefined;
         let y = undefined;
         if (pokemon.types.has(Synergy_1.Synergy.DARK) &&
-            pokemon.range === 1 &&
+            pokemon.baseRange === 1 &&
             pokemon.passive !== Passive_1.Passive.GUZZLORD &&
             !pokemon.status.locked) {
             const farthestCoordinate = board.getFarthestTargetCoordinateAvailablePlace(pokemon);
@@ -98,9 +98,6 @@ class MovingState extends pokemon_state_1.default {
         pokemon.cooldown = 0;
     }
     onExit(pokemon) {
-        if (pokemon.status.skydiving) {
-            pokemon.status.skydiving = false;
-        }
         super.onExit(pokemon);
     }
 }

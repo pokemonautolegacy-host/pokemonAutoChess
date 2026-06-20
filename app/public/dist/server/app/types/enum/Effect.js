@@ -111,8 +111,9 @@ var Effect;
     Effect["NIGHT"] = "NIGHT";
     Effect["WINDY"] = "WINDY";
     Effect["BLOODMOON"] = "BLOODMOON";
-    Effect["SMOG"] = "SMOG";
-    Effect["SMOKE"] = "SMOKE";
+    Effect["HYDRATATION"] = "HYDRATATION";
+    Effect["COOL_BREEZE"] = "COOL_BREEZE";
+    Effect["GAS"] = "GAS";
     Effect["POISON_GAS"] = "POISON_GAS";
     Effect["SHINING_RAY"] = "SHINING_RAY";
     Effect["LIGHT_PULSE"] = "LIGHT_PULSE";
@@ -120,7 +121,6 @@ var Effect;
     Effect["MAX_ILLUMINATION"] = "MAX_ILLUMINATION";
     Effect["STEALTH_ROCKS"] = "STEALTH_ROCKS";
     Effect["SPIKES"] = "SPIKES";
-    Effect["TOXIC_SPIKES"] = "TOXIC_SPIKES";
     Effect["IMMUNITY_BURN"] = "IMMUNITY_BURN";
     Effect["IMMUNITY_CONFUSION"] = "IMMUNITY_CONFUSION";
     Effect["IMMUNITY_FREEZE"] = "IMMUNITY_FREEZE";
@@ -136,26 +136,19 @@ var Effect;
     Effect["BERSERK"] = "BERSERK";
     Effect["STICKY_WEB"] = "STICKY_WEB";
     Effect["HAIL"] = "HAIL";
-    Effect["EMBER"] = "EMBER";
     Effect["FLUID"] = "FLUID";
     Effect["SHAPELESS"] = "SHAPELESS";
     Effect["ETHEREAL"] = "ETHEREAL";
     Effect["ZEN_MODE"] = "ZEN_MODE";
     Effect["LIGHTNING_STRIKE"] = "LIGHTNING_STRIKE";
-    Effect["VICTINI_PASSIVE"] = "VICTINI_PASSIVE";
-    Effect["GOOD_LUCK"] = "GOOD_LUCK";
-    Effect["BAD_LUCK"] = "BAD_LUCK";
-    Effect["WONDER_ROOM"] = "WONDER_ROOM";
 })(Effect || (exports.Effect = Effect = {}));
 exports.BoardEffects = [
     Effect.LIGHTNING_STRIKE,
-    Effect.SMOKE,
+    Effect.GAS,
     Effect.POISON_GAS,
     Effect.STEALTH_ROCKS,
     Effect.SPIKES,
-    Effect.TOXIC_SPIKES,
     Effect.STICKY_WEB,
-    Effect.HAIL,
-    Effect.EMBER
+    Effect.HAIL
 ];
 //# sourceMappingURL=Effect.js.map

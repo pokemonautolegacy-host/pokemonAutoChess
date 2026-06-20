@@ -5,7 +5,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const precomputed_emotions_1 = require("../../../../../models/precomputed/precomputed-emotions");
 const Config_1 = require("../../../../../types/Config");
 const Emotion_1 = require("../../../../../types/enum/Emotion");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const jsx_1 = require("../../utils/jsx");
 require("./pokemon-collection-item.css");
 function PokemonCollectionItem(props) {
@@ -37,6 +37,6 @@ function PokemonCollectionItem(props) {
             shimmer: canUnlock
         }), onClick: () => {
             props.setPokemon(props.name);
-        }, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(props.index, (_b = props.config) === null || _b === void 0 ? void 0 : _b.selectedShiny, (_c = props.config) === null || _c === void 0 ? void 0 : _c.selectedEmotion), loading: "lazy" }), (0, jsx_runtime_1.jsxs)("p", { children: [(0, jsx_runtime_1.jsx)("span", { children: props.config ? props.config.dust : 0 }), (0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(props.index) })] })] }));
+        }, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(props.index, (_b = props.config) === null || _b === void 0 ? void 0 : _b.selectedShiny, (_c = props.config) === null || _c === void 0 ? void 0 : _c.selectedEmotion), loading: "lazy" }), (0, jsx_runtime_1.jsxs)("p", { children: [(0, jsx_runtime_1.jsx)("span", { children: props.config ? props.config.dust : 0 }), (0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(props.index) })] })] }));
 }
 //# sourceMappingURL=pokemon-collection-item.js.map

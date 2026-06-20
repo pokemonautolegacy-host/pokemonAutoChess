@@ -58,10 +58,9 @@ class LobbyState extends schema_1.Schema {
         });
     }
     removeMessages(authorId) {
-        var _a;
         let i = this.messages.length;
         while (i--) {
-            if (((_a = this.messages[i]) === null || _a === void 0 ? void 0 : _a.authorId) === authorId) {
+            if (this.messages[i].authorId === authorId) {
                 this.messages.splice(i, 1);
             }
         }

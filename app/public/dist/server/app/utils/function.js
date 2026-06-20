@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.repeat = void 0;
 exports.debounce = debounce;
 exports.throttle = throttle;
-exports.block = block;
 function debounce(fn, delayInMs = 300) {
     let timeoutId;
     return function (...args) {
@@ -38,20 +37,6 @@ function throttle(fn, delayInMs) {
                 lastResult = yield mightBePromise;
             }
             return lastResult;
-        });
-    };
-}
-function block(fn) {
-    let existingPromise = null;
-    return function (...args) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (existingPromise) {
-                return existingPromise;
-            }
-            existingPromise = fn.apply(this, args);
-            const result = yield existingPromise;
-            existingPromise = null;
-            return result;
         });
     };
 }

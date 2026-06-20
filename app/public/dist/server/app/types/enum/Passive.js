@@ -34,6 +34,7 @@ var Passive;
     Passive["WINDY"] = "WINDY";
     Passive["AIRLOCK"] = "AIRLOCK";
     Passive["WURMPLE"] = "WURMPLE";
+    Passive["HYDRATATION"] = "HYDRATATION";
     Passive["SHARED_VISION"] = "SHARED_VISION";
     Passive["WATER_SPRING"] = "WATER_SPRING";
     Passive["MAGIKARP"] = "MAGIKARP";
@@ -133,10 +134,5 @@ var Passive;
     Passive["BAD_LUCK"] = "BAD_LUCK";
     Passive["GOOD_LUCK"] = "GOOD_LUCK";
     Passive["PRIMEAPE"] = "PRIMEAPE";
-    Passive["ZYGARDE10"] = "ZYGARDE10";
-    Passive["ZYGARDE50"] = "ZYGARDE50";
-    Passive["GLIMMORA"] = "GLIMMORA";
-    Passive["PILLAR"] = "PILLAR";
-    Passive["INANIMATE"] = "INANIMATE";
 })(Passive || (exports.Passive = Passive = {}));
 //# sourceMappingURL=Passive.js.map

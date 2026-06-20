@@ -17,10 +17,9 @@ const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
 const number_1 = require("../../utils/number");
 const random_1 = require("../../utils/random");
-const Config_1 = require("../../types/Config");
 class Status extends schema_1.Schema {
-    constructor(simulation) {
-        super();
+    constructor() {
+        super(...arguments);
         this.burn = false;
         this.silence = false;
         this.fatigue = false;
@@ -35,7 +34,6 @@ class Status extends schema_1.Schema {
         this.paralysis = false;
         this.pokerus = false;
         this.locked = false;
-        this.blinded = false;
         this.armorReduction = false;
         this.runeProtect = false;
         this.charm = false;
@@ -84,7 +82,6 @@ class Status extends schema_1.Schema {
         this.runeProtectCooldown = 0;
         this.charmCooldown = 0;
         this.flinchCooldown = 0;
-        this.enrageCooldown = 0;
         this.spikeArmorCooldown = 0;
         this.magicBounceCooldown = 0;
         this.synchroCooldown = 3000;
@@ -97,7 +94,6 @@ class Status extends schema_1.Schema {
         this.curseCooldown = 0;
         this.pokerusCooldown = 2000;
         this.lockedCooldown = 0;
-        this.blindCooldown = 0;
         this.enrageDelay = 35000;
         this.darkHarvest = false;
         this.darkHarvestCooldown = 0;
@@ -105,8 +101,6 @@ class Status extends schema_1.Schema {
         this.stoneEdge = false;
         this.stoneEdgeCooldown = 0;
         this.bideCooldown = 0;
-        const elapsedTime = (Config_1.StageDuration[1] * 1000) - simulation.room.state.time;
-        this.enrageDelay = this.enrageDelay - elapsedTime;
     }
     clearNegativeStatus() {
         this.burnCooldown = 0;
@@ -124,8 +118,6 @@ class Status extends schema_1.Schema {
         this.curseCooldown = 0;
         this.curse = false;
         this.lockedCooldown = 0;
-        this.enrageCooldown = 0;
-        this.blindCooldown = 0;
     }
     hasNegativeStatus() {
         return (this.burn ||
@@ -141,18 +133,14 @@ class Status extends schema_1.Schema {
             this.flinch ||
             this.armorReduction ||
             this.curse ||
-            this.locked ||
-            this.blinded);
+            this.locked);
     }
     updateAllStatus(dt, pokemon, board) {
         if (pokemon.effects.has(Effect_1.Effect.POISON_GAS) && this.poisonStacks === 0) {
             this.triggerPoison(1500, pokemon, undefined);
         }
-        if (pokemon.effects.has(Effect_1.Effect.SMOKE) && !this.blinded) {
-            this.triggerBlinded(1000, pokemon);
-        }
         if (pokemon.effects.has(Effect_1.Effect.STICKY_WEB) && !this.paralysis) {
-            this.triggerParalysis(2000, pokemon, null);
+            this.triggerParalysis(2000, pokemon);
         }
         if (pokemon.status.runeProtect) {
             this.updateRuneProtect(dt);
@@ -195,9 +183,6 @@ class Status extends schema_1.Schema {
         }
         if (this.locked) {
             this.updateLocked(dt, pokemon);
-        }
-        if (this.blinded) {
-            this.updateBlinded(dt);
         }
         if (this.pokerus) {
             this.updatePokerus(dt, pokemon, board);
@@ -242,19 +227,19 @@ class Status extends schema_1.Schema {
             this.triggerFlinch(30000, pokemon);
         }
         if (pokemon.status.curseWeakness && !pokemon.status.paralysis) {
-            this.triggerParalysis(30000, pokemon, null);
+            this.triggerParalysis(30000, pokemon);
         }
         if (pokemon.status.curseTorment && !pokemon.status.fatigue) {
             this.triggerFatigue(30000, pokemon);
         }
         if (pokemon.status.curseFate && !pokemon.status.curse) {
-            this.triggerCurse(6500);
+            this.triggerCurse(5000);
         }
     }
-    triggerMagmaStorm(delay, origin) {
+    triggerMagmaStorm(pkm, origin) {
         if (!this.magmaStorm && origin) {
             this.magmaStorm = true;
-            this.magmaStormCooldown = delay;
+            this.magmaStormCooldown = 500;
             this.magmaStormOrigin = origin;
         }
     }
@@ -265,7 +250,7 @@ class Status extends schema_1.Schema {
             for (let i = 0; i < adjacentCells.length; i++) {
                 const cell = adjacentCells[i];
                 if (cell && cell.value && cell.value.team === pkm.team) {
-                    cell.value.status.triggerMagmaStorm(500, this.magmaStormOrigin);
+                    cell.value.status.triggerMagmaStorm(cell.value, this.magmaStormOrigin);
                     break;
                 }
             }
@@ -302,28 +287,15 @@ class Status extends schema_1.Schema {
             this.armorReductionCooldown -= dt;
         }
     }
-    triggerRage(duration, pokemon) {
-        this.enraged = true;
-        this.protect = false;
-        duration = this.applyAquaticReduction(duration, pokemon);
-        this.enrageCooldown = Math.round(duration);
-        pokemon.addAttackSpeed(100, pokemon, 0, false);
-    }
     updateRage(dt, pokemon) {
-        if (!this.enraged &&
-            this.enrageDelay - dt <= 0 &&
-            !pokemon.simulation.finished) {
+        if (this.enrageDelay - dt <= 0 && !pokemon.simulation.finished) {
             this.enraged = true;
             this.protect = false;
             pokemon.addAttackSpeed(100, pokemon, 0, false);
         }
-        else if (this.enraged &&
-            this.enrageCooldown - dt <= 0 &&
-            this.enrageDelay - dt > 0) {
-            this.enraged = false;
-            pokemon.addAttackSpeed(-100, pokemon, 0, false);
+        else {
+            this.enrageDelay -= dt;
         }
-        this.enrageDelay -= dt;
     }
     triggerClearWing(timer) {
         if (!this.clearWing) {
@@ -721,12 +693,10 @@ class Status extends schema_1.Schema {
             this.sleepCooldown = this.sleepCooldown - dt;
         }
     }
-    triggerConfusion(duration, pkm, origin, apBoost = false) {
+    triggerConfusion(duration, pkm) {
         if (!this.confusion &&
             !this.runeProtect &&
             !pkm.effects.has(Effect_1.Effect.IMMUNITY_CONFUSION)) {
-            const boost = apBoost && origin ? (duration * origin.ap) / 100 : 0;
-            duration = duration + boost;
             if (pkm.simulation.weather === Weather_1.Weather.SANDSTORM) {
                 duration *= 1.3;
             }
@@ -799,14 +769,12 @@ class Status extends schema_1.Schema {
             this.woundCooldown -= dt;
         }
     }
-    triggerParalysis(duration, pkm, origin, apBoost = false) {
+    triggerParalysis(duration, pkm) {
         if (!this.runeProtect && !pkm.effects.has(Effect_1.Effect.IMMUNITY_PARALYSIS)) {
             if (!this.paralysis) {
                 this.paralysis = true;
                 pkm.addAttackSpeed(-40, pkm, 0, false);
             }
-            const boost = apBoost && origin ? (duration * origin.ap) / 100 : 0;
-            duration = duration + boost;
             if (pkm.simulation.weather === Weather_1.Weather.STORM) {
                 duration *= 1.3;
                 const nbElectricQuartz = pkm.player
@@ -900,11 +868,6 @@ class Status extends schema_1.Schema {
             this.magicBounceCooldown -= dt;
         }
     }
-    addResurrection(pokemon) {
-        if (pokemon.passive === Passive_1.Passive.INANIMATE)
-            return;
-        this.resurection = true;
-    }
     triggerResurection(pokemon) {
         this.resurection = false;
         this.resurecting = true;
@@ -955,9 +918,7 @@ class Status extends schema_1.Schema {
             this.curseCooldown -= dt;
         }
     }
-    triggerPokerus(pokemon) {
-        if ((pokemon.passive = Passive_1.Passive.INANIMATE))
-            return;
+    triggerPokerus() {
         if (!this.pokerus) {
             this.pokerus = true;
         }
@@ -972,7 +933,7 @@ class Status extends schema_1.Schema {
                 if (infectCount < 2 && cell.value !== undefined) {
                     if (cell.value.team === pokemon.team &&
                         cell.value.status.pokerus === false) {
-                        cell.value.status.triggerPokerus(cell.value);
+                        cell.value.status.triggerPokerus();
                         infectCount++;
                     }
                 }
@@ -985,7 +946,6 @@ class Status extends schema_1.Schema {
     }
     triggerLocked(duration, pkm) {
         if (!this.locked &&
-            !this.skydiving &&
             !this.runeProtect) {
             if (pkm.status.enraged) {
                 duration = duration / 2;
@@ -1005,24 +965,6 @@ class Status extends schema_1.Schema {
         }
         else {
             this.lockedCooldown -= dt;
-        }
-    }
-    triggerBlinded(duration, pkm) {
-        if (!this.blinded && !this.runeProtect) {
-            if (pkm.status.enraged) {
-                duration = duration / 2;
-            }
-            duration = this.applyAquaticReduction(duration, pkm);
-            this.blinded = true;
-            this.blindCooldown = Math.round(duration);
-        }
-    }
-    updateBlinded(dt) {
-        if (this.blindCooldown - dt <= 0) {
-            this.blinded = false;
-        }
-        else {
-            this.blindCooldown -= dt;
         }
     }
     applyAquaticReduction(duration, pkm) {
@@ -1081,9 +1023,6 @@ __decorate([
 __decorate([
     (0, schema_1.type)("boolean")
 ], Status.prototype, "locked", void 0);
-__decorate([
-    (0, schema_1.type)("boolean")
-], Status.prototype, "blinded", void 0);
 __decorate([
     (0, schema_1.type)("boolean")
 ], Status.prototype, "armorReduction", void 0);

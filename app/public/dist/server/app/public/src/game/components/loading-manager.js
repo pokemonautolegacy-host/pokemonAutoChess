@@ -21,7 +21,7 @@ const schemas_1 = require("../../../../utils/schemas");
 const indexList_json_1 = __importDefault(require("../../../src/assets/pokemons/indexList.json"));
 const atlas_json_1 = __importDefault(require("../../assets/atlas.json"));
 const audio_1 = require("../../pages/utils/audio");
-const avatar_1 = require("../../../../utils/avatar");
+const utils_1 = require("../../utils");
 const game_scene_1 = __importDefault(require("../scenes/game-scene"));
 class LoadingManager {
     constructor(scene) {
@@ -44,64 +44,9 @@ class LoadingManager {
             const scene = this.scene;
             scene.load.xhr.timeout = 5000;
             scene.load.scenePlugin("animatedTiles", AnimatedTiles_min_js_1.default, "animatedTiles", "animatedTiles");
-            scene.load.json("pokemons-atlas", `/assets/pokemons.json?v=${package_json_1.default.version}`);
-            scene.load.once("filecomplete-json-pokemons-atlas", (key, type, compressedAtlas) => {
-                var _a;
-                for (const image in compressedAtlas) {
-                    const data = compressedAtlas[image];
-                    function traverse(obj, path, frames) {
-                        if (Array.isArray(obj)) {
-                            const [sourceSizew, sourceSizeh, spriteSourceSizex, spriteSourceSizey, spriteSourceSizew, spriteSourceSizeh, framex, framey, framew, frameh] = obj;
-                            frames.push({
-                                filename: path,
-                                rotated: false,
-                                trimmed: true,
-                                sourceSize: {
-                                    w: sourceSizew,
-                                    h: sourceSizeh
-                                },
-                                spriteSourceSize: {
-                                    x: spriteSourceSizex,
-                                    y: spriteSourceSizey,
-                                    w: spriteSourceSizew,
-                                    h: spriteSourceSizeh
-                                },
-                                frame: {
-                                    x: framex,
-                                    y: framey,
-                                    w: framew,
-                                    h: frameh
-                                }
-                            });
-                        }
-                        else if (obj instanceof Object) {
-                            for (const key in obj) {
-                                traverse(obj[key], path ? path + "/" + key : key, frames);
-                            }
-                        }
-                    }
-                    const frames = [];
-                    traverse(data.a, "", frames);
-                    const multiatlas = {
-                        textures: [
-                            {
-                                image: image,
-                                format: "RGBA8888",
-                                size: {
-                                    w: data.s[0],
-                                    h: data.s[1]
-                                },
-                                scale: (_a = data.s[2]) !== null && _a !== void 0 ? _a : 1,
-                                frames
-                            }
-                        ]
-                    };
-                    const index = image.replace(".png", "");
-                    scene.load.multiatlas(index, multiatlas, "/assets/pokemons");
-                }
-            });
             indexList_json_1.default.forEach((id) => {
-                scene.load.image(`portrait-${id}`, (0, avatar_1.getPortraitSrc)(id));
+                scene.load.image(`portrait-${id}`, (0, utils_1.getPortraitSrc)(id));
+                scene.load.multiatlas(id, `/assets/pokemons/${id}.json`, "/assets/pokemons");
             });
             if (scene instanceof game_scene_1.default) {
                 const players = (0, schemas_1.values)((_a = scene.room) === null || _a === void 0 ? void 0 : _a.state.players);
@@ -125,11 +70,11 @@ class LoadingManager {
                     frameWidth: 64,
                     frameHeight: 64,
                     startFrame: 0,
-                    endFrame: 23
+                    endFrame: 17
                 }
             });
             for (const pack in atlas_json_1.default.packs) {
-                scene.load.multiatlas(atlas_json_1.default.packs[pack].name, `/assets/${pack}/${atlas_json_1.default.packs[pack].name}.json?v=${package_json_1.default.version}`, `/assets/${pack}/`);
+                scene.load.multiatlas(atlas_json_1.default.packs[pack].name, `/assets/${pack}/${atlas_json_1.default.packs[pack].name}-${package_json_1.default.version.replaceAll(".", "_")}.json`, `/assets/${pack}/`);
             }
             loadEnvironmentMultiAtlas(this.scene);
         });

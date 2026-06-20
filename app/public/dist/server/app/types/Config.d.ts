@@ -27,15 +27,12 @@ export declare const ExpTable: {
 export declare const SynergyTriggers: {
     [key in Synergy]: number[];
 };
-export declare const MinStageLevelForGameToCount = 10;
+export declare const RequiredStageLevelForXpElligibility = 10;
 export declare const ExpPlace: number[];
 export declare const RarityColor: {
     [key in Rarity]: string;
 };
 export declare const BoosterRarityProbability: {
-    [key in Rarity]: number;
-};
-export declare const BoosterPriceByRarity: {
     [key in Rarity]: number;
 };
 export declare const DITTO_RATE = 0.005;
@@ -66,7 +63,7 @@ export declare const FishRarityProbability: {
 };
 export declare const MAX_POOL_CONNECTIONS_SIZE = 16;
 export declare const MAX_CONCURRENT_PLAYERS_ON_SERVER = 1000;
-export declare const MAX_CONCURRENT_PLAYERS_ON_LOBBY = 500;
+export declare const MAX_CONCURRENT_PLAYERS_ON_LOBBY = 100;
 export declare const MAX_PLAYERS_PER_GAME = 8;
 export declare const MIN_HUMAN_PLAYERS: number;
 export declare const INACTIVITY_TIMEOUT: number;
@@ -196,5 +193,5 @@ export declare const MAX_SIMULATION_DELTA_TIME = 50;
 export declare const CRON_ELO_DECAY_DELAY: number;
 export declare const CRON_ELO_DECAY_MINIMUM_ELO = 1100;
 export declare const CRON_HISTORY_CLEANUP_DELAY: number;
-export declare const BOTS_ENABLED = true;
+export declare const BOTS_ENABLED = false;
 export { EloRank };

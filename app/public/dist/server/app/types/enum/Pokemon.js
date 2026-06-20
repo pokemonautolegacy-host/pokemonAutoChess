@@ -1,798 +1,499 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnimationConfig = exports.UnownsStage3 = exports.UnownsStage2 = exports.UnownsStage1 = exports.Unowns = exports.PkmDuos = exports.PkmDuo = exports.PkmRegionalVariants = exports.PkmFamily = exports.PkmByIndex = exports.PkmIndex = exports.Pkm = void 0;
+exports.AnimationConfig = exports.UnownsStage3 = exports.UnownsStage2 = exports.UnownsStage1 = exports.Unowns = exports.PkmDuos = exports.PkmDuo = exports.PkmRegionalVariants = exports.PkmFamily = exports.PkmIndex = exports.Pkm = void 0;
 exports.getUnownsPoolPerStage = getUnownsPoolPerStage;
 const Animation_1 = require("../Animation");
 var Pkm;
 (function (Pkm) {
-    Pkm["ABOMASNOW"] = "ABOMASNOW";
-    Pkm["ABRA"] = "ABRA";
-    Pkm["ABSOL"] = "ABSOL";
-    Pkm["AEGISLASH"] = "AEGISLASH";
-    Pkm["AEGISLASH_BLADE"] = "AEGISLASH_BLADE";
-    Pkm["AERODACTYL"] = "AERODACTYL";
-    Pkm["AGGRON"] = "AGGRON";
-    Pkm["AIPOM"] = "AIPOM";
-    Pkm["ALAKAZAM"] = "ALAKAZAM";
-    Pkm["ALOLAN_DIGLETT"] = "ALOLAN_DIGLETT";
-    Pkm["ALOLAN_DUGTRIO"] = "ALOLAN_DUGTRIO";
-    Pkm["ALOLAN_EXEGGUTOR"] = "ALOLAN_EXEGGUTOR";
-    Pkm["ALOLAN_GEODUDE"] = "ALOLAN_GEODUDE";
-    Pkm["ALOLAN_GOLEM"] = "ALOLAN_GOLEM";
-    Pkm["ALOLAN_GRAVELER"] = "ALOLAN_GRAVELER";
-    Pkm["ALOLAN_GRIMER"] = "ALOLAN_GRIMER";
-    Pkm["ALOLAN_MAROWAK"] = "ALOLAN_MAROWAK";
-    Pkm["ALOLAN_MEOWTH"] = "ALOLAN_MEOWTH";
-    Pkm["ALOLAN_MUK"] = "ALOLAN_MUK";
-    Pkm["ALOLAN_NINETALES"] = "ALOLAN_NINETALES";
-    Pkm["ALOLAN_PERSIAN"] = "ALOLAN_PERSIAN";
-    Pkm["ALOLAN_RAICHU"] = "ALOLAN_RAICHU";
-    Pkm["ALOLAN_RATICATE"] = "ALOLAN_RATICATE";
-    Pkm["ALOLAN_RATTATA"] = "ALOLAN_RATTATA";
-    Pkm["ALOLAN_VULPIX"] = "ALOLAN_VULPIX";
-    Pkm["ALTARIA"] = "ALTARIA";
-    Pkm["AMAURA"] = "AMAURA";
-    Pkm["AMBIPOM"] = "AMBIPOM";
-    Pkm["AMPHAROS"] = "AMPHAROS";
-    Pkm["ANNIHILAPE"] = "ANNIHILAPE";
-    Pkm["ANORITH"] = "ANORITH";
-    Pkm["APPLETUN"] = "APPLETUN";
-    Pkm["APPLIN"] = "APPLIN";
-    Pkm["ARAQUANID"] = "ARAQUANID";
-    Pkm["ARBOK"] = "ARBOK";
-    Pkm["ARCANINE"] = "ARCANINE";
-    Pkm["ARCEUS"] = "ARCEUS";
-    Pkm["ARCHEN"] = "ARCHEN";
-    Pkm["ARCHEOPS"] = "ARCHEOPS";
-    Pkm["ARCTIBAX"] = "ARCTIBAX";
-    Pkm["ARIADOS"] = "ARIADOS";
-    Pkm["ARMALDO"] = "ARMALDO";
-    Pkm["ARON"] = "ARON";
-    Pkm["ARROKUDA"] = "ARROKUDA";
-    Pkm["ARTICUNO"] = "ARTICUNO";
-    Pkm["AUDINO"] = "AUDINO";
-    Pkm["AURORUS"] = "AURORUS";
-    Pkm["AXEW"] = "AXEW";
-    Pkm["AZELF"] = "AZELF";
-    Pkm["AZUMARILL"] = "AZUMARILL";
-    Pkm["AZURILL"] = "AZURILL";
-    Pkm["BAGON"] = "BAGON";
-    Pkm["BALTOY"] = "BALTOY";
-    Pkm["BANETTE"] = "BANETTE";
-    Pkm["BARBARACLE"] = "BARBARACLE";
-    Pkm["BARBOACH"] = "BARBOACH";
-    Pkm["BASTIODON"] = "BASTIODON";
-    Pkm["BAXCALIBUR"] = "BAXCALIBUR";
-    Pkm["BAYLEEF"] = "BAYLEEF";
-    Pkm["BEAUTIFLY"] = "BEAUTIFLY";
-    Pkm["BEEDRILL"] = "BEEDRILL";
-    Pkm["BEHEEYEM"] = "BEHEEYEM";
-    Pkm["BELDUM"] = "BELDUM";
-    Pkm["BELLOSSOM"] = "BELLOSSOM";
-    Pkm["BELLSPROUT"] = "BELLSPROUT";
-    Pkm["BIBAREL"] = "BIBAREL";
-    Pkm["BIDOOF"] = "BIDOOF";
-    Pkm["BINACLE"] = "BINACLE";
-    Pkm["BISHARP"] = "BISHARP";
-    Pkm["BLACEPHALON"] = "BLACEPHALON";
-    Pkm["BLASTOISE"] = "BLASTOISE";
-    Pkm["BLAZIKEN"] = "BLAZIKEN";
-    Pkm["BLISSEY"] = "BLISSEY";
-    Pkm["BONSLEY"] = "BONSLEY";
-    Pkm["BOUNSWEET"] = "BOUNSWEET";
-    Pkm["BRAIXEN"] = "BRAIXEN";
-    Pkm["BRAVIARY"] = "BRAVIARY";
-    Pkm["BRELOOM"] = "BRELOOM";
-    Pkm["BRIONNE"] = "BRIONNE";
-    Pkm["BRONZONG"] = "BRONZONG";
-    Pkm["BRONZOR"] = "BRONZOR";
-    Pkm["BRUXISH"] = "BRUXISH";
-    Pkm["BUDEW"] = "BUDEW";
-    Pkm["BUIZEL"] = "BUIZEL";
+    Pkm["DEFAULT"] = "DEFAULT";
+    Pkm["EGG"] = "EGG";
+    Pkm["DITTO"] = "DITTO";
     Pkm["BULBASAUR"] = "BULBASAUR";
-    Pkm["BUNEARY"] = "BUNEARY";
-    Pkm["BURMY_PLANT"] = "BURMY_PLANT";
-    Pkm["BURMY_SANDY"] = "BURMY_SANDY";
-    Pkm["BURMY_TRASH"] = "BURMY_TRASH";
-    Pkm["BUTTERFREE"] = "BUTTERFREE";
-    Pkm["CACNEA"] = "CACNEA";
-    Pkm["CACTURNE"] = "CACTURNE";
-    Pkm["CAMERUPT"] = "CAMERUPT";
-    Pkm["CARBINK"] = "CARBINK";
-    Pkm["CARNIVINE"] = "CARNIVINE";
-    Pkm["CARVANHA"] = "CARVANHA";
-    Pkm["CASCOON"] = "CASCOON";
-    Pkm["CASTFORM"] = "CASTFORM";
-    Pkm["CASTFORM_HAIL"] = "CASTFORM_HAIL";
-    Pkm["CASTFORM_RAIN"] = "CASTFORM_RAIN";
-    Pkm["CASTFORM_SUN"] = "CASTFORM_SUN";
-    Pkm["CATERPIE"] = "CATERPIE";
-    Pkm["CELEBI"] = "CELEBI";
-    Pkm["CENTISKORCH"] = "CENTISKORCH";
-    Pkm["CHANDELURE"] = "CHANDELURE";
-    Pkm["CHANSEY"] = "CHANSEY";
-    Pkm["CHARIZARD"] = "CHARIZARD";
-    Pkm["CHARJABUG"] = "CHARJABUG";
+    Pkm["IVYSAUR"] = "IVYSAUR";
+    Pkm["VENUSAUR"] = "VENUSAUR";
     Pkm["CHARMANDER"] = "CHARMANDER";
     Pkm["CHARMELEON"] = "CHARMELEON";
-    Pkm["CHATOT"] = "CHATOT";
-    Pkm["CHERRIM"] = "CHERRIM";
-    Pkm["CHERRIM_SUNLIGHT"] = "CHERRIM_SUNLIGHT";
-    Pkm["CHERRUBI"] = "CHERRUBI";
-    Pkm["CHIKORITA"] = "CHIKORITA";
-    Pkm["CHIMCHAR"] = "CHIMCHAR";
-    Pkm["CHIMECHO"] = "CHIMECHO";
-    Pkm["CHINCHOU"] = "CHINCHOU";
-    Pkm["CHINGLING"] = "CHINGLING";
-    Pkm["CINDERACE"] = "CINDERACE";
-    Pkm["CLAMPERL"] = "CLAMPERL";
-    Pkm["CLAUNCHER"] = "CLAUNCHER";
-    Pkm["CLAWITZER"] = "CLAWITZER";
-    Pkm["CLAYDOL"] = "CLAYDOL";
-    Pkm["CLEFABLE"] = "CLEFABLE";
-    Pkm["CLEFAIRY"] = "CLEFAIRY";
-    Pkm["CLEFFA"] = "CLEFFA";
-    Pkm["CLODSIRE"] = "CLODSIRE";
-    Pkm["CLOYSTER"] = "CLOYSTER";
-    Pkm["COBALION"] = "COBALION";
-    Pkm["COMBEE"] = "COMBEE";
-    Pkm["COMBUSKEN"] = "COMBUSKEN";
-    Pkm["COMFEY"] = "COMFEY";
-    Pkm["CONKELDURR"] = "CONKELDURR";
-    Pkm["CORPHISH"] = "CORPHISH";
-    Pkm["CORSOLA"] = "CORSOLA";
-    Pkm["CORVIKNIGHT"] = "CORVIKNIGHT";
-    Pkm["CORVISQUIRE"] = "CORVISQUIRE";
-    Pkm["COSMOEM"] = "COSMOEM";
-    Pkm["COSMOG"] = "COSMOG";
-    Pkm["CRABOMINABLE"] = "CRABOMINABLE";
-    Pkm["CRABRAWLER"] = "CRABRAWLER";
-    Pkm["CRADILY"] = "CRADILY";
-    Pkm["CRAMORANT"] = "CRAMORANT";
-    Pkm["CRANIDOS"] = "CRANIDOS";
-    Pkm["CRAWDAUNT"] = "CRAWDAUNT";
-    Pkm["CRESSELIA"] = "CRESSELIA";
-    Pkm["CROAGUNK"] = "CROAGUNK";
-    Pkm["CROBAT"] = "CROBAT";
-    Pkm["CROCALOR"] = "CROCALOR";
-    Pkm["CROCONAW"] = "CROCONAW";
-    Pkm["CUBONE"] = "CUBONE";
-    Pkm["CURSOLA"] = "CURSOLA";
-    Pkm["CUTIEFLY"] = "CUTIEFLY";
-    Pkm["CYCLIZAR"] = "CYCLIZAR";
-    Pkm["CYNDAQUIL"] = "CYNDAQUIL";
-    Pkm["DARKRAI"] = "DARKRAI";
-    Pkm["DARMANITAN"] = "DARMANITAN";
-    Pkm["DARMANITAN_ZEN"] = "DARMANITAN_ZEN";
-    Pkm["DARTIX"] = "DARTIX";
-    Pkm["DARUMAKA"] = "DARUMAKA";
-    Pkm["DECIDUEYE"] = "DECIDUEYE";
-    Pkm["DEERLING"] = "DEERLING";
-    Pkm["DEFAULT"] = "DEFAULT";
-    Pkm["DEINO"] = "DEINO";
-    Pkm["DELIBIRD"] = "DELIBIRD";
-    Pkm["DELPHOX"] = "DELPHOX";
-    Pkm["DEOXYS"] = "DEOXYS";
-    Pkm["DEOXYS_ATTACK"] = "DEOXYS_ATTACK";
-    Pkm["DEOXYS_DEFENSE"] = "DEOXYS_DEFENSE";
-    Pkm["DEOXYS_SPEED"] = "DEOXYS_SPEED";
-    Pkm["DEWGONG"] = "DEWGONG";
-    Pkm["DEWOTT"] = "DEWOTT";
-    Pkm["DEWPIDER"] = "DEWPIDER";
-    Pkm["DHELMISE"] = "DHELMISE";
-    Pkm["DIALGA"] = "DIALGA";
-    Pkm["DIANCIE"] = "DIANCIE";
-    Pkm["DIGLETT"] = "DIGLETT";
-    Pkm["DITTO"] = "DITTO";
-    Pkm["DODRIO"] = "DODRIO";
-    Pkm["DODUO"] = "DODUO";
-    Pkm["DONPHAN"] = "DONPHAN";
-    Pkm["DOUBLADE"] = "DOUBLADE";
-    Pkm["DRACOVISH"] = "DRACOVISH";
-    Pkm["DRAGAPULT"] = "DRAGAPULT";
-    Pkm["DRAGONAIR"] = "DRAGONAIR";
-    Pkm["DRAGONITE"] = "DRAGONITE";
-    Pkm["DRAKLOAK"] = "DRAKLOAK";
-    Pkm["DRAPION"] = "DRAPION";
-    Pkm["DRATINI"] = "DRATINI";
-    Pkm["DREEPY"] = "DREEPY";
-    Pkm["DRIFBLIM"] = "DRIFBLIM";
-    Pkm["DRIFLOON"] = "DRIFLOON";
-    Pkm["DRIZZILE"] = "DRIZZILE";
-    Pkm["DROWZEE"] = "DROWZEE";
-    Pkm["DRUDDIGON"] = "DRUDDIGON";
-    Pkm["DUGTRIO"] = "DUGTRIO";
-    Pkm["DUOSION"] = "DUOSION";
-    Pkm["DURANT"] = "DURANT";
-    Pkm["DUSCLOPS"] = "DUSCLOPS";
-    Pkm["DUSKNOIR"] = "DUSKNOIR";
-    Pkm["DUSKULL"] = "DUSKULL";
-    Pkm["DUSTOX"] = "DUSTOX";
-    Pkm["EEVEE"] = "EEVEE";
-    Pkm["EGG"] = "EGG";
-    Pkm["EKANS"] = "EKANS";
-    Pkm["ELECTABUZZ"] = "ELECTABUZZ";
-    Pkm["ELECTIVIRE"] = "ELECTIVIRE";
-    Pkm["ELECTRIKE"] = "ELECTRIKE";
-    Pkm["ELECTRODE"] = "ELECTRODE";
-    Pkm["ELEKID"] = "ELEKID";
-    Pkm["ELGYEM"] = "ELGYEM";
-    Pkm["EMBOAR"] = "EMBOAR";
-    Pkm["EMPOLEON"] = "EMPOLEON";
-    Pkm["ENAMORUS"] = "ENAMORUS";
-    Pkm["ENTEI"] = "ENTEI";
-    Pkm["ESPEON"] = "ESPEON";
-    Pkm["ETERNATUS"] = "ETERNATUS";
-    Pkm["EXEGGCUTE"] = "EXEGGCUTE";
-    Pkm["EXEGGUTOR"] = "EXEGGUTOR";
-    Pkm["EXPLOUD"] = "EXPLOUD";
-    Pkm["FARFETCH_D"] = "FARFETCH_D";
-    Pkm["FEAROW"] = "FEAROW";
-    Pkm["FEEBAS"] = "FEEBAS";
-    Pkm["FENNEKIN"] = "FENNEKIN";
-    Pkm["FERALIGATR"] = "FERALIGATR";
-    Pkm["FERROSEED"] = "FERROSEED";
-    Pkm["FERROTHORN"] = "FERROTHORN";
-    Pkm["FINNEON"] = "FINNEON";
-    Pkm["FLABEBE"] = "FLABEBE";
-    Pkm["FLAFFY"] = "FLAFFY";
-    Pkm["FLAREON"] = "FLAREON";
-    Pkm["FLETCHINDER"] = "FLETCHINDER";
-    Pkm["FLETCHLING"] = "FLETCHLING";
-    Pkm["FLOATZEL"] = "FLOATZEL";
-    Pkm["FLOETTE"] = "FLOETTE";
-    Pkm["FLORGES"] = "FLORGES";
-    Pkm["FLYGON"] = "FLYGON";
-    Pkm["FORRETRESS"] = "FORRETRESS";
-    Pkm["FRAXURE"] = "FRAXURE";
-    Pkm["FRIGIBAX"] = "FRIGIBAX";
-    Pkm["FROAKIE"] = "FROAKIE";
-    Pkm["FROGADIER"] = "FROGADIER";
-    Pkm["FROSLASS"] = "FROSLASS";
-    Pkm["FROSMOTH"] = "FROSMOTH";
-    Pkm["FUECOCO"] = "FUECOCO";
-    Pkm["FURRET"] = "FURRET";
-    Pkm["GABITE"] = "GABITE";
-    Pkm["GALAR_CORSOLA"] = "GALAR_CORSOLA";
-    Pkm["GALARIAN_ARTICUNO"] = "GALARIAN_ARTICUNO";
-    Pkm["GALARIAN_ZAPDOS"] = "GALARIAN_ZAPDOS";
-    Pkm["GALARIAN_MOLTRES"] = "GALARIAN_MOLTRES";
-    Pkm["GALARIAN_PONYTA"] = "GALARIAN_PONYTA";
-    Pkm["GALARIAN_RAPIDASH"] = "GALARIAN_RAPIDASH";
-    Pkm["GALVANTULA"] = "GALVANTULA";
-    Pkm["GARBODOR"] = "GARBODOR";
-    Pkm["GARCHOMP"] = "GARCHOMP";
-    Pkm["GARDEVOIR"] = "GARDEVOIR";
-    Pkm["GASTLY"] = "GASTLY";
-    Pkm["GASTRODON_EAST_SEA"] = "GASTRODON_EAST_SEA";
-    Pkm["GASTRODON_WEST_SEA"] = "GASTRODON_WEST_SEA";
-    Pkm["GENESECT"] = "GENESECT";
-    Pkm["GENGAR"] = "GENGAR";
+    Pkm["CHARIZARD"] = "CHARIZARD";
+    Pkm["SQUIRTLE"] = "SQUIRTLE";
+    Pkm["WARTORTLE"] = "WARTORTLE";
+    Pkm["BLASTOISE"] = "BLASTOISE";
     Pkm["GEODUDE"] = "GEODUDE";
-    Pkm["GHOLDENGO"] = "GHOLDENGO";
-    Pkm["GIBLE"] = "GIBLE";
-    Pkm["GIMMIGHOUL"] = "GIMMIGHOUL";
-    Pkm["GIRATINA"] = "GIRATINA";
-    Pkm["GLACEON"] = "GLACEON";
-    Pkm["GLALIE"] = "GLALIE";
-    Pkm["GLIGAR"] = "GLIGAR";
-    Pkm["GLISCOR"] = "GLISCOR";
-    Pkm["GLIMMET"] = "GLIMMET";
-    Pkm["GLIMMORA"] = "GLIMMORA";
-    Pkm["GLOOM"] = "GLOOM";
-    Pkm["GOLBAT"] = "GOLBAT";
-    Pkm["GOLDEEN"] = "GOLDEEN";
-    Pkm["GOLDUCK"] = "GOLDUCK";
-    Pkm["GOLEM"] = "GOLEM";
-    Pkm["GOLETT"] = "GOLETT";
-    Pkm["GOLURK"] = "GOLURK";
-    Pkm["GOODRA"] = "GOODRA";
-    Pkm["GOOMY"] = "GOOMY";
-    Pkm["GOREBYSS"] = "GOREBYSS";
-    Pkm["GOTHITA"] = "GOTHITA";
-    Pkm["GOTHITELLE"] = "GOTHITELLE";
-    Pkm["GOTHORITA"] = "GOTHORITA";
-    Pkm["GOURGEIST"] = "GOURGEIST";
-    Pkm["GRANBULL"] = "GRANBULL";
     Pkm["GRAVELER"] = "GRAVELER";
-    Pkm["GRENINJA"] = "GRENINJA";
-    Pkm["GRIMER"] = "GRIMER";
-    Pkm["GRIMMSNARL"] = "GRIMMSNARL";
-    Pkm["GROTLE"] = "GROTLE";
-    Pkm["GROUDON"] = "GROUDON";
-    Pkm["GROVYLE"] = "GROVYLE";
-    Pkm["GROWLITHE"] = "GROWLITHE";
-    Pkm["GRUBBIN"] = "GRUBBIN";
-    Pkm["GRUMPIG"] = "GRUMPIG";
-    Pkm["GURDURR"] = "GURDURR";
-    Pkm["GUZZLORD"] = "GUZZLORD";
-    Pkm["GYARADOS"] = "GYARADOS";
-    Pkm["HAKAMO_O"] = "HAKAMO_O";
-    Pkm["HAPPINY"] = "HAPPINY";
-    Pkm["HARIYAMA"] = "HARIYAMA";
-    Pkm["HATENNA"] = "HATENNA";
-    Pkm["HATTERENE"] = "HATTERENE";
-    Pkm["HATTREM"] = "HATTREM";
-    Pkm["HAUNTER"] = "HAUNTER";
-    Pkm["HAWLUCHA"] = "HAWLUCHA";
-    Pkm["HAXORUS"] = "HAXORUS";
-    Pkm["HEATMOR"] = "HEATMOR";
-    Pkm["HEATRAN"] = "HEATRAN";
-    Pkm["HELIOLISK"] = "HELIOLISK";
-    Pkm["HELIOPTILE"] = "HELIOPTILE";
-    Pkm["HERACROSS"] = "HERACROSS";
-    Pkm["HERDIER"] = "HERDIER";
-    Pkm["HIPPODOWN"] = "HIPPODOWN";
-    Pkm["HIPPOPOTAS"] = "HIPPOPOTAS";
-    Pkm["HISUI_ARCANINE"] = "HISUI_ARCANINE";
-    Pkm["HISUI_ELECTRODE"] = "HISUI_ELECTRODE";
-    Pkm["HISUI_GOODRA"] = "HISUI_GOODRA";
-    Pkm["HISUI_GROWLITHE"] = "HISUI_GROWLITHE";
-    Pkm["HISUI_SLIGGOO"] = "HISUI_SLIGGOO";
-    Pkm["HISUI_SNEASEL"] = "HISUI_SNEASEL";
-    Pkm["HISUI_VOLTORB"] = "HISUI_VOLTORB";
-    Pkm["HISUI_ZOROARK"] = "HISUI_ZOROARK";
-    Pkm["HISUI_ZORUA"] = "HISUI_ZORUA";
-    Pkm["HISUIAN_QWILFISH"] = "HISUIAN_QWILFISH";
-    Pkm["HISUIAN_TYPHLOSION"] = "HISUIAN_TYPHLOSION";
-    Pkm["HITMONCHAN"] = "HITMONCHAN";
-    Pkm["HITMONLEE"] = "HITMONLEE";
-    Pkm["HITMONTOP"] = "HITMONTOP";
-    Pkm["HO_OH"] = "HO_OH";
-    Pkm["HONCHKROW"] = "HONCHKROW";
-    Pkm["HONEDGE"] = "HONEDGE";
-    Pkm["HOOPA"] = "HOOPA";
-    Pkm["HOOPA_UNBOUND"] = "HOOPA_UNBOUND";
-    Pkm["HOOTHOOT"] = "HOOTHOOT";
-    Pkm["HOPPIP"] = "HOPPIP";
-    Pkm["HORSEA"] = "HORSEA";
-    Pkm["HOUNDOOM"] = "HOUNDOOM";
-    Pkm["HOUNDOUR"] = "HOUNDOUR";
-    Pkm["HUNTAIL"] = "HUNTAIL";
-    Pkm["HYDREIGON"] = "HYDREIGON";
-    Pkm["HYPNO"] = "HYPNO";
+    Pkm["GOLEM"] = "GOLEM";
+    Pkm["AZURILL"] = "AZURILL";
+    Pkm["MARILL"] = "MARILL";
+    Pkm["AZUMARILL"] = "AZUMARILL";
+    Pkm["ZUBAT"] = "ZUBAT";
+    Pkm["GOLBAT"] = "GOLBAT";
+    Pkm["CROBAT"] = "CROBAT";
+    Pkm["MAREEP"] = "MAREEP";
+    Pkm["FLAFFY"] = "FLAFFY";
+    Pkm["AMPHAROS"] = "AMPHAROS";
+    Pkm["CLEFFA"] = "CLEFFA";
+    Pkm["CLEFAIRY"] = "CLEFAIRY";
+    Pkm["CLEFABLE"] = "CLEFABLE";
     Pkm["IGGLYBUFF"] = "IGGLYBUFF";
-    Pkm["ILLUMISE"] = "ILLUMISE";
-    Pkm["IMPIDIMP"] = "IMPIDIMP";
-    Pkm["INCINEROAR"] = "INCINEROAR";
-    Pkm["INFERNAPE"] = "INFERNAPE";
-    Pkm["INTELEON"] = "INTELEON";
-    Pkm["IRON_BUNDLE"] = "IRON_BUNDLE";
-    Pkm["IRON_HANDS"] = "IRON_HANDS";
-    Pkm["IVYSAUR"] = "IVYSAUR";
-    Pkm["JANGMO_O"] = "JANGMO_O";
+    Pkm["WIGGLYTUFF"] = "WIGGLYTUFF";
     Pkm["JIGGLYPUFF"] = "JIGGLYPUFF";
-    Pkm["JIRACHI"] = "JIRACHI";
-    Pkm["JOLTEON"] = "JOLTEON";
-    Pkm["JOLTIK"] = "JOLTIK";
-    Pkm["JUMPLUFF"] = "JUMPLUFF";
-    Pkm["JYNX"] = "JYNX";
-    Pkm["KABUTO"] = "KABUTO";
-    Pkm["KABUTOPS"] = "KABUTOPS";
-    Pkm["KADABRA"] = "KADABRA";
+    Pkm["CATERPIE"] = "CATERPIE";
+    Pkm["METAPOD"] = "METAPOD";
+    Pkm["BUTTERFREE"] = "BUTTERFREE";
+    Pkm["WEEDLE"] = "WEEDLE";
     Pkm["KAKUNA"] = "KAKUNA";
-    Pkm["KANGASKHAN"] = "KANGASKHAN";
-    Pkm["KARTANA"] = "KARTANA";
-    Pkm["KECLEON"] = "KECLEON";
-    Pkm["KELDEO"] = "KELDEO";
-    Pkm["KILOWATTREL"] = "KILOWATTREL";
-    Pkm["KINGAMBIT"] = "KINGAMBIT";
-    Pkm["KINGDRA"] = "KINGDRA";
-    Pkm["KINGLER"] = "KINGLER";
-    Pkm["KIRLIA"] = "KIRLIA";
-    Pkm["KLEAVOR"] = "KLEAVOR";
-    Pkm["KLEFKI"] = "KLEFKI";
-    Pkm["KOFFING"] = "KOFFING";
-    Pkm["KOMMO_O"] = "KOMMO_O";
-    Pkm["KRABBY"] = "KRABBY";
-    Pkm["KRICKETOT"] = "KRICKETOT";
-    Pkm["KRICKETUNE"] = "KRICKETUNE";
-    Pkm["KROKOROK"] = "KROKOROK";
-    Pkm["KROOKODILE"] = "KROOKODILE";
-    Pkm["KYOGRE"] = "KYOGRE";
-    Pkm["KYUREM"] = "KYUREM";
-    Pkm["LAIRON"] = "LAIRON";
-    Pkm["LAMPENT"] = "LAMPENT";
-    Pkm["LANDORUS"] = "LANDORUS";
-    Pkm["LANTURN"] = "LANTURN";
-    Pkm["LAPRAS"] = "LAPRAS";
-    Pkm["LARVESTA"] = "LARVESTA";
-    Pkm["LARVITAR"] = "LARVITAR";
-    Pkm["LATIAS"] = "LATIAS";
-    Pkm["LATIOS"] = "LATIOS";
-    Pkm["LEAFEON"] = "LEAFEON";
-    Pkm["LEAVANNY"] = "LEAVANNY";
-    Pkm["LICKILICKY"] = "LICKILICKY";
-    Pkm["LICKITUNG"] = "LICKITUNG";
-    Pkm["LIEPARD"] = "LIEPARD";
-    Pkm["LILEEP"] = "LILEEP";
-    Pkm["LILIGANT"] = "LILIGANT";
-    Pkm["LILLIPUP"] = "LILLIPUP";
-    Pkm["LINOONE"] = "LINOONE";
-    Pkm["LITTEN"] = "LITTEN";
-    Pkm["LITWICK"] = "LITWICK";
-    Pkm["LOMBRE"] = "LOMBRE";
-    Pkm["LOPUNNY"] = "LOPUNNY";
-    Pkm["LOTAD"] = "LOTAD";
-    Pkm["LOUDRED"] = "LOUDRED";
-    Pkm["LUCARIO"] = "LUCARIO";
-    Pkm["LUDICOLO"] = "LUDICOLO";
-    Pkm["LUGIA"] = "LUGIA";
-    Pkm["LUMINEON"] = "LUMINEON";
-    Pkm["LUNALA"] = "LUNALA";
-    Pkm["LUNATONE"] = "LUNATONE";
-    Pkm["LUVDISC"] = "LUVDISC";
-    Pkm["LUXIO"] = "LUXIO";
-    Pkm["LUXRAY"] = "LUXRAY";
-    Pkm["LYCANROC_DAY"] = "LYCANROC_DAY";
-    Pkm["LYCANROC_DUSK"] = "LYCANROC_DUSK";
-    Pkm["LYCANROC_NIGHT"] = "LYCANROC_NIGHT";
-    Pkm["MACHAMP"] = "MACHAMP";
-    Pkm["MACHOKE"] = "MACHOKE";
+    Pkm["BEEDRILL"] = "BEEDRILL";
+    Pkm["PIDGEY"] = "PIDGEY";
+    Pkm["PIDGEOTTO"] = "PIDGEOTTO";
+    Pkm["PIDGEOT"] = "PIDGEOT";
+    Pkm["HOPPIP"] = "HOPPIP";
+    Pkm["SKIPLOOM"] = "SKIPLOOM";
+    Pkm["JUMPLUFF"] = "JUMPLUFF";
+    Pkm["SEEDOT"] = "SEEDOT";
+    Pkm["NUZLEAF"] = "NUZLEAF";
+    Pkm["SHIFTRY"] = "SHIFTRY";
+    Pkm["STARLY"] = "STARLY";
+    Pkm["STARAVIA"] = "STARAVIA";
+    Pkm["STARAPTOR"] = "STARAPTOR";
+    Pkm["CHIKORITA"] = "CHIKORITA";
+    Pkm["BAYLEEF"] = "BAYLEEF";
+    Pkm["MEGANIUM"] = "MEGANIUM";
+    Pkm["CYNDAQUIL"] = "CYNDAQUIL";
+    Pkm["QUILAVA"] = "QUILAVA";
+    Pkm["TYPHLOSION"] = "TYPHLOSION";
+    Pkm["TOTODILE"] = "TOTODILE";
+    Pkm["CROCONAW"] = "CROCONAW";
+    Pkm["FERALIGATR"] = "FERALIGATR";
+    Pkm["TREECKO"] = "TREECKO";
+    Pkm["GROVYLE"] = "GROVYLE";
+    Pkm["SCEPTILE"] = "SCEPTILE";
+    Pkm["TORCHIC"] = "TORCHIC";
+    Pkm["COMBUSKEN"] = "COMBUSKEN";
+    Pkm["BLAZIKEN"] = "BLAZIKEN";
+    Pkm["MUDKIP"] = "MUDKIP";
+    Pkm["MARSHTOMP"] = "MARSHTOMP";
+    Pkm["SWAMPERT"] = "SWAMPERT";
+    Pkm["TURTWIG"] = "TURTWIG";
+    Pkm["GROTLE"] = "GROTLE";
+    Pkm["TORTERRA"] = "TORTERRA";
+    Pkm["CHIMCHAR"] = "CHIMCHAR";
+    Pkm["MONFERNO"] = "MONFERNO";
+    Pkm["INFERNAPE"] = "INFERNAPE";
+    Pkm["PIPLUP"] = "PIPLUP";
+    Pkm["PRINPLUP"] = "PRINPLUP";
+    Pkm["EMPOLEON"] = "EMPOLEON";
+    Pkm["NIDORANF"] = "NIDORANF";
+    Pkm["NIDORINA"] = "NIDORINA";
+    Pkm["NIDOQUEEN"] = "NIDOQUEEN";
+    Pkm["NIDORANM"] = "NIDORANM";
+    Pkm["NIDORINO"] = "NIDORINO";
+    Pkm["NIDOKING"] = "NIDOKING";
+    Pkm["PICHU"] = "PICHU";
+    Pkm["PIKACHU"] = "PIKACHU";
+    Pkm["RAICHU"] = "RAICHU";
     Pkm["MACHOP"] = "MACHOP";
-    Pkm["MAGBY"] = "MAGBY";
-    Pkm["MAGCARGO"] = "MAGCARGO";
-    Pkm["MAGEARNA"] = "MAGEARNA";
-    Pkm["MAGIKARP"] = "MAGIKARP";
-    Pkm["MAGMAR"] = "MAGMAR";
-    Pkm["MAGMORTAR"] = "MAGMORTAR";
+    Pkm["MACHOKE"] = "MACHOKE";
+    Pkm["MACHAMP"] = "MACHAMP";
+    Pkm["HORSEA"] = "HORSEA";
+    Pkm["SEADRA"] = "SEADRA";
+    Pkm["KINGDRA"] = "KINGDRA";
+    Pkm["TRAPINCH"] = "TRAPINCH";
+    Pkm["VIBRAVA"] = "VIBRAVA";
+    Pkm["FLYGON"] = "FLYGON";
+    Pkm["SPHEAL"] = "SPHEAL";
+    Pkm["SEALEO"] = "SEALEO";
+    Pkm["WALREIN"] = "WALREIN";
+    Pkm["ARON"] = "ARON";
+    Pkm["LAIRON"] = "LAIRON";
+    Pkm["AGGRON"] = "AGGRON";
     Pkm["MAGNEMITE"] = "MAGNEMITE";
     Pkm["MAGNETON"] = "MAGNETON";
     Pkm["MAGNEZONE"] = "MAGNEZONE";
-    Pkm["MAKUHITA"] = "MAKUHITA";
-    Pkm["MAMOSWINE"] = "MAMOSWINE";
-    Pkm["MANAPHY"] = "MANAPHY";
-    Pkm["MANECTRIC"] = "MANECTRIC";
-    Pkm["MANKEY"] = "MANKEY";
-    Pkm["MANTINE"] = "MANTINE";
-    Pkm["MANTYKE"] = "MANTYKE";
-    Pkm["MARACTUS"] = "MARACTUS";
-    Pkm["MAREEP"] = "MAREEP";
-    Pkm["MARILL"] = "MARILL";
-    Pkm["MAROWAK"] = "MAROWAK";
-    Pkm["MARSHADOW"] = "MARSHADOW";
-    Pkm["MARSHTOMP"] = "MARSHTOMP";
-    Pkm["MAUSHOLD_FOUR"] = "MAUSHOLD_FOUR";
-    Pkm["MAUSHOLD_THREE"] = "MAUSHOLD_THREE";
-    Pkm["MAWILE"] = "MAWILE";
-    Pkm["MEDICHAM"] = "MEDICHAM";
-    Pkm["MEDITITE"] = "MEDITITE";
-    Pkm["MEGA_ABOMASNOW"] = "MEGA_ABOMASNOW";
-    Pkm["MEGA_ALTARIA"] = "MEGA_ALTARIA";
-    Pkm["MEGA_BANETTE"] = "MEGA_BANETTE";
-    Pkm["MEGA_CAMERUPT"] = "MEGA_CAMERUPT";
-    Pkm["MEGA_HOUNDOOM"] = "MEGA_HOUNDOOM";
-    Pkm["MEGA_LOPUNNY"] = "MEGA_LOPUNNY";
-    Pkm["MEGA_MANECTRIC"] = "MEGA_MANECTRIC";
-    Pkm["MEGA_RAYQUAZA"] = "MEGA_RAYQUAZA";
-    Pkm["MEGA_SABLEYE"] = "MEGA_SABLEYE";
-    Pkm["MEGA_STEELIX"] = "MEGA_STEELIX";
-    Pkm["MEGANIUM"] = "MEGANIUM";
-    Pkm["MELMETAL"] = "MELMETAL";
-    Pkm["MELOETTA"] = "MELOETTA";
-    Pkm["MEOWTH"] = "MEOWTH";
-    Pkm["MESPRIT"] = "MESPRIT";
-    Pkm["METAGROSS"] = "METAGROSS";
-    Pkm["METANG"] = "METANG";
-    Pkm["METAPOD"] = "METAPOD";
-    Pkm["MEW"] = "MEW";
-    Pkm["MEWTWO"] = "MEWTWO";
-    Pkm["MIENFOO"] = "MIENFOO";
-    Pkm["MIENSHAO"] = "MIENSHAO";
-    Pkm["MIGHTYENA"] = "MIGHTYENA";
-    Pkm["MILOTIC"] = "MILOTIC";
-    Pkm["MILTANK"] = "MILTANK";
-    Pkm["MIME_JR"] = "MIME_JR";
-    Pkm["MIMIKYU"] = "MIMIKYU";
-    Pkm["MIMIKYU_BUSTED"] = "MIMIKYU_BUSTED";
-    Pkm["MINIOR"] = "MINIOR";
-    Pkm["MINIOR_KERNEL_BLUE"] = "MINIOR_KERNEL_BLUE";
-    Pkm["MINIOR_KERNEL_GREEN"] = "MINIOR_KERNEL_GREEN";
-    Pkm["MINIOR_KERNEL_ORANGE"] = "MINIOR_KERNEL_ORANGE";
-    Pkm["MINIOR_KERNEL_RED"] = "MINIOR_KERNEL_RED";
-    Pkm["MINUN"] = "MINUN";
-    Pkm["MISDREAVUS"] = "MISDREAVUS";
-    Pkm["MISMAGIUS"] = "MISMAGIUS";
-    Pkm["MOLTRES"] = "MOLTRES";
-    Pkm["MONFERNO"] = "MONFERNO";
-    Pkm["MORGREM"] = "MORGREM";
-    Pkm["MORPEKO"] = "MORPEKO";
-    Pkm["MORPEKO_HANGRY"] = "MORPEKO_HANGRY";
-    Pkm["MOTHIM"] = "MOTHIM";
-    Pkm["MR_MIME"] = "MR_MIME";
-    Pkm["MUDKIP"] = "MUDKIP";
-    Pkm["MUK"] = "MUK";
-    Pkm["MUNCHLAX"] = "MUNCHLAX";
-    Pkm["MUNNA"] = "MUNNA";
-    Pkm["MURKROW"] = "MURKROW";
-    Pkm["MUSHARNA"] = "MUSHARNA";
-    Pkm["NAGANADEL"] = "NAGANADEL";
-    Pkm["NATU"] = "NATU";
-    Pkm["NECROZMA"] = "NECROZMA";
-    Pkm["NICKIT"] = "NICKIT";
-    Pkm["NIDOKING"] = "NIDOKING";
-    Pkm["NIDOQUEEN"] = "NIDOQUEEN";
-    Pkm["NIDORANF"] = "NIDORANF";
-    Pkm["NIDORANM"] = "NIDORANM";
-    Pkm["NIDORINA"] = "NIDORINA";
-    Pkm["NIDORINO"] = "NIDORINO";
-    Pkm["NIHILEGO"] = "NIHILEGO";
-    Pkm["NINCADA"] = "NINCADA";
-    Pkm["NINETALES"] = "NINETALES";
-    Pkm["NINJASK"] = "NINJASK";
-    Pkm["NOCTOWL"] = "NOCTOWL";
-    Pkm["NOIBAT"] = "NOIBAT";
-    Pkm["NOIVERN"] = "NOIVERN";
-    Pkm["NOSEPASS"] = "NOSEPASS";
-    Pkm["NUMEL"] = "NUMEL";
-    Pkm["NUZLEAF"] = "NUZLEAF";
-    Pkm["OCTILLERY"] = "OCTILLERY";
-    Pkm["ODDISH"] = "ODDISH";
-    Pkm["OGERPON_CORNERSTONE"] = "OGERPON_CORNERSTONE";
-    Pkm["OGERPON_CORNERSTONE_MASK"] = "OGERPON_CORNERSTONE_MASK";
-    Pkm["OGERPON_HEARTHFLAME"] = "OGERPON_HEARTHFLAME";
-    Pkm["OGERPON_HEARTHFLAME_MASK"] = "OGERPON_HEARTHFLAME_MASK";
-    Pkm["OGERPON_TEAL"] = "OGERPON_TEAL";
-    Pkm["OGERPON_TEAL_MASK"] = "OGERPON_TEAL_MASK";
-    Pkm["OGERPON_WELLSPRING"] = "OGERPON_WELLSPRING";
-    Pkm["OGERPON_WELLSPRING_MASK"] = "OGERPON_WELLSPRING_MASK";
-    Pkm["OMANYTE"] = "OMANYTE";
-    Pkm["OMASTAR"] = "OMASTAR";
-    Pkm["ONIX"] = "ONIX";
-    Pkm["ORIGIN_GIRATINA"] = "ORIGIN_GIRATINA";
-    Pkm["OSHAWOTT"] = "OSHAWOTT";
-    Pkm["OVERQWIL"] = "OVERQWIL";
-    Pkm["PALDEA_WOOPER"] = "PALDEA_WOOPER";
-    Pkm["PALKIA"] = "PALKIA";
-    Pkm["PALOSSAND"] = "PALOSSAND";
-    Pkm["PALPITOAD"] = "PALPITOAD";
-    Pkm["PARAS"] = "PARAS";
-    Pkm["PARASECT"] = "PARASECT";
-    Pkm["PATRAT"] = "PATRAT";
-    Pkm["PAWMI"] = "PAWMI";
-    Pkm["PAWMO"] = "PAWMO";
-    Pkm["PAWMOT"] = "PAWMOT";
-    Pkm["PAWNIARD"] = "PAWNIARD";
-    Pkm["PELIPPER"] = "PELIPPER";
-    Pkm["PERSIAN"] = "PERSIAN";
-    Pkm["PETILIL"] = "PETILIL";
-    Pkm["PHANPY"] = "PHANPY";
-    Pkm["PHANTUMP"] = "PHANTUMP";
-    Pkm["PHEROMOSA"] = "PHEROMOSA";
-    Pkm["PHIONE"] = "PHIONE";
-    Pkm["PICHU"] = "PICHU";
-    Pkm["PIDGEOT"] = "PIDGEOT";
-    Pkm["PIDGEOTTO"] = "PIDGEOTTO";
-    Pkm["PIDGEY"] = "PIDGEY";
-    Pkm["PIGNITE"] = "PIGNITE";
-    Pkm["PIKACHU"] = "PIKACHU";
-    Pkm["PILLAR_WOOD"] = "PILLAR_WOOD";
-    Pkm["PILLAR_IRON"] = "PILLAR_IRON";
-    Pkm["PILLAR_CONCRETE"] = "PILLAR_CONCRETE";
-    Pkm["PILOSWINE"] = "PILOSWINE";
-    Pkm["PINECO"] = "PINECO";
-    Pkm["PINSIR"] = "PINSIR";
-    Pkm["PIPLUP"] = "PIPLUP";
-    Pkm["PIROUETTE_MELOETTA"] = "PIROUETTE_MELOETTA";
-    Pkm["PLUSLE"] = "PLUSLE";
-    Pkm["POIPOLE"] = "POIPOLE";
-    Pkm["POLITOED"] = "POLITOED";
+    Pkm["RHYHORN"] = "RHYHORN";
+    Pkm["RHYDON"] = "RHYDON";
+    Pkm["RHYPERIOR"] = "RHYPERIOR";
+    Pkm["TOGEPI"] = "TOGEPI";
+    Pkm["TOGETIC"] = "TOGETIC";
+    Pkm["TOGEKISS"] = "TOGEKISS";
+    Pkm["DUSKULL"] = "DUSKULL";
+    Pkm["DUSCLOPS"] = "DUSCLOPS";
+    Pkm["DUSKNOIR"] = "DUSKNOIR";
+    Pkm["LOTAD"] = "LOTAD";
+    Pkm["LOMBRE"] = "LOMBRE";
+    Pkm["LUDICOLO"] = "LUDICOLO";
+    Pkm["SHINX"] = "SHINX";
+    Pkm["LUXIO"] = "LUXIO";
+    Pkm["LUXRAY"] = "LUXRAY";
     Pkm["POLIWAG"] = "POLIWAG";
     Pkm["POLIWHIRL"] = "POLIWHIRL";
+    Pkm["POLITOED"] = "POLITOED";
     Pkm["POLIWRATH"] = "POLIWRATH";
-    Pkm["POLTEAGEIST"] = "POLTEAGEIST";
-    Pkm["PONYTA"] = "PONYTA";
-    Pkm["POOCHYENA"] = "POOCHYENA";
-    Pkm["POPPLIO"] = "POPPLIO";
+    Pkm["ABRA"] = "ABRA";
+    Pkm["KADABRA"] = "KADABRA";
+    Pkm["ALAKAZAM"] = "ALAKAZAM";
+    Pkm["GASTLY"] = "GASTLY";
+    Pkm["HAUNTER"] = "HAUNTER";
+    Pkm["GENGAR"] = "GENGAR";
+    Pkm["DRATINI"] = "DRATINI";
+    Pkm["DRAGONAIR"] = "DRAGONAIR";
+    Pkm["DRAGONITE"] = "DRAGONITE";
+    Pkm["LARVITAR"] = "LARVITAR";
+    Pkm["PUPITAR"] = "PUPITAR";
+    Pkm["TYRANITAR"] = "TYRANITAR";
+    Pkm["SLAKOTH"] = "SLAKOTH";
+    Pkm["VIGOROTH"] = "VIGOROTH";
+    Pkm["SLAKING"] = "SLAKING";
+    Pkm["RALTS"] = "RALTS";
+    Pkm["KIRLIA"] = "KIRLIA";
+    Pkm["GARDEVOIR"] = "GARDEVOIR";
+    Pkm["BAGON"] = "BAGON";
+    Pkm["SHELGON"] = "SHELGON";
+    Pkm["SALAMENCE"] = "SALAMENCE";
+    Pkm["BELDUM"] = "BELDUM";
+    Pkm["METANG"] = "METANG";
+    Pkm["METAGROSS"] = "METAGROSS";
+    Pkm["GIBLE"] = "GIBLE";
+    Pkm["GABITE"] = "GABITE";
+    Pkm["GARCHOMP"] = "GARCHOMP";
+    Pkm["ELEKID"] = "ELEKID";
+    Pkm["ELECTABUZZ"] = "ELECTABUZZ";
+    Pkm["ELECTIVIRE"] = "ELECTIVIRE";
+    Pkm["MAGBY"] = "MAGBY";
+    Pkm["MAGMAR"] = "MAGMAR";
+    Pkm["MAGMORTAR"] = "MAGMORTAR";
+    Pkm["MUNCHLAX"] = "MUNCHLAX";
+    Pkm["SNORLAX"] = "SNORLAX";
+    Pkm["GROWLITHE"] = "GROWLITHE";
+    Pkm["ARCANINE"] = "ARCANINE";
+    Pkm["HISUI_GROWLITHE"] = "HISUI_GROWLITHE";
+    Pkm["HISUI_ARCANINE"] = "HISUI_ARCANINE";
+    Pkm["ONIX"] = "ONIX";
+    Pkm["STEELIX"] = "STEELIX";
+    Pkm["MEGA_STEELIX"] = "MEGA_STEELIX";
+    Pkm["SCYTHER"] = "SCYTHER";
+    Pkm["SCIZOR"] = "SCIZOR";
+    Pkm["KLEAVOR"] = "KLEAVOR";
+    Pkm["RIOLU"] = "RIOLU";
+    Pkm["LUCARIO"] = "LUCARIO";
+    Pkm["MAGIKARP"] = "MAGIKARP";
+    Pkm["RATTATA"] = "RATTATA";
+    Pkm["ALOLAN_RATTATA"] = "ALOLAN_RATTATA";
+    Pkm["RATICATE"] = "RATICATE";
+    Pkm["ALOLAN_RATICATE"] = "ALOLAN_RATICATE";
+    Pkm["SPEAROW"] = "SPEAROW";
+    Pkm["FEAROW"] = "FEAROW";
+    Pkm["GYARADOS"] = "GYARADOS";
+    Pkm["LUGIA"] = "LUGIA";
+    Pkm["SHADOW_LUGIA"] = "SHADOW_LUGIA";
+    Pkm["GIRATINA"] = "GIRATINA";
+    Pkm["ZAPDOS"] = "ZAPDOS";
+    Pkm["MOLTRES"] = "MOLTRES";
+    Pkm["ARTICUNO"] = "ARTICUNO";
+    Pkm["DIALGA"] = "DIALGA";
+    Pkm["PALKIA"] = "PALKIA";
+    Pkm["SUICUNE"] = "SUICUNE";
+    Pkm["RAIKOU"] = "RAIKOU";
+    Pkm["ENTEI"] = "ENTEI";
+    Pkm["REGICE"] = "REGICE";
+    Pkm["REGIROCK"] = "REGIROCK";
+    Pkm["REGISTEEL"] = "REGISTEEL";
+    Pkm["KYOGRE"] = "KYOGRE";
+    Pkm["GROUDON"] = "GROUDON";
+    Pkm["RAYQUAZA"] = "RAYQUAZA";
+    Pkm["REGIGIGAS"] = "REGIGIGAS";
+    Pkm["EEVEE"] = "EEVEE";
+    Pkm["VAPOREON"] = "VAPOREON";
+    Pkm["JOLTEON"] = "JOLTEON";
+    Pkm["FLAREON"] = "FLAREON";
+    Pkm["ESPEON"] = "ESPEON";
+    Pkm["UMBREON"] = "UMBREON";
+    Pkm["LEAFEON"] = "LEAFEON";
+    Pkm["SYLVEON"] = "SYLVEON";
+    Pkm["MEDITITE"] = "MEDITITE";
+    Pkm["MEDICHAM"] = "MEDICHAM";
+    Pkm["NUMEL"] = "NUMEL";
+    Pkm["CAMERUPT"] = "CAMERUPT";
+    Pkm["MEGA_CAMERUPT"] = "MEGA_CAMERUPT";
+    Pkm["DARKRAI"] = "DARKRAI";
+    Pkm["LITWICK"] = "LITWICK";
+    Pkm["LAMPENT"] = "LAMPENT";
+    Pkm["CHANDELURE"] = "CHANDELURE";
+    Pkm["SLOWPOKE"] = "SLOWPOKE";
+    Pkm["SLOWBRO"] = "SLOWBRO";
+    Pkm["SLOWKING"] = "SLOWKING";
+    Pkm["BELLSPROUT"] = "BELLSPROUT";
+    Pkm["WEEPINBELL"] = "WEEPINBELL";
+    Pkm["VICTREEBEL"] = "VICTREEBEL";
+    Pkm["SWINUB"] = "SWINUB";
+    Pkm["PILOSWINE"] = "PILOSWINE";
+    Pkm["MAMOSWINE"] = "MAMOSWINE";
+    Pkm["SNORUNT"] = "SNORUNT";
+    Pkm["GLALIE"] = "GLALIE";
+    Pkm["FROSLASS"] = "FROSLASS";
+    Pkm["SNOVER"] = "SNOVER";
+    Pkm["ABOMASNOW"] = "ABOMASNOW";
+    Pkm["MEGA_ABOMASNOW"] = "MEGA_ABOMASNOW";
+    Pkm["VANILLITE"] = "VANILLITE";
+    Pkm["VANILLISH"] = "VANILLISH";
+    Pkm["VANILLUXE"] = "VANILLUXE";
+    Pkm["GLACEON"] = "GLACEON";
+    Pkm["LARVESTA"] = "LARVESTA";
+    Pkm["VOLCARONA"] = "VOLCARONA";
+    Pkm["LANDORUS"] = "LANDORUS";
+    Pkm["THUNDURUS"] = "THUNDURUS";
+    Pkm["TORNADUS"] = "TORNADUS";
+    Pkm["ENAMORUS"] = "ENAMORUS";
+    Pkm["KELDEO"] = "KELDEO";
+    Pkm["TERRAKION"] = "TERRAKION";
+    Pkm["VIRIZION"] = "VIRIZION";
+    Pkm["COBALION"] = "COBALION";
+    Pkm["MANAPHY"] = "MANAPHY";
+    Pkm["ROTOM"] = "ROTOM";
+    Pkm["ROTOM_DRONE"] = "ROTOM_DRONE";
+    Pkm["SPIRITOMB"] = "SPIRITOMB";
+    Pkm["ABSOL"] = "ABSOL";
+    Pkm["LAPRAS"] = "LAPRAS";
+    Pkm["LATIAS"] = "LATIAS";
+    Pkm["LATIOS"] = "LATIOS";
+    Pkm["MESPRIT"] = "MESPRIT";
+    Pkm["AZELF"] = "AZELF";
+    Pkm["UXIE"] = "UXIE";
+    Pkm["MEWTWO"] = "MEWTWO";
+    Pkm["KYUREM"] = "KYUREM";
+    Pkm["RESHIRAM"] = "RESHIRAM";
+    Pkm["ZEKROM"] = "ZEKROM";
+    Pkm["CELEBI"] = "CELEBI";
+    Pkm["VICTINI"] = "VICTINI";
+    Pkm["JIRACHI"] = "JIRACHI";
+    Pkm["ARCEUS"] = "ARCEUS";
+    Pkm["DEOXYS"] = "DEOXYS";
+    Pkm["DEOXYS_DEFENSE"] = "DEOXYS_DEFENSE";
+    Pkm["DEOXYS_ATTACK"] = "DEOXYS_ATTACK";
+    Pkm["DEOXYS_SPEED"] = "DEOXYS_SPEED";
+    Pkm["SHAYMIN"] = "SHAYMIN";
+    Pkm["CRESSELIA"] = "CRESSELIA";
+    Pkm["HEATRAN"] = "HEATRAN";
+    Pkm["HO_OH"] = "HO_OH";
+    Pkm["AERODACTYL"] = "AERODACTYL";
+    Pkm["PRIMAL_KYOGRE"] = "PRIMAL_KYOGRE";
+    Pkm["PRIMAL_GROUDON"] = "PRIMAL_GROUDON";
+    Pkm["MEOWTH"] = "MEOWTH";
+    Pkm["PERSIAN"] = "PERSIAN";
+    Pkm["ALOLAN_MEOWTH"] = "ALOLAN_MEOWTH";
+    Pkm["ALOLAN_PERSIAN"] = "ALOLAN_PERSIAN";
+    Pkm["DEINO"] = "DEINO";
+    Pkm["ZWEILOUS"] = "ZWEILOUS";
+    Pkm["HYDREIGON"] = "HYDREIGON";
+    Pkm["SANDILE"] = "SANDILE";
+    Pkm["KROKOROK"] = "KROKOROK";
+    Pkm["KROOKODILE"] = "KROOKODILE";
+    Pkm["SOLOSIS"] = "SOLOSIS";
+    Pkm["DUOSION"] = "DUOSION";
+    Pkm["REUNICLUS"] = "REUNICLUS";
+    Pkm["MEGA_RAYQUAZA"] = "MEGA_RAYQUAZA";
+    Pkm["SWABLU"] = "SWABLU";
+    Pkm["ODDISH"] = "ODDISH";
+    Pkm["GLOOM"] = "GLOOM";
+    Pkm["VILEPLUME"] = "VILEPLUME";
+    Pkm["BELLOSSOM"] = "BELLOSSOM";
+    Pkm["AMAURA"] = "AMAURA";
+    Pkm["AURORUS"] = "AURORUS";
+    Pkm["ANORITH"] = "ANORITH";
+    Pkm["ARMALDO"] = "ARMALDO";
+    Pkm["ARCHEN"] = "ARCHEN";
+    Pkm["ARCHEOPS"] = "ARCHEOPS";
+    Pkm["SHIELDON"] = "SHIELDON";
+    Pkm["BASTIODON"] = "BASTIODON";
+    Pkm["TIRTOUGA"] = "TIRTOUGA";
+    Pkm["CARRACOSTA"] = "CARRACOSTA";
+    Pkm["LILEEP"] = "LILEEP";
+    Pkm["CRADILY"] = "CRADILY";
+    Pkm["CRANIDOS"] = "CRANIDOS";
+    Pkm["RAMPARDOS"] = "RAMPARDOS";
+    Pkm["KABUTO"] = "KABUTO";
+    Pkm["KABUTOPS"] = "KABUTOPS";
+    Pkm["OMANYTE"] = "OMANYTE";
+    Pkm["OMASTAR"] = "OMASTAR";
+    Pkm["TYRUNT"] = "TYRUNT";
+    Pkm["TYRANTRUM"] = "TYRANTRUM";
+    Pkm["BUDEW"] = "BUDEW";
+    Pkm["ROSELIA"] = "ROSELIA";
+    Pkm["ROSERADE"] = "ROSERADE";
+    Pkm["BUNEARY"] = "BUNEARY";
+    Pkm["LOPUNNY"] = "LOPUNNY";
+    Pkm["MEGA_LOPUNNY"] = "MEGA_LOPUNNY";
+    Pkm["AXEW"] = "AXEW";
+    Pkm["FRAXURE"] = "FRAXURE";
+    Pkm["HAXORUS"] = "HAXORUS";
+    Pkm["VENIPEDE"] = "VENIPEDE";
+    Pkm["WHIRLIPEDE"] = "WHIRLIPEDE";
+    Pkm["SCOLIPEDE"] = "SCOLIPEDE";
     Pkm["PORYGON"] = "PORYGON";
     Pkm["PORYGON_2"] = "PORYGON_2";
     Pkm["PORYGON_Z"] = "PORYGON_Z";
-    Pkm["PRIMAL_GROUDON"] = "PRIMAL_GROUDON";
-    Pkm["PRIMAL_KYOGRE"] = "PRIMAL_KYOGRE";
-    Pkm["PRIMARINA"] = "PRIMARINA";
-    Pkm["PRIMEAPE"] = "PRIMEAPE";
-    Pkm["PRINPLUP"] = "PRINPLUP";
-    Pkm["PROBOPASS"] = "PROBOPASS";
-    Pkm["PSYDUCK"] = "PSYDUCK";
-    Pkm["PUMPKABOO"] = "PUMPKABOO";
-    Pkm["PUPITAR"] = "PUPITAR";
-    Pkm["PURRLOIN"] = "PURRLOIN";
-    Pkm["PYUKUMUKU"] = "PYUKUMUKU";
-    Pkm["QUILAVA"] = "QUILAVA";
-    Pkm["RABOOT"] = "RABOOT";
-    Pkm["RAICHU"] = "RAICHU";
-    Pkm["RAIKOU"] = "RAIKOU";
-    Pkm["RALTS"] = "RALTS";
-    Pkm["RAMPARDOS"] = "RAMPARDOS";
-    Pkm["RAPIDASH"] = "RAPIDASH";
-    Pkm["RATICATE"] = "RATICATE";
-    Pkm["RATTATA"] = "RATTATA";
-    Pkm["RAYQUAZA"] = "RAYQUAZA";
-    Pkm["REGICE"] = "REGICE";
-    Pkm["REGIDRAGO"] = "REGIDRAGO";
-    Pkm["REGIELEKI"] = "REGIELEKI";
-    Pkm["REGIGIGAS"] = "REGIGIGAS";
-    Pkm["REGIROCK"] = "REGIROCK";
-    Pkm["REGISTEEL"] = "REGISTEEL";
-    Pkm["RELICANTH"] = "RELICANTH";
-    Pkm["REMORAID"] = "REMORAID";
-    Pkm["RESHIRAM"] = "RESHIRAM";
-    Pkm["REUNICLUS"] = "REUNICLUS";
-    Pkm["RHYDON"] = "RHYDON";
-    Pkm["RHYHORN"] = "RHYHORN";
-    Pkm["RHYPERIOR"] = "RHYPERIOR";
-    Pkm["RIBOMBEE"] = "RIBOMBEE";
-    Pkm["RIOLU"] = "RIOLU";
-    Pkm["ROCKRUFF"] = "ROCKRUFF";
-    Pkm["ROOKIDEE"] = "ROOKIDEE";
-    Pkm["ROSELIA"] = "ROSELIA";
-    Pkm["ROSERADE"] = "ROSERADE";
-    Pkm["ROTOM"] = "ROTOM";
-    Pkm["ROTOM_DRONE"] = "ROTOM_DRONE";
-    Pkm["ROWLET"] = "ROWLET";
-    Pkm["RUFFLET"] = "RUFFLET";
-    Pkm["SABLEYE"] = "SABLEYE";
-    Pkm["SALAMENCE"] = "SALAMENCE";
-    Pkm["SALANDIT"] = "SALANDIT";
-    Pkm["SALAZZLE"] = "SALAZZLE";
-    Pkm["STUFFUL"] = "STUFFUL";
-    Pkm["BEWEAR"] = "BEWEAR";
-    Pkm["SAMUROTT"] = "SAMUROTT";
-    Pkm["SANDILE"] = "SANDILE";
-    Pkm["SANDSHREW"] = "SANDSHREW";
-    Pkm["SANDSLASH"] = "SANDSLASH";
-    Pkm["SANDYGAST"] = "SANDYGAST";
-    Pkm["SAWSBUCK"] = "SAWSBUCK";
-    Pkm["SCEPTILE"] = "SCEPTILE";
-    Pkm["SCIZOR"] = "SCIZOR";
-    Pkm["SCOLIPEDE"] = "SCOLIPEDE";
-    Pkm["SCORBUNNY"] = "SCORBUNNY";
-    Pkm["SCRAFTY"] = "SCRAFTY";
-    Pkm["SCRAGGY"] = "SCRAGGY";
-    Pkm["SCYTHER"] = "SCYTHER";
-    Pkm["SEADRA"] = "SEADRA";
-    Pkm["SEAKING"] = "SEAKING";
-    Pkm["SEALEO"] = "SEALEO";
-    Pkm["SEEDOT"] = "SEEDOT";
-    Pkm["SEEL"] = "SEEL";
-    Pkm["SEISMITOAD"] = "SEISMITOAD";
-    Pkm["SENTRET"] = "SENTRET";
-    Pkm["SERPERIOR"] = "SERPERIOR";
-    Pkm["SERVINE"] = "SERVINE";
-    Pkm["SEVIPER"] = "SEVIPER";
-    Pkm["SEWADDLE"] = "SEWADDLE";
-    Pkm["SHADOW_LUGIA"] = "SHADOW_LUGIA";
-    Pkm["SHARPEDO"] = "SHARPEDO";
-    Pkm["SHAYMIN"] = "SHAYMIN";
-    Pkm["SHAYMIN_SKY"] = "SHAYMIN_SKY";
-    Pkm["SHEDINJA"] = "SHEDINJA";
-    Pkm["SHELGON"] = "SHELGON";
-    Pkm["SHELLDER"] = "SHELLDER";
-    Pkm["SHELLOS_EAST_SEA"] = "SHELLOS_EAST_SEA";
-    Pkm["SHELLOS_WEST_SEA"] = "SHELLOS_WEST_SEA";
-    Pkm["SHIELDON"] = "SHIELDON";
-    Pkm["SHIFTRY"] = "SHIFTRY";
-    Pkm["SHINX"] = "SHINX";
-    Pkm["SHROOMISH"] = "SHROOMISH";
-    Pkm["SHUCKLE"] = "SHUCKLE";
+    Pkm["ELECTRIKE"] = "ELECTRIKE";
+    Pkm["MANECTRIC"] = "MANECTRIC";
+    Pkm["MEGA_MANECTRIC"] = "MEGA_MANECTRIC";
     Pkm["SHUPPET"] = "SHUPPET";
-    Pkm["SIGILYPH"] = "SIGILYPH";
-    Pkm["SILCOON"] = "SILCOON";
-    Pkm["SILVALLY"] = "SILVALLY";
-    Pkm["SINISTEA"] = "SINISTEA";
-    Pkm["SIZZLIPEDE"] = "SIZZLIPEDE";
-    Pkm["SKARMORY"] = "SKARMORY";
-    Pkm["SKELEDIRGE"] = "SKELEDIRGE";
-    Pkm["SKIPLOOM"] = "SKIPLOOM";
-    Pkm["SKORUPI"] = "SKORUPI";
-    Pkm["SKUNTANK"] = "SKUNTANK";
-    Pkm["SLAKING"] = "SLAKING";
-    Pkm["SLAKOTH"] = "SLAKOTH";
-    Pkm["SLIGOO"] = "SLIGOO";
-    Pkm["SLOWBRO"] = "SLOWBRO";
-    Pkm["SLOWKING"] = "SLOWKING";
-    Pkm["SLOWPOKE"] = "SLOWPOKE";
-    Pkm["SLUGMA"] = "SLUGMA";
-    Pkm["SMEARGLE"] = "SMEARGLE";
-    Pkm["SMOOCHUM"] = "SMOOCHUM";
-    Pkm["SNEASEL"] = "SNEASEL";
-    Pkm["SNEASLER"] = "SNEASLER";
-    Pkm["SNIVY"] = "SNIVY";
-    Pkm["SNOM"] = "SNOM";
-    Pkm["SNORLAX"] = "SNORLAX";
-    Pkm["SNORUNT"] = "SNORUNT";
-    Pkm["SNOVER"] = "SNOVER";
-    Pkm["SNUBULL"] = "SNUBULL";
-    Pkm["SOBBLE"] = "SOBBLE";
-    Pkm["SOLGALEO"] = "SOLGALEO";
-    Pkm["SOLOSIS"] = "SOLOSIS";
-    Pkm["SOLROCK"] = "SOLROCK";
-    Pkm["SPEAROW"] = "SPEAROW";
-    Pkm["SPECTRIER"] = "SPECTRIER";
-    Pkm["SPHEAL"] = "SPHEAL";
-    Pkm["SPINARAK"] = "SPINARAK";
-    Pkm["SPINDA"] = "SPINDA";
-    Pkm["SPIRITOMB"] = "SPIRITOMB";
-    Pkm["SPOINK"] = "SPOINK";
-    Pkm["SQUIRTLE"] = "SQUIRTLE";
-    Pkm["STAKATAKA"] = "STAKATAKA";
-    Pkm["STANTLER"] = "STANTLER";
-    Pkm["STARAPTOR"] = "STARAPTOR";
-    Pkm["STARAVIA"] = "STARAVIA";
-    Pkm["STARLY"] = "STARLY";
-    Pkm["STARMIE"] = "STARMIE";
-    Pkm["STARYU"] = "STARYU";
-    Pkm["STEELIX"] = "STEELIX";
-    Pkm["STEENEE"] = "STEENEE";
-    Pkm["STONJOURNER"] = "STONJOURNER";
-    Pkm["STOUTLAND"] = "STOUTLAND";
-    Pkm["STUNKY"] = "STUNKY";
-    Pkm["SUBSTITUTE"] = "SUBSTITUTE";
-    Pkm["SUDOWOODO"] = "SUDOWOODO";
-    Pkm["SUICUNE"] = "SUICUNE";
-    Pkm["SUNFLORA"] = "SUNFLORA";
-    Pkm["SUNKERN"] = "SUNKERN";
-    Pkm["SWABLU"] = "SWABLU";
+    Pkm["BANETTE"] = "BANETTE";
+    Pkm["MEGA_BANETTE"] = "MEGA_BANETTE";
+    Pkm["HONEDGE"] = "HONEDGE";
+    Pkm["DOUBLADE"] = "DOUBLADE";
+    Pkm["AEGISLASH"] = "AEGISLASH";
+    Pkm["AEGISLASH_BLADE"] = "AEGISLASH_BLADE";
+    Pkm["CUBONE"] = "CUBONE";
+    Pkm["MAROWAK"] = "MAROWAK";
+    Pkm["ALOLAN_MAROWAK"] = "ALOLAN_MAROWAK";
+    Pkm["WHISMUR"] = "WHISMUR";
+    Pkm["LOUDRED"] = "LOUDRED";
+    Pkm["EXPLOUD"] = "EXPLOUD";
+    Pkm["TYMPOLE"] = "TYMPOLE";
+    Pkm["PALPITOAD"] = "PALPITOAD";
+    Pkm["SEISMITOAD"] = "SEISMITOAD";
+    Pkm["SEWADDLE"] = "SEWADDLE";
     Pkm["SWADLOON"] = "SWADLOON";
-    Pkm["SWAMPERT"] = "SWAMPERT";
-    Pkm["SWINUB"] = "SWINUB";
-    Pkm["SWOOBAT"] = "SWOOBAT";
-    Pkm["SYLVEON"] = "SYLVEON";
-    Pkm["TALONFLAME"] = "TALONFLAME";
-    Pkm["TANDEMAUS"] = "TANDEMAUS";
-    Pkm["TANGELA"] = "TANGELA";
-    Pkm["TANGROWTH"] = "TANGROWTH";
-    Pkm["TAPU_BULU"] = "TAPU_BULU";
-    Pkm["TAPU_FINI"] = "TAPU_FINI";
+    Pkm["LEAVANNY"] = "LEAVANNY";
+    Pkm["PIKIPEK"] = "PIKIPEK";
+    Pkm["TRUMBEAK"] = "TRUMBEAK";
+    Pkm["TOUCANNON"] = "TOUCANNON";
+    Pkm["FLABEBE"] = "FLABEBE";
+    Pkm["FLOETTE"] = "FLOETTE";
+    Pkm["FLORGES"] = "FLORGES";
+    Pkm["JANGMO_O"] = "JANGMO_O";
+    Pkm["HAKAMO_O"] = "HAKAMO_O";
+    Pkm["KOMMO_O"] = "KOMMO_O";
+    Pkm["MELOETTA"] = "MELOETTA";
+    Pkm["ALTARIA"] = "ALTARIA";
+    Pkm["MEGA_ALTARIA"] = "MEGA_ALTARIA";
+    Pkm["CASTFORM"] = "CASTFORM";
+    Pkm["CASTFORM_SUN"] = "CASTFORM_SUN";
+    Pkm["CASTFORM_RAIN"] = "CASTFORM_RAIN";
+    Pkm["CASTFORM_HAIL"] = "CASTFORM_HAIL";
+    Pkm["CORPHISH"] = "CORPHISH";
+    Pkm["CRAWDAUNT"] = "CRAWDAUNT";
+    Pkm["JOLTIK"] = "JOLTIK";
+    Pkm["GALVANTULA"] = "GALVANTULA";
+    Pkm["GENESECT"] = "GENESECT";
+    Pkm["RELICANTH"] = "RELICANTH";
+    Pkm["HATENNA"] = "HATENNA";
+    Pkm["HATTREM"] = "HATTREM";
+    Pkm["HATTERENE"] = "HATTERENE";
+    Pkm["FENNEKIN"] = "FENNEKIN";
+    Pkm["BRAIXEN"] = "BRAIXEN";
+    Pkm["DELPHOX"] = "DELPHOX";
+    Pkm["MAKUHITA"] = "MAKUHITA";
+    Pkm["HARIYAMA"] = "HARIYAMA";
+    Pkm["REGIELEKI"] = "REGIELEKI";
+    Pkm["REGIDRAGO"] = "REGIDRAGO";
+    Pkm["GUZZLORD"] = "GUZZLORD";
+    Pkm["ETERNATUS"] = "ETERNATUS";
+    Pkm["PONYTA"] = "PONYTA";
+    Pkm["RAPIDASH"] = "RAPIDASH";
+    Pkm["GALARIAN_PONYTA"] = "GALARIAN_PONYTA";
+    Pkm["GALARIAN_RAPIDASH"] = "GALARIAN_RAPIDASH";
+    Pkm["NINCADA"] = "NINCADA";
+    Pkm["NINJASK"] = "NINJASK";
+    Pkm["SHEDINJA"] = "SHEDINJA";
+    Pkm["NOIBAT"] = "NOIBAT";
+    Pkm["NOIVERN"] = "NOIVERN";
+    Pkm["PUMPKABOO"] = "PUMPKABOO";
+    Pkm["GOURGEIST"] = "GOURGEIST";
+    Pkm["CACNEA"] = "CACNEA";
+    Pkm["CACTURNE"] = "CACTURNE";
+    Pkm["TAUROS"] = "TAUROS";
+    Pkm["HAPPINY"] = "HAPPINY";
+    Pkm["CHANSEY"] = "CHANSEY";
+    Pkm["BLISSEY"] = "BLISSEY";
     Pkm["TAPU_KOKO"] = "TAPU_KOKO";
     Pkm["TAPU_LELE"] = "TAPU_LELE";
-    Pkm["TAUROS"] = "TAUROS";
-    Pkm["TEDDIURSA"] = "TEDDIURSA";
+    Pkm["STAKATAKA"] = "STAKATAKA";
+    Pkm["BLACEPHALON"] = "BLACEPHALON";
+    Pkm["HOUNDOUR"] = "HOUNDOUR";
+    Pkm["HOUNDOOM"] = "HOUNDOOM";
+    Pkm["MEGA_HOUNDOOM"] = "MEGA_HOUNDOOM";
+    Pkm["CLAMPERL"] = "CLAMPERL";
+    Pkm["HUNTAIL"] = "HUNTAIL";
+    Pkm["GOREBYSS"] = "GOREBYSS";
+    Pkm["SMOOCHUM"] = "SMOOCHUM";
+    Pkm["JYNX"] = "JYNX";
+    Pkm["SALANDIT"] = "SALANDIT";
+    Pkm["SALAZZLE"] = "SALAZZLE";
+    Pkm["VENONAT"] = "VENONAT";
+    Pkm["VENOMOTH"] = "VENOMOTH";
+    Pkm["VOLTORB"] = "VOLTORB";
+    Pkm["ELECTRODE"] = "ELECTRODE";
+    Pkm["SLUGMA"] = "SLUGMA";
+    Pkm["MAGCARGO"] = "MAGCARGO";
+    Pkm["SNEASEL"] = "SNEASEL";
+    Pkm["WEAVILE"] = "WEAVILE";
+    Pkm["CROAGUNK"] = "CROAGUNK";
+    Pkm["TOXICROAK"] = "TOXICROAK";
+    Pkm["CHINCHOU"] = "CHINCHOU";
+    Pkm["LANTURN"] = "LANTURN";
+    Pkm["POOCHYENA"] = "POOCHYENA";
+    Pkm["MIGHTYENA"] = "MIGHTYENA";
+    Pkm["BRONZOR"] = "BRONZOR";
+    Pkm["BRONZONG"] = "BRONZONG";
+    Pkm["DRIFLOON"] = "DRIFLOON";
+    Pkm["DRIFBLIM"] = "DRIFBLIM";
+    Pkm["SHROOMISH"] = "SHROOMISH";
+    Pkm["BRELOOM"] = "BRELOOM";
     Pkm["TENTACOOL"] = "TENTACOOL";
     Pkm["TENTACRUEL"] = "TENTACRUEL";
-    Pkm["TEPIG"] = "TEPIG";
-    Pkm["TERRAKION"] = "TERRAKION";
-    Pkm["THIEVUL"] = "THIEVUL";
-    Pkm["THUNDURUS"] = "THUNDURUS";
-    Pkm["TIMBURR"] = "TIMBURR";
-    Pkm["TINKATINK"] = "TINKATINK";
-    Pkm["TINKATON"] = "TINKATON";
-    Pkm["TINKATUFF"] = "TINKATUFF";
-    Pkm["TOGEKISS"] = "TOGEKISS";
-    Pkm["TOGEPI"] = "TOGEPI";
-    Pkm["TOGETIC"] = "TOGETIC";
-    Pkm["TORCHIC"] = "TORCHIC";
-    Pkm["TORKOAL"] = "TORKOAL";
-    Pkm["TORNADUS"] = "TORNADUS";
-    Pkm["TORRACAT"] = "TORRACAT";
-    Pkm["TORTERRA"] = "TORTERRA";
-    Pkm["TOTODILE"] = "TOTODILE";
-    Pkm["TOXEL"] = "TOXEL";
-    Pkm["TOXICROAK"] = "TOXICROAK";
-    Pkm["TOXTRICITY"] = "TOXTRICITY";
-    Pkm["TRAPINCH"] = "TRAPINCH";
-    Pkm["TREECKO"] = "TREECKO";
-    Pkm["TREVENANT"] = "TREVENANT";
-    Pkm["TROPIUS"] = "TROPIUS";
-    Pkm["TRUBBISH"] = "TRUBBISH";
+    Pkm["SNUBULL"] = "SNUBULL";
+    Pkm["GRANBULL"] = "GRANBULL";
+    Pkm["SEVIPER"] = "SEVIPER";
+    Pkm["VULPIX"] = "VULPIX";
+    Pkm["NINETALES"] = "NINETALES";
+    Pkm["ALOLAN_VULPIX"] = "ALOLAN_VULPIX";
+    Pkm["ALOLAN_NINETALES"] = "ALOLAN_NINETALES";
+    Pkm["BUIZEL"] = "BUIZEL";
+    Pkm["FLOATZEL"] = "FLOATZEL";
+    Pkm["MAWILE"] = "MAWILE";
+    Pkm["KECLEON"] = "KECLEON";
+    Pkm["CARBINK"] = "CARBINK";
+    Pkm["DIANCIE"] = "DIANCIE";
+    Pkm["CHATOT"] = "CHATOT";
+    Pkm["GOOMY"] = "GOOMY";
+    Pkm["SLIGOO"] = "SLIGOO";
+    Pkm["GOODRA"] = "GOODRA";
+    Pkm["HISUI_SLIGGOO"] = "HISUI_SLIGGOO";
+    Pkm["HISUI_GOODRA"] = "HISUI_GOODRA";
+    Pkm["MEW"] = "MEW";
+    Pkm["BOUNSWEET"] = "BOUNSWEET";
+    Pkm["STEENEE"] = "STEENEE";
     Pkm["TSAREENA"] = "TSAREENA";
-    Pkm["TURTONATOR"] = "TURTONATOR";
-    Pkm["TURTWIG"] = "TURTWIG";
-    Pkm["TYMPOLE"] = "TYMPOLE";
-    Pkm["TYPE_NULL"] = "TYPE_NULL";
-    Pkm["TYPHLOSION"] = "TYPHLOSION";
-    Pkm["TYRANITAR"] = "TYRANITAR";
-    Pkm["TYRANTRUM"] = "TYRANTRUM";
-    Pkm["TYROGUE"] = "TYROGUE";
-    Pkm["TYRUNT"] = "TYRUNT";
-    Pkm["ULTRA_NECROZMA"] = "ULTRA_NECROZMA";
-    Pkm["UMBREON"] = "UMBREON";
+    Pkm["VOLCANION"] = "VOLCANION";
+    Pkm["APPLIN"] = "APPLIN";
+    Pkm["APPLETUN"] = "APPLETUN";
+    Pkm["OSHAWOTT"] = "OSHAWOTT";
+    Pkm["DEWOTT"] = "DEWOTT";
+    Pkm["SAMUROTT"] = "SAMUROTT";
+    Pkm["SNOM"] = "SNOM";
+    Pkm["FROSMOTH"] = "FROSMOTH";
+    Pkm["WAILMER"] = "WAILMER";
+    Pkm["WAILORD"] = "WAILORD";
+    Pkm["DREEPY"] = "DREEPY";
+    Pkm["DRAKLOAK"] = "DRAKLOAK";
+    Pkm["DRAGAPULT"] = "DRAGAPULT";
+    Pkm["SNIVY"] = "SNIVY";
+    Pkm["SERVINE"] = "SERVINE";
+    Pkm["SERPERIOR"] = "SERPERIOR";
+    Pkm["SCORBUNNY"] = "SCORBUNNY";
+    Pkm["RABOOT"] = "RABOOT";
+    Pkm["CINDERACE"] = "CINDERACE";
+    Pkm["POPPLIO"] = "POPPLIO";
+    Pkm["BRIONNE"] = "BRIONNE";
+    Pkm["PRIMARINA"] = "PRIMARINA";
+    Pkm["GOTHITA"] = "GOTHITA";
+    Pkm["GOTHORITA"] = "GOTHORITA";
+    Pkm["GOTHITELLE"] = "GOTHITELLE";
+    Pkm["SANDSHREW"] = "SANDSHREW";
+    Pkm["SANDSLASH"] = "SANDSLASH";
+    Pkm["FARFETCH_D"] = "FARFETCH_D";
     Pkm["UNOWN_A"] = "UNOWN_A";
     Pkm["UNOWN_B"] = "UNOWN_B";
     Pkm["UNOWN_C"] = "UNOWN_C";
     Pkm["UNOWN_D"] = "UNOWN_D";
     Pkm["UNOWN_E"] = "UNOWN_E";
-    Pkm["UNOWN_EXCLAMATION"] = "UNOWN_EXCLAMATION";
     Pkm["UNOWN_F"] = "UNOWN_F";
     Pkm["UNOWN_G"] = "UNOWN_G";
     Pkm["UNOWN_H"] = "UNOWN_H";
@@ -805,7 +506,6 @@ var Pkm;
     Pkm["UNOWN_O"] = "UNOWN_O";
     Pkm["UNOWN_P"] = "UNOWN_P";
     Pkm["UNOWN_Q"] = "UNOWN_Q";
-    Pkm["UNOWN_QUESTION"] = "UNOWN_QUESTION";
     Pkm["UNOWN_R"] = "UNOWN_R";
     Pkm["UNOWN_S"] = "UNOWN_S";
     Pkm["UNOWN_T"] = "UNOWN_T";
@@ -815,82 +515,353 @@ var Pkm;
     Pkm["UNOWN_X"] = "UNOWN_X";
     Pkm["UNOWN_Y"] = "UNOWN_Y";
     Pkm["UNOWN_Z"] = "UNOWN_Z";
+    Pkm["UNOWN_QUESTION"] = "UNOWN_QUESTION";
+    Pkm["UNOWN_EXCLAMATION"] = "UNOWN_EXCLAMATION";
+    Pkm["TAPU_FINI"] = "TAPU_FINI";
+    Pkm["TAPU_BULU"] = "TAPU_BULU";
+    Pkm["DIGLETT"] = "DIGLETT";
+    Pkm["ALOLAN_DIGLETT"] = "ALOLAN_DIGLETT";
+    Pkm["DUGTRIO"] = "DUGTRIO";
+    Pkm["ALOLAN_DUGTRIO"] = "ALOLAN_DUGTRIO";
+    Pkm["ROWLET"] = "ROWLET";
+    Pkm["DARTIX"] = "DARTIX";
+    Pkm["DECIDUEYE"] = "DECIDUEYE";
+    Pkm["ZORUA"] = "ZORUA";
+    Pkm["ZOROARK"] = "ZOROARK";
+    Pkm["HISUI_ZORUA"] = "HISUI_ZORUA";
+    Pkm["HISUI_ZOROARK"] = "HISUI_ZOROARK";
+    Pkm["FROAKIE"] = "FROAKIE";
+    Pkm["FROGADIER"] = "FROGADIER";
+    Pkm["GRENINJA"] = "GRENINJA";
+    Pkm["TYROGUE"] = "TYROGUE";
+    Pkm["HITMONLEE"] = "HITMONLEE";
+    Pkm["HITMONCHAN"] = "HITMONCHAN";
+    Pkm["HITMONTOP"] = "HITMONTOP";
+    Pkm["MIMIKYU"] = "MIMIKYU";
+    Pkm["MIMIKYU_BUSTED"] = "MIMIKYU_BUSTED";
+    Pkm["GRIMER"] = "GRIMER";
+    Pkm["MUK"] = "MUK";
+    Pkm["ALOLAN_GRIMER"] = "ALOLAN_GRIMER";
+    Pkm["ALOLAN_MUK"] = "ALOLAN_MUK";
+    Pkm["CARVANHA"] = "CARVANHA";
+    Pkm["SHARPEDO"] = "SHARPEDO";
+    Pkm["PINECO"] = "PINECO";
+    Pkm["FORRETRESS"] = "FORRETRESS";
+    Pkm["SEEL"] = "SEEL";
+    Pkm["DEWGONG"] = "DEWGONG";
+    Pkm["ALOLAN_GEODUDE"] = "ALOLAN_GEODUDE";
+    Pkm["ALOLAN_GRAVELER"] = "ALOLAN_GRAVELER";
+    Pkm["ALOLAN_GOLEM"] = "ALOLAN_GOLEM";
+    Pkm["EKANS"] = "EKANS";
+    Pkm["ARBOK"] = "ARBOK";
+    Pkm["MIME_JR"] = "MIME_JR";
+    Pkm["MR_MIME"] = "MR_MIME";
+    Pkm["ORIGIN_GIRATINA"] = "ORIGIN_GIRATINA";
+    Pkm["PIROUETTE_MELOETTA"] = "PIROUETTE_MELOETTA";
+    Pkm["MELMETAL"] = "MELMETAL";
+    Pkm["HOOPA"] = "HOOPA";
+    Pkm["HOOPA_UNBOUND"] = "HOOPA_UNBOUND";
+    Pkm["SILVALLY"] = "SILVALLY";
+    Pkm["TYPE_NULL"] = "TYPE_NULL";
+    Pkm["ZERAORA"] = "ZERAORA";
+    Pkm["XERNEAS"] = "XERNEAS";
+    Pkm["YVELTAL"] = "YVELTAL";
+    Pkm["MARSHADOW"] = "MARSHADOW";
+    Pkm["HOOTHOOT"] = "HOOTHOOT";
+    Pkm["NOCTOWL"] = "NOCTOWL";
+    Pkm["BONSLEY"] = "BONSLEY";
+    Pkm["SUDOWOODO"] = "SUDOWOODO";
+    Pkm["PHIONE"] = "PHIONE";
+    Pkm["COMBEE"] = "COMBEE";
+    Pkm["VESPIQUEEN"] = "VESPIQUEEN";
+    Pkm["SHUCKLE"] = "SHUCKLE";
+    Pkm["TEPIG"] = "TEPIG";
+    Pkm["PIGNITE"] = "PIGNITE";
+    Pkm["EMBOAR"] = "EMBOAR";
+    Pkm["WYNAUT"] = "WYNAUT";
+    Pkm["WOBBUFFET"] = "WOBBUFFET";
+    Pkm["LUNATONE"] = "LUNATONE";
+    Pkm["SOLROCK"] = "SOLROCK";
+    Pkm["SHAYMIN_SKY"] = "SHAYMIN_SKY";
+    Pkm["WURMPLE"] = "WURMPLE";
+    Pkm["SILCOON"] = "SILCOON";
+    Pkm["BEAUTIFLY"] = "BEAUTIFLY";
+    Pkm["CASCOON"] = "CASCOON";
+    Pkm["DUSTOX"] = "DUSTOX";
+    Pkm["TINKATINK"] = "TINKATINK";
+    Pkm["TINKATUFF"] = "TINKATUFF";
+    Pkm["TINKATON"] = "TINKATON";
+    Pkm["PARAS"] = "PARAS";
+    Pkm["PARASECT"] = "PARASECT";
+    Pkm["MILTANK"] = "MILTANK";
+    Pkm["MANKEY"] = "MANKEY";
+    Pkm["PRIMEAPE"] = "PRIMEAPE";
+    Pkm["ANNIHILAPE"] = "ANNIHILAPE";
+    Pkm["SUNKERN"] = "SUNKERN";
+    Pkm["SUNFLORA"] = "SUNFLORA";
+    Pkm["MARACTUS"] = "MARACTUS";
+    Pkm["MINUN"] = "MINUN";
+    Pkm["PLUSLE"] = "PLUSLE";
+    Pkm["PINSIR"] = "PINSIR";
+    Pkm["NATU"] = "NATU";
+    Pkm["XATU"] = "XATU";
+    Pkm["GLIGAR"] = "GLIGAR";
+    Pkm["GLISCOR"] = "GLISCOR";
+    Pkm["SHELLDER"] = "SHELLDER";
+    Pkm["CLOYSTER"] = "CLOYSTER";
+    Pkm["SENTRET"] = "SENTRET";
+    Pkm["FURRET"] = "FURRET";
+    Pkm["SPECTRIER"] = "SPECTRIER";
+    Pkm["TORKOAL"] = "TORKOAL";
+    Pkm["DELIBIRD"] = "DELIBIRD";
+    Pkm["IRON_BUNDLE"] = "IRON_BUNDLE";
+    Pkm["KARTANA"] = "KARTANA";
+    Pkm["CHINGLING"] = "CHINGLING";
+    Pkm["CHIMECHO"] = "CHIMECHO";
+    Pkm["ALOLAN_RAICHU"] = "ALOLAN_RAICHU";
+    Pkm["DHELMISE"] = "DHELMISE";
+    Pkm["KOFFING"] = "KOFFING";
+    Pkm["WEEZING"] = "WEEZING";
+    Pkm["STARYU"] = "STARYU";
+    Pkm["STARMIE"] = "STARMIE";
+    Pkm["NOSEPASS"] = "NOSEPASS";
+    Pkm["PROBOPASS"] = "PROBOPASS";
+    Pkm["WOOBAT"] = "WOOBAT";
+    Pkm["SWOOBAT"] = "SWOOBAT";
+    Pkm["CLAUNCHER"] = "CLAUNCHER";
+    Pkm["CLAWITZER"] = "CLAWITZER";
+    Pkm["YANMA"] = "YANMA";
+    Pkm["YANMEGA"] = "YANMEGA";
+    Pkm["HELIOPTILE"] = "HELIOPTILE";
+    Pkm["HELIOLISK"] = "HELIOLISK";
+    Pkm["BIDOOF"] = "BIDOOF";
+    Pkm["BIBAREL"] = "BIBAREL";
+    Pkm["SPINDA"] = "SPINDA";
+    Pkm["BALTOY"] = "BALTOY";
+    Pkm["CLAYDOL"] = "CLAYDOL";
+    Pkm["HERACROSS"] = "HERACROSS";
+    Pkm["PURRLOIN"] = "PURRLOIN";
+    Pkm["LIEPARD"] = "LIEPARD";
+    Pkm["BARBOACH"] = "BARBOACH";
+    Pkm["WHISCASH"] = "WHISCASH";
+    Pkm["SCRAGGY"] = "SCRAGGY";
+    Pkm["SCRAFTY"] = "SCRAFTY";
+    Pkm["FINNEON"] = "FINNEON";
+    Pkm["LUMINEON"] = "LUMINEON";
+    Pkm["STUNKY"] = "STUNKY";
+    Pkm["SKUNTANK"] = "SKUNTANK";
+    Pkm["ILLUMISE"] = "ILLUMISE";
+    Pkm["VOLBEAT"] = "VOLBEAT";
+    Pkm["NECROZMA"] = "NECROZMA";
+    Pkm["ULTRA_NECROZMA"] = "ULTRA_NECROZMA";
+    Pkm["CHERRUBI"] = "CHERRUBI";
+    Pkm["CHERRIM"] = "CHERRIM";
+    Pkm["CHERRIM_SUNLIGHT"] = "CHERRIM_SUNLIGHT";
+    Pkm["MISDREAVUS"] = "MISDREAVUS";
+    Pkm["MISMAGIUS"] = "MISMAGIUS";
+    Pkm["DODUO"] = "DODUO";
+    Pkm["DODRIO"] = "DODRIO";
+    Pkm["XURKITREE"] = "XURKITREE";
+    Pkm["TANDEMAUS"] = "TANDEMAUS";
+    Pkm["MAUSHOLD_THREE"] = "MAUSHOLD_THREE";
+    Pkm["MAUSHOLD_FOUR"] = "MAUSHOLD_FOUR";
+    Pkm["KRICKETOT"] = "KRICKETOT";
+    Pkm["KRICKETUNE"] = "KRICKETUNE";
+    Pkm["HIPPOPOTAS"] = "HIPPOPOTAS";
+    Pkm["HIPPODOWN"] = "HIPPODOWN";
+    Pkm["WINGULL"] = "WINGULL";
+    Pkm["PELIPPER"] = "PELIPPER";
+    Pkm["NIHILEGO"] = "NIHILEGO";
+    Pkm["SOBBLE"] = "SOBBLE";
+    Pkm["DRIZZILE"] = "DRIZZILE";
+    Pkm["INTELEON"] = "INTELEON";
+    Pkm["TROPIUS"] = "TROPIUS";
+    Pkm["EXEGGCUTE"] = "EXEGGCUTE";
+    Pkm["EXEGGUTOR"] = "EXEGGUTOR";
+    Pkm["ALOLAN_EXEGGUTOR"] = "ALOLAN_EXEGGUTOR";
+    Pkm["COMFEY"] = "COMFEY";
+    Pkm["CARNIVINE"] = "CARNIVINE";
+    Pkm["HISUIAN_QWILFISH"] = "HISUIAN_QWILFISH";
+    Pkm["OVERQWIL"] = "OVERQWIL";
+    Pkm["HISUIAN_TYPHLOSION"] = "HISUIAN_TYPHLOSION";
+    Pkm["LILLIPUP"] = "LILLIPUP";
+    Pkm["HERDIER"] = "HERDIER";
+    Pkm["STOUTLAND"] = "STOUTLAND";
+    Pkm["ZIGZAGOON"] = "ZIGZAGOON";
+    Pkm["LINOONE"] = "LINOONE";
+    Pkm["PHEROMOSA"] = "PHEROMOSA";
+    Pkm["SABLEYE"] = "SABLEYE";
+    Pkm["MEGA_SABLEYE"] = "MEGA_SABLEYE";
+    Pkm["DRACOVISH"] = "DRACOVISH";
+    Pkm["CORSOLA"] = "CORSOLA";
+    Pkm["GALAR_CORSOLA"] = "GALAR_CORSOLA";
+    Pkm["CURSOLA"] = "CURSOLA";
+    Pkm["GIMMIGHOUL"] = "GIMMIGHOUL";
+    Pkm["GHOLDENGO"] = "GHOLDENGO";
+    Pkm["PHANTUMP"] = "PHANTUMP";
+    Pkm["TREVENANT"] = "TREVENANT";
+    Pkm["SMEARGLE"] = "SMEARGLE";
+    Pkm["TOXEL"] = "TOXEL";
+    Pkm["TOXTRICITY"] = "TOXTRICITY";
+    Pkm["BRUXISH"] = "BRUXISH";
+    Pkm["SUBSTITUTE"] = "SUBSTITUTE";
+    Pkm["CYCLIZAR"] = "CYCLIZAR";
+    Pkm["PAWNIARD"] = "PAWNIARD";
+    Pkm["BISHARP"] = "BISHARP";
+    Pkm["KINGAMBIT"] = "KINGAMBIT";
+    Pkm["MINIOR"] = "MINIOR";
+    Pkm["MINIOR_KERNEL_RED"] = "MINIOR_KERNEL_RED";
+    Pkm["MINIOR_KERNEL_BLUE"] = "MINIOR_KERNEL_BLUE";
+    Pkm["MINIOR_KERNEL_ORANGE"] = "MINIOR_KERNEL_ORANGE";
+    Pkm["MINIOR_KERNEL_GREEN"] = "MINIOR_KERNEL_GREEN";
+    Pkm["FEEBAS"] = "FEEBAS";
+    Pkm["MILOTIC"] = "MILOTIC";
+    Pkm["MORPEKO"] = "MORPEKO";
+    Pkm["MORPEKO_HANGRY"] = "MORPEKO_HANGRY";
+    Pkm["KANGASKHAN"] = "KANGASKHAN";
+    Pkm["TEDDIURSA"] = "TEDDIURSA";
+    Pkm["URSARING"] = "URSARING";
     Pkm["URSALUNA"] = "URSALUNA";
     Pkm["URSALUNA_BLOODMOON"] = "URSALUNA_BLOODMOON";
-    Pkm["URSARING"] = "URSARING";
-    Pkm["UXIE"] = "UXIE";
-    Pkm["VANILLISH"] = "VANILLISH";
-    Pkm["VANILLITE"] = "VANILLITE";
-    Pkm["VANILLUXE"] = "VANILLUXE";
-    Pkm["VAPOREON"] = "VAPOREON";
-    Pkm["VENIPEDE"] = "VENIPEDE";
-    Pkm["VENOMOTH"] = "VENOMOTH";
-    Pkm["VENONAT"] = "VENONAT";
-    Pkm["VENUSAUR"] = "VENUSAUR";
-    Pkm["VESPIQUEEN"] = "VESPIQUEEN";
-    Pkm["VIBRAVA"] = "VIBRAVA";
-    Pkm["VICTINI"] = "VICTINI";
-    Pkm["VICTREEBEL"] = "VICTREEBEL";
-    Pkm["VIGOROTH"] = "VIGOROTH";
-    Pkm["VIKAVOLT"] = "VIKAVOLT";
-    Pkm["VILEPLUME"] = "VILEPLUME";
-    Pkm["VIRIZION"] = "VIRIZION";
-    Pkm["VOLBEAT"] = "VOLBEAT";
-    Pkm["VOLCANION"] = "VOLCANION";
-    Pkm["VOLCARONA"] = "VOLCARONA";
-    Pkm["VOLTORB"] = "VOLTORB";
-    Pkm["VULPIX"] = "VULPIX";
-    Pkm["WAILMER"] = "WAILMER";
-    Pkm["WAILORD"] = "WAILORD";
-    Pkm["WALREIN"] = "WALREIN";
-    Pkm["WARTORTLE"] = "WARTORTLE";
+    Pkm["AIPOM"] = "AIPOM";
+    Pkm["AMBIPOM"] = "AMBIPOM";
+    Pkm["DEERLING"] = "DEERLING";
+    Pkm["SAWSBUCK"] = "SAWSBUCK";
+    Pkm["LICKITUNG"] = "LICKITUNG";
+    Pkm["LICKILICKY"] = "LICKILICKY";
+    Pkm["PATRAT"] = "PATRAT";
     Pkm["WATCHOG"] = "WATCHOG";
+    Pkm["SPINARAK"] = "SPINARAK";
+    Pkm["ARIADOS"] = "ARIADOS";
+    Pkm["DEWPIDER"] = "DEWPIDER";
+    Pkm["ARAQUANID"] = "ARAQUANID";
+    Pkm["ROCKRUFF"] = "ROCKRUFF";
+    Pkm["LYCANROC_DAY"] = "LYCANROC_DAY";
+    Pkm["LYCANROC_DUSK"] = "LYCANROC_DUSK";
+    Pkm["LYCANROC_NIGHT"] = "LYCANROC_NIGHT";
+    Pkm["DRUDDIGON"] = "DRUDDIGON";
+    Pkm["COSMOG"] = "COSMOG";
+    Pkm["COSMOEM"] = "COSMOEM";
+    Pkm["SOLGALEO"] = "SOLGALEO";
+    Pkm["LUNALA"] = "LUNALA";
+    Pkm["MAGEARNA"] = "MAGEARNA";
+    Pkm["IMPIDIMP"] = "IMPIDIMP";
+    Pkm["MORGREM"] = "MORGREM";
+    Pkm["GRIMMSNARL"] = "GRIMMSNARL";
+    Pkm["CRABRAWLER"] = "CRABRAWLER";
+    Pkm["CRABOMINABLE"] = "CRABOMINABLE";
+    Pkm["CUTIEFLY"] = "CUTIEFLY";
+    Pkm["RIBOMBEE"] = "RIBOMBEE";
+    Pkm["ZANGOOSE"] = "ZANGOOSE";
+    Pkm["NICKIT"] = "NICKIT";
+    Pkm["THIEVUL"] = "THIEVUL";
+    Pkm["DROWZEE"] = "DROWZEE";
+    Pkm["HYPNO"] = "HYPNO";
     Pkm["WATTREL"] = "WATTREL";
-    Pkm["WEAVILE"] = "WEAVILE";
-    Pkm["WEEDLE"] = "WEEDLE";
-    Pkm["WEEPINBELL"] = "WEEPINBELL";
-    Pkm["WEEZING"] = "WEEZING";
-    Pkm["WHIRLIPEDE"] = "WHIRLIPEDE";
-    Pkm["WHISCASH"] = "WHISCASH";
-    Pkm["WHISMUR"] = "WHISMUR";
-    Pkm["WIGGLYTUFF"] = "WIGGLYTUFF";
-    Pkm["WINGULL"] = "WINGULL";
-    Pkm["WISHIWASHI"] = "WISHIWASHI";
-    Pkm["WISHIWASHI_SCHOOL"] = "WISHIWASHI_SCHOOL";
-    Pkm["WOBBUFFET"] = "WOBBUFFET";
-    Pkm["WOOBAT"] = "WOOBAT";
+    Pkm["KILOWATTREL"] = "KILOWATTREL";
+    Pkm["STANTLER"] = "STANTLER";
+    Pkm["BURMY_PLANT"] = "BURMY_PLANT";
+    Pkm["BURMY_SANDY"] = "BURMY_SANDY";
+    Pkm["BURMY_TRASH"] = "BURMY_TRASH";
     Pkm["WORMADAM_PLANT"] = "WORMADAM_PLANT";
     Pkm["WORMADAM_SANDY"] = "WORMADAM_SANDY";
     Pkm["WORMADAM_TRASH"] = "WORMADAM_TRASH";
-    Pkm["WURMPLE"] = "WURMPLE";
-    Pkm["WYNAUT"] = "WYNAUT";
-    Pkm["XATU"] = "XATU";
-    Pkm["XERNEAS"] = "XERNEAS";
-    Pkm["XURKITREE"] = "XURKITREE";
-    Pkm["YANMA"] = "YANMA";
-    Pkm["YANMEGA"] = "YANMEGA";
-    Pkm["YVELTAL"] = "YVELTAL";
-    Pkm["ZANGOOSE"] = "ZANGOOSE";
-    Pkm["ZAPDOS"] = "ZAPDOS";
-    Pkm["ZEKROM"] = "ZEKROM";
-    Pkm["ZERAORA"] = "ZERAORA";
-    Pkm["ZIGZAGOON"] = "ZIGZAGOON";
-    Pkm["ZOROARK"] = "ZOROARK";
-    Pkm["ZORUA"] = "ZORUA";
-    Pkm["ZUBAT"] = "ZUBAT";
-    Pkm["ZWEILOUS"] = "ZWEILOUS";
-    Pkm["ZYGARDE_10"] = "ZYGARDE_10";
-    Pkm["ZYGARDE_50"] = "ZYGARDE_50";
-    Pkm["ZYGARDE_100"] = "ZYGARDE_100";
-    Pkm["VULLABY"] = "VULLABY";
-    Pkm["MANDIBUZZ"] = "MANDIBUZZ";
-    Pkm["INKAY"] = "INKAY";
-    Pkm["MALAMAR"] = "MALAMAR";
+    Pkm["MOTHIM"] = "MOTHIM";
+    Pkm["PALDEA_WOOPER"] = "PALDEA_WOOPER";
+    Pkm["CLODSIRE"] = "CLODSIRE";
+    Pkm["FUECOCO"] = "FUECOCO";
+    Pkm["CROCALOR"] = "CROCALOR";
+    Pkm["SKELEDIRGE"] = "SKELEDIRGE";
+    Pkm["TANGELA"] = "TANGELA";
+    Pkm["TANGROWTH"] = "TANGROWTH";
+    Pkm["PSYDUCK"] = "PSYDUCK";
+    Pkm["GOLDUCK"] = "GOLDUCK";
+    Pkm["PHANPY"] = "PHANPY";
+    Pkm["DONPHAN"] = "DONPHAN";
+    Pkm["SPOINK"] = "SPOINK";
+    Pkm["GRUMPIG"] = "GRUMPIG";
+    Pkm["SINISTEA"] = "SINISTEA";
+    Pkm["POLTEAGEIST"] = "POLTEAGEIST";
+    Pkm["FERROSEED"] = "FERROSEED";
+    Pkm["FERROTHORN"] = "FERROTHORN";
+    Pkm["GOLETT"] = "GOLETT";
+    Pkm["GOLURK"] = "GOLURK";
+    Pkm["TRUBBISH"] = "TRUBBISH";
+    Pkm["GARBODOR"] = "GARBODOR";
+    Pkm["GRUBBIN"] = "GRUBBIN";
+    Pkm["CHARJABUG"] = "CHARJABUG";
+    Pkm["VIKAVOLT"] = "VIKAVOLT";
+    Pkm["SHELLOS_WEST_SEA"] = "SHELLOS_WEST_SEA";
+    Pkm["GASTRODON_WEST_SEA"] = "GASTRODON_WEST_SEA";
+    Pkm["SHELLOS_EAST_SEA"] = "SHELLOS_EAST_SEA";
+    Pkm["GASTRODON_EAST_SEA"] = "GASTRODON_EAST_SEA";
+    Pkm["MUNNA"] = "MUNNA";
+    Pkm["MUSHARNA"] = "MUSHARNA";
+    Pkm["RUFFLET"] = "RUFFLET";
+    Pkm["BRAVIARY"] = "BRAVIARY";
+    Pkm["HEATMOR"] = "HEATMOR";
+    Pkm["KLEFKI"] = "KLEFKI";
+    Pkm["HAWLUCHA"] = "HAWLUCHA";
+    Pkm["MIENFOO"] = "MIENFOO";
+    Pkm["MIENSHAO"] = "MIENSHAO";
+    Pkm["STONJOURNER"] = "STONJOURNER";
+    Pkm["HISUI_SNEASEL"] = "HISUI_SNEASEL";
+    Pkm["SNEASLER"] = "SNEASLER";
+    Pkm["PYUKUMUKU"] = "PYUKUMUKU";
+    Pkm["POIPOLE"] = "POIPOLE";
+    Pkm["NAGANADEL"] = "NAGANADEL";
+    Pkm["CRAMORANT"] = "CRAMORANT";
+    Pkm["ARROKUDA"] = "ARROKUDA";
+    Pkm["WISHIWASHI"] = "WISHIWASHI";
+    Pkm["WISHIWASHI_SCHOOL"] = "WISHIWASHI_SCHOOL";
+    Pkm["PAWMI"] = "PAWMI";
+    Pkm["PAWMO"] = "PAWMO";
+    Pkm["PAWMOT"] = "PAWMOT";
+    Pkm["GOLDEEN"] = "GOLDEEN";
+    Pkm["SEAKING"] = "SEAKING";
+    Pkm["LUVDISC"] = "LUVDISC";
+    Pkm["AUDINO"] = "AUDINO";
+    Pkm["PETILIL"] = "PETILIL";
+    Pkm["LILIGANT"] = "LILIGANT";
+    Pkm["MANTYKE"] = "MANTYKE";
+    Pkm["MANTINE"] = "MANTINE";
+    Pkm["REMORAID"] = "REMORAID";
+    Pkm["OCTILLERY"] = "OCTILLERY";
+    Pkm["SIGILYPH"] = "SIGILYPH";
+    Pkm["FRIGIBAX"] = "FRIGIBAX";
+    Pkm["ARCTIBAX"] = "ARCTIBAX";
+    Pkm["BAXCALIBUR"] = "BAXCALIBUR";
+    Pkm["BINACLE"] = "BINACLE";
+    Pkm["BARBARACLE"] = "BARBARACLE";
+    Pkm["SKARMORY"] = "SKARMORY";
+    Pkm["DURANT"] = "DURANT";
+    Pkm["OGERPON_TEAL"] = "OGERPON_TEAL";
+    Pkm["OGERPON_TEAL_MASK"] = "OGERPON_TEAL_MASK";
+    Pkm["OGERPON_WELLSPRING"] = "OGERPON_WELLSPRING";
+    Pkm["OGERPON_WELLSPRING_MASK"] = "OGERPON_WELLSPRING_MASK";
+    Pkm["OGERPON_HEARTHFLAME"] = "OGERPON_HEARTHFLAME";
+    Pkm["OGERPON_HEARTHFLAME_MASK"] = "OGERPON_HEARTHFLAME_MASK";
+    Pkm["OGERPON_CORNERSTONE"] = "OGERPON_CORNERSTONE";
+    Pkm["OGERPON_CORNERSTONE_MASK"] = "OGERPON_CORNERSTONE_MASK";
+    Pkm["IRON_HANDS"] = "IRON_HANDS";
+    Pkm["ROOKIDEE"] = "ROOKIDEE";
+    Pkm["CORVISQUIRE"] = "CORVISQUIRE";
+    Pkm["CORVIKNIGHT"] = "CORVIKNIGHT";
+    Pkm["MURKROW"] = "MURKROW";
+    Pkm["HONCHKROW"] = "HONCHKROW";
+    Pkm["SANDYGAST"] = "SANDYGAST";
+    Pkm["PALOSSAND"] = "PALOSSAND";
+    Pkm["TURTONATOR"] = "TURTONATOR";
+    Pkm["SKORUPI"] = "SKORUPI";
+    Pkm["DRAPION"] = "DRAPION";
+    Pkm["DARUMAKA"] = "DARUMAKA";
+    Pkm["DARMANITAN"] = "DARMANITAN";
+    Pkm["DARMANITAN_ZEN"] = "DARMANITAN_ZEN";
 })(Pkm || (exports.Pkm = Pkm = {}));
 exports.PkmIndex = {
-    [Pkm.DEFAULT]: "0000",
     [Pkm.EGG]: "0000-0004",
-    [Pkm.SUBSTITUTE]: "0000-0001",
+    [Pkm.DEFAULT]: "0000",
+    [Pkm.DITTO]: "0132",
     [Pkm.BULBASAUR]: "0001",
     [Pkm.IVYSAUR]: "0002",
     [Pkm.VENUSAUR]: "0003",
@@ -900,6 +871,24 @@ exports.PkmIndex = {
     [Pkm.SQUIRTLE]: "0007",
     [Pkm.WARTORTLE]: "0008",
     [Pkm.BLASTOISE]: "0009",
+    [Pkm.GEODUDE]: "0074",
+    [Pkm.GRAVELER]: "0075",
+    [Pkm.GOLEM]: "0076",
+    [Pkm.AZURILL]: "0298",
+    [Pkm.MARILL]: "0183",
+    [Pkm.AZUMARILL]: "0184",
+    [Pkm.ZUBAT]: "0041",
+    [Pkm.GOLBAT]: "0042",
+    [Pkm.CROBAT]: "0169",
+    [Pkm.MAREEP]: "0179",
+    [Pkm.FLAFFY]: "0180",
+    [Pkm.AMPHAROS]: "0181",
+    [Pkm.CLEFFA]: "0173",
+    [Pkm.CLEFAIRY]: "0035",
+    [Pkm.CLEFABLE]: "0036",
+    [Pkm.IGGLYBUFF]: "0174",
+    [Pkm.WIGGLYTUFF]: "0040",
+    [Pkm.JIGGLYPUFF]: "0039",
     [Pkm.CATERPIE]: "0010",
     [Pkm.METAPOD]: "0011",
     [Pkm.BUTTERFREE]: "0012",
@@ -909,211 +898,452 @@ exports.PkmIndex = {
     [Pkm.PIDGEY]: "0016",
     [Pkm.PIDGEOTTO]: "0017",
     [Pkm.PIDGEOT]: "0018",
-    [Pkm.RATTATA]: "0019",
-    [Pkm.ALOLAN_RATTATA]: "0019-0001",
-    [Pkm.RATICATE]: "0020",
-    [Pkm.ALOLAN_RATICATE]: "0020-0001",
-    [Pkm.SPEAROW]: "0021",
-    [Pkm.FEAROW]: "0022",
-    [Pkm.EKANS]: "0023",
-    [Pkm.ARBOK]: "0024",
-    [Pkm.PIKACHU]: "0025",
-    [Pkm.RAICHU]: "0026",
-    [Pkm.ALOLAN_RAICHU]: "0026-0001",
-    [Pkm.SANDSHREW]: "0027",
-    [Pkm.SANDSLASH]: "0028",
-    [Pkm.NIDORANF]: "0029",
-    [Pkm.NIDORINA]: "0030",
-    [Pkm.NIDOQUEEN]: "0031",
-    [Pkm.NIDORANM]: "0032",
-    [Pkm.NIDORINO]: "0033",
-    [Pkm.NIDOKING]: "0034",
-    [Pkm.CLEFAIRY]: "0035",
-    [Pkm.CLEFABLE]: "0036",
-    [Pkm.VULPIX]: "0037",
-    [Pkm.NINETALES]: "0038",
-    [Pkm.ALOLAN_VULPIX]: "0037-0001",
-    [Pkm.ALOLAN_NINETALES]: "0038-0001",
-    [Pkm.JIGGLYPUFF]: "0039",
-    [Pkm.WIGGLYTUFF]: "0040",
-    [Pkm.ZUBAT]: "0041",
-    [Pkm.GOLBAT]: "0042",
-    [Pkm.ODDISH]: "0043",
-    [Pkm.GLOOM]: "0044",
-    [Pkm.VILEPLUME]: "0045",
-    [Pkm.PARAS]: "0046",
-    [Pkm.PARASECT]: "0047",
-    [Pkm.VENONAT]: "0048",
-    [Pkm.VENOMOTH]: "0049",
-    [Pkm.DIGLETT]: "0050",
-    [Pkm.ALOLAN_DIGLETT]: "0050-0001",
-    [Pkm.DUGTRIO]: "0051",
-    [Pkm.ALOLAN_DUGTRIO]: "0051-0001",
-    [Pkm.MEOWTH]: "0052",
-    [Pkm.PERSIAN]: "0053",
-    [Pkm.ALOLAN_MEOWTH]: "0052-0001",
-    [Pkm.ALOLAN_PERSIAN]: "0053-0001",
-    [Pkm.PSYDUCK]: "0054",
-    [Pkm.GOLDUCK]: "0055",
-    [Pkm.MANKEY]: "0056",
-    [Pkm.PRIMEAPE]: "0057",
-    [Pkm.GROWLITHE]: "0058",
-    [Pkm.ARCANINE]: "0059",
-    [Pkm.HISUI_GROWLITHE]: "0058-0001",
-    [Pkm.HISUI_ARCANINE]: "0059-0001",
-    [Pkm.POLIWAG]: "0060",
-    [Pkm.POLIWHIRL]: "0061",
-    [Pkm.POLIWRATH]: "0062",
-    [Pkm.ABRA]: "0063",
-    [Pkm.KADABRA]: "0064",
-    [Pkm.ALAKAZAM]: "0065",
-    [Pkm.MACHOP]: "0066",
-    [Pkm.MACHOKE]: "0067",
-    [Pkm.MACHAMP]: "0068",
-    [Pkm.BELLSPROUT]: "0069",
-    [Pkm.WEEPINBELL]: "0070",
-    [Pkm.VICTREEBEL]: "0071",
-    [Pkm.TENTACOOL]: "0072",
-    [Pkm.TENTACRUEL]: "0073",
-    [Pkm.GEODUDE]: "0074",
-    [Pkm.GRAVELER]: "0075",
-    [Pkm.GOLEM]: "0076",
-    [Pkm.ALOLAN_GEODUDE]: "0074-0001",
-    [Pkm.ALOLAN_GRAVELER]: "0075-0001",
-    [Pkm.ALOLAN_GOLEM]: "0076-0001",
-    [Pkm.PONYTA]: "0077",
-    [Pkm.RAPIDASH]: "0078",
-    [Pkm.GALARIAN_PONYTA]: "0077-0001",
-    [Pkm.GALARIAN_RAPIDASH]: "0078-0001",
-    [Pkm.SLOWPOKE]: "0079",
-    [Pkm.SLOWBRO]: "0080",
-    [Pkm.MAGNEMITE]: "0081",
-    [Pkm.MAGNETON]: "0082",
-    [Pkm.FARFETCH_D]: "0083",
-    [Pkm.DODUO]: "0084",
-    [Pkm.DODRIO]: "0085",
-    [Pkm.SEEL]: "0086",
-    [Pkm.DEWGONG]: "0087",
-    [Pkm.GRIMER]: "0088",
-    [Pkm.MUK]: "0089",
-    [Pkm.ALOLAN_GRIMER]: "0088-0001",
-    [Pkm.ALOLAN_MUK]: "0089-0001",
-    [Pkm.SHELLDER]: "0090",
-    [Pkm.CLOYSTER]: "0091",
-    [Pkm.GASTLY]: "0092",
-    [Pkm.HAUNTER]: "0093",
-    [Pkm.GENGAR]: "0094",
-    [Pkm.ONIX]: "0095",
-    [Pkm.DROWZEE]: "0096",
-    [Pkm.HYPNO]: "0097",
-    [Pkm.KRABBY]: "0098",
-    [Pkm.KINGLER]: "0099",
-    [Pkm.VOLTORB]: "0100",
-    [Pkm.HISUI_VOLTORB]: "0100-0001",
-    [Pkm.ELECTRODE]: "0101",
-    [Pkm.HISUI_ELECTRODE]: "0101-0001",
-    [Pkm.EXEGGCUTE]: "0102",
-    [Pkm.EXEGGUTOR]: "0103",
-    [Pkm.ALOLAN_EXEGGUTOR]: "0103-0001",
-    [Pkm.CUBONE]: "0104",
-    [Pkm.MAROWAK]: "0105",
-    [Pkm.ALOLAN_MAROWAK]: "0105-0001",
-    [Pkm.HITMONLEE]: "0106",
-    [Pkm.HITMONCHAN]: "0107",
-    [Pkm.LICKITUNG]: "0108",
-    [Pkm.KOFFING]: "0109",
-    [Pkm.WEEZING]: "0110",
-    [Pkm.RHYHORN]: "0111",
-    [Pkm.RHYDON]: "0112",
-    [Pkm.CHANSEY]: "0113",
-    [Pkm.TANGELA]: "0114",
-    [Pkm.KANGASKHAN]: "0115",
-    [Pkm.HORSEA]: "0116",
-    [Pkm.SEADRA]: "0117",
-    [Pkm.GOLDEEN]: "0118",
-    [Pkm.SEAKING]: "0119",
-    [Pkm.STARYU]: "0120",
-    [Pkm.STARMIE]: "0121",
-    [Pkm.MR_MIME]: "0122",
-    [Pkm.SCYTHER]: "0123",
-    [Pkm.JYNX]: "0124",
-    [Pkm.ELECTABUZZ]: "0125",
-    [Pkm.MAGMAR]: "0126",
-    [Pkm.PINSIR]: "0127",
-    [Pkm.TAUROS]: "0128",
-    [Pkm.MAGIKARP]: "0129",
-    [Pkm.GYARADOS]: "0130",
-    [Pkm.LAPRAS]: "0131",
-    [Pkm.DITTO]: "0132",
-    [Pkm.EEVEE]: "0133",
-    [Pkm.VAPOREON]: "0134",
-    [Pkm.JOLTEON]: "0135",
-    [Pkm.FLAREON]: "0136",
-    [Pkm.PORYGON]: "0137",
-    [Pkm.OMANYTE]: "0138",
-    [Pkm.OMASTAR]: "0139",
-    [Pkm.KABUTO]: "0140",
-    [Pkm.KABUTOPS]: "0141",
-    [Pkm.AERODACTYL]: "0142",
-    [Pkm.SNORLAX]: "0143",
-    [Pkm.ARTICUNO]: "0144",
-    [Pkm.GALARIAN_ARTICUNO]: "0144-0001",
-    [Pkm.ZAPDOS]: "0145",
-    [Pkm.GALARIAN_ZAPDOS]: "0145-0001",
-    [Pkm.MOLTRES]: "0146",
-    [Pkm.GALARIAN_MOLTRES]: "0146-0001",
-    [Pkm.DRATINI]: "0147",
-    [Pkm.DRAGONAIR]: "0148",
-    [Pkm.DRAGONITE]: "0149",
-    [Pkm.MEWTWO]: "0150",
-    [Pkm.MEW]: "0151",
+    [Pkm.HOPPIP]: "0187",
+    [Pkm.SKIPLOOM]: "0188",
+    [Pkm.JUMPLUFF]: "0189",
+    [Pkm.SEEDOT]: "0273",
+    [Pkm.NUZLEAF]: "0274",
+    [Pkm.SHIFTRY]: "0275",
+    [Pkm.STARLY]: "0396",
+    [Pkm.STARAVIA]: "0397",
+    [Pkm.STARAPTOR]: "0398",
     [Pkm.CHIKORITA]: "0152",
     [Pkm.BAYLEEF]: "0153",
     [Pkm.MEGANIUM]: "0154",
     [Pkm.CYNDAQUIL]: "0155",
     [Pkm.QUILAVA]: "0156",
     [Pkm.TYPHLOSION]: "0157",
-    [Pkm.HISUIAN_TYPHLOSION]: "0157-0001",
     [Pkm.TOTODILE]: "0158",
     [Pkm.CROCONAW]: "0159",
     [Pkm.FERALIGATR]: "0160",
-    [Pkm.SENTRET]: "0161",
-    [Pkm.FURRET]: "0162",
-    [Pkm.HOOTHOOT]: "0163",
-    [Pkm.NOCTOWL]: "0164",
-    [Pkm.SPINARAK]: "0167",
-    [Pkm.ARIADOS]: "0168",
-    [Pkm.CROBAT]: "0169",
-    [Pkm.CHINCHOU]: "0170",
-    [Pkm.LANTURN]: "0171",
+    [Pkm.TREECKO]: "0252",
+    [Pkm.GROVYLE]: "0253",
+    [Pkm.SCEPTILE]: "0254",
+    [Pkm.TORCHIC]: "0255",
+    [Pkm.COMBUSKEN]: "0256",
+    [Pkm.BLAZIKEN]: "0257",
+    [Pkm.MUDKIP]: "0258",
+    [Pkm.MARSHTOMP]: "0259",
+    [Pkm.SWAMPERT]: "0260",
+    [Pkm.TURTWIG]: "0387",
+    [Pkm.GROTLE]: "0388",
+    [Pkm.TORTERRA]: "0389",
+    [Pkm.CHIMCHAR]: "0390",
+    [Pkm.MONFERNO]: "0391",
+    [Pkm.INFERNAPE]: "0392",
+    [Pkm.PIPLUP]: "0393",
+    [Pkm.PRINPLUP]: "0394",
+    [Pkm.EMPOLEON]: "0395",
+    [Pkm.NIDORANF]: "0029",
+    [Pkm.NIDORINA]: "0030",
+    [Pkm.NIDOQUEEN]: "0031",
+    [Pkm.NIDORANM]: "0032",
+    [Pkm.NIDORINO]: "0033",
+    [Pkm.NIDOKING]: "0034",
     [Pkm.PICHU]: "0172",
-    [Pkm.CLEFFA]: "0173",
-    [Pkm.IGGLYBUFF]: "0174",
+    [Pkm.PIKACHU]: "0025",
+    [Pkm.RAICHU]: "0026",
+    [Pkm.SANDSHREW]: "0027",
+    [Pkm.SANDSLASH]: "0028",
+    [Pkm.MACHOP]: "0066",
+    [Pkm.MACHOKE]: "0067",
+    [Pkm.MACHAMP]: "0068",
+    [Pkm.HORSEA]: "0116",
+    [Pkm.SEADRA]: "0117",
+    [Pkm.KINGDRA]: "0230",
+    [Pkm.TRAPINCH]: "0328",
+    [Pkm.VIBRAVA]: "0329",
+    [Pkm.FLYGON]: "0330",
+    [Pkm.SPHEAL]: "0363",
+    [Pkm.SEALEO]: "0364",
+    [Pkm.WALREIN]: "0365",
+    [Pkm.ARON]: "0304",
+    [Pkm.LAIRON]: "0305",
+    [Pkm.AGGRON]: "0306",
+    [Pkm.MAGNEMITE]: "0081",
+    [Pkm.MAGNETON]: "0082",
+    [Pkm.MAGNEZONE]: "0462",
+    [Pkm.KOFFING]: "0109",
+    [Pkm.WEEZING]: "0110",
+    [Pkm.RHYHORN]: "0111",
+    [Pkm.RHYDON]: "0112",
+    [Pkm.RHYPERIOR]: "0464",
     [Pkm.TOGEPI]: "0175",
     [Pkm.TOGETIC]: "0176",
-    [Pkm.NATU]: "0177",
-    [Pkm.XATU]: "0178",
-    [Pkm.MAREEP]: "0179",
-    [Pkm.FLAFFY]: "0180",
-    [Pkm.AMPHAROS]: "0181",
-    [Pkm.BELLOSSOM]: "0182",
-    [Pkm.MARILL]: "0183",
-    [Pkm.AZUMARILL]: "0184",
-    [Pkm.SUDOWOODO]: "0185",
+    [Pkm.TOGEKISS]: "0468",
+    [Pkm.DUSKULL]: "0355",
+    [Pkm.DUSCLOPS]: "0356",
+    [Pkm.DUSKNOIR]: "0477",
+    [Pkm.LOTAD]: "0270",
+    [Pkm.LOMBRE]: "0271",
+    [Pkm.LUDICOLO]: "0272",
+    [Pkm.SHINX]: "0403",
+    [Pkm.LUXIO]: "0404",
+    [Pkm.LUXRAY]: "0405",
+    [Pkm.POLIWAG]: "0060",
+    [Pkm.POLIWHIRL]: "0061",
     [Pkm.POLITOED]: "0186",
-    [Pkm.HOPPIP]: "0187",
-    [Pkm.SKIPLOOM]: "0188",
-    [Pkm.JUMPLUFF]: "0189",
-    [Pkm.AIPOM]: "0190",
-    [Pkm.SUNKERN]: "0191",
-    [Pkm.SUNFLORA]: "0192",
-    [Pkm.YANMA]: "0193",
-    [Pkm.PALDEA_WOOPER]: "0194-0002",
+    [Pkm.ABRA]: "0063",
+    [Pkm.KADABRA]: "0064",
+    [Pkm.ALAKAZAM]: "0065",
+    [Pkm.GASTLY]: "0092",
+    [Pkm.HAUNTER]: "0093",
+    [Pkm.GENGAR]: "0094",
+    [Pkm.DRATINI]: "0147",
+    [Pkm.DRAGONAIR]: "0148",
+    [Pkm.DRAGONITE]: "0149",
+    [Pkm.LARVITAR]: "0246",
+    [Pkm.PUPITAR]: "0247",
+    [Pkm.TYRANITAR]: "0248",
+    [Pkm.SLAKOTH]: "0287",
+    [Pkm.VIGOROTH]: "0288",
+    [Pkm.SLAKING]: "0289",
+    [Pkm.RALTS]: "0280",
+    [Pkm.KIRLIA]: "0281",
+    [Pkm.GARDEVOIR]: "0282",
+    [Pkm.BAGON]: "0371",
+    [Pkm.SHELGON]: "0372",
+    [Pkm.SALAMENCE]: "0373",
+    [Pkm.BELDUM]: "0374",
+    [Pkm.METANG]: "0375",
+    [Pkm.METAGROSS]: "0376",
+    [Pkm.GIBLE]: "0443",
+    [Pkm.GABITE]: "0444",
+    [Pkm.GARCHOMP]: "0445",
+    [Pkm.ELEKID]: "0239",
+    [Pkm.ELECTABUZZ]: "0125",
+    [Pkm.ELECTIVIRE]: "0466",
+    [Pkm.MAGBY]: "0240",
+    [Pkm.MAGMAR]: "0126",
+    [Pkm.MAGMORTAR]: "0467",
+    [Pkm.MUNCHLAX]: "0446",
+    [Pkm.SNORLAX]: "0143",
+    [Pkm.GROWLITHE]: "0058",
+    [Pkm.ARCANINE]: "0059",
+    [Pkm.HISUI_GROWLITHE]: "0058-0001",
+    [Pkm.HISUI_ARCANINE]: "0059-0001",
+    [Pkm.ONIX]: "0095",
+    [Pkm.STEELIX]: "0208",
+    [Pkm.MEGA_STEELIX]: "0208-0001",
+    [Pkm.SCYTHER]: "0123",
+    [Pkm.SCIZOR]: "0212",
+    [Pkm.KLEAVOR]: "0900",
+    [Pkm.RIOLU]: "0447",
+    [Pkm.LUCARIO]: "0448",
+    [Pkm.MAGIKARP]: "0129",
+    [Pkm.RATTATA]: "0019",
+    [Pkm.ALOLAN_RATTATA]: "0019-0001",
+    [Pkm.RATICATE]: "0020",
+    [Pkm.ALOLAN_RATICATE]: "0020-0001",
+    [Pkm.SPEAROW]: "0021",
+    [Pkm.FEAROW]: "0022",
+    [Pkm.GYARADOS]: "0130",
+    [Pkm.LUGIA]: "0249",
+    [Pkm.SHADOW_LUGIA]: "0249-0001",
+    [Pkm.GIRATINA]: "0487",
+    [Pkm.ZAPDOS]: "0145",
+    [Pkm.MOLTRES]: "0146",
+    [Pkm.ARTICUNO]: "0144",
+    [Pkm.DIALGA]: "0483",
+    [Pkm.PALKIA]: "0484",
+    [Pkm.SUICUNE]: "0245",
+    [Pkm.RAIKOU]: "0243",
+    [Pkm.ENTEI]: "0244",
+    [Pkm.REGICE]: "0378",
+    [Pkm.REGIROCK]: "0377",
+    [Pkm.REGISTEEL]: "0379",
+    [Pkm.KYOGRE]: "0382",
+    [Pkm.GROUDON]: "0383",
+    [Pkm.RAYQUAZA]: "0384",
+    [Pkm.REGIGIGAS]: "0486",
+    [Pkm.EEVEE]: "0133",
+    [Pkm.VAPOREON]: "0134",
+    [Pkm.JOLTEON]: "0135",
+    [Pkm.FLAREON]: "0136",
     [Pkm.ESPEON]: "0196",
     [Pkm.UMBREON]: "0197",
-    [Pkm.MURKROW]: "0198",
+    [Pkm.LEAFEON]: "0470",
+    [Pkm.SYLVEON]: "0700",
+    [Pkm.MEDITITE]: "0307",
+    [Pkm.MEDICHAM]: "0308",
+    [Pkm.NUMEL]: "0322",
+    [Pkm.CAMERUPT]: "0323",
+    [Pkm.MEGA_CAMERUPT]: "0323-0001",
+    [Pkm.DARKRAI]: "0491",
+    [Pkm.LITWICK]: "0607",
+    [Pkm.LAMPENT]: "0608",
+    [Pkm.CHANDELURE]: "0609",
+    [Pkm.SLOWPOKE]: "0079",
+    [Pkm.SLOWBRO]: "0080",
     [Pkm.SLOWKING]: "0199",
-    [Pkm.MISDREAVUS]: "0200",
+    [Pkm.BELLSPROUT]: "0069",
+    [Pkm.WEEPINBELL]: "0070",
+    [Pkm.VICTREEBEL]: "0071",
+    [Pkm.CARVANHA]: "0318",
+    [Pkm.SWINUB]: "0220",
+    [Pkm.PILOSWINE]: "0221",
+    [Pkm.MAMOSWINE]: "0473",
+    [Pkm.SNORUNT]: "0361",
+    [Pkm.GLALIE]: "0362",
+    [Pkm.FROSLASS]: "0478",
+    [Pkm.SNOVER]: "0459",
+    [Pkm.ABOMASNOW]: "0460",
+    [Pkm.MEGA_ABOMASNOW]: "0460-0001",
+    [Pkm.VANILLITE]: "0582",
+    [Pkm.VANILLISH]: "0583",
+    [Pkm.VANILLUXE]: "0584",
+    [Pkm.GLACEON]: "0471",
+    [Pkm.LARVESTA]: "0636",
+    [Pkm.VOLCARONA]: "0637",
+    [Pkm.LANDORUS]: "0645",
+    [Pkm.THUNDURUS]: "0642",
+    [Pkm.TORNADUS]: "0641",
+    [Pkm.ENAMORUS]: "0905",
+    [Pkm.KELDEO]: "0647",
+    [Pkm.TERRAKION]: "0639",
+    [Pkm.VIRIZION]: "0640",
+    [Pkm.COBALION]: "0638",
+    [Pkm.MANAPHY]: "0490",
+    [Pkm.ROTOM]: "0479",
+    [Pkm.ROTOM_DRONE]: "0479-0008",
+    [Pkm.SPIRITOMB]: "0442",
+    [Pkm.ABSOL]: "0359",
+    [Pkm.LAPRAS]: "0131",
+    [Pkm.LATIAS]: "0380",
+    [Pkm.LATIOS]: "0381",
+    [Pkm.MESPRIT]: "0481",
+    [Pkm.AZELF]: "0482",
+    [Pkm.UXIE]: "0480",
+    [Pkm.MEWTWO]: "0150",
+    [Pkm.KYUREM]: "0646",
+    [Pkm.RESHIRAM]: "0643",
+    [Pkm.ZEKROM]: "0644",
+    [Pkm.CELEBI]: "0251",
+    [Pkm.VICTINI]: "0494",
+    [Pkm.JIRACHI]: "0385",
+    [Pkm.ARCEUS]: "0493",
+    [Pkm.SHAYMIN]: "0492",
+    [Pkm.CRESSELIA]: "0488",
+    [Pkm.HEATRAN]: "0485",
+    [Pkm.HO_OH]: "0250",
+    [Pkm.AERODACTYL]: "0142",
+    [Pkm.PRIMAL_KYOGRE]: "0382-0001",
+    [Pkm.PRIMAL_GROUDON]: "0383-0001",
+    [Pkm.MEOWTH]: "0052",
+    [Pkm.PERSIAN]: "0053",
+    [Pkm.ALOLAN_MEOWTH]: "0052-0001",
+    [Pkm.ALOLAN_PERSIAN]: "0053-0001",
+    [Pkm.DEINO]: "0633",
+    [Pkm.ZWEILOUS]: "0634",
+    [Pkm.HYDREIGON]: "0635",
+    [Pkm.SANDILE]: "0551",
+    [Pkm.KROKOROK]: "0552",
+    [Pkm.KROOKODILE]: "0553",
+    [Pkm.SOLOSIS]: "0577",
+    [Pkm.DUOSION]: "0578",
+    [Pkm.REUNICLUS]: "0579",
+    [Pkm.MEGA_RAYQUAZA]: "0384-0001",
+    [Pkm.SWABLU]: "0333",
+    [Pkm.ODDISH]: "0043",
+    [Pkm.GLOOM]: "0044",
+    [Pkm.VILEPLUME]: "0045",
+    [Pkm.BELLOSSOM]: "0182",
+    [Pkm.AMAURA]: "0698",
+    [Pkm.AURORUS]: "0699",
+    [Pkm.ANORITH]: "0347",
+    [Pkm.ARMALDO]: "0348",
+    [Pkm.ARCHEN]: "0566",
+    [Pkm.ARCHEOPS]: "0567",
+    [Pkm.SHIELDON]: "0410",
+    [Pkm.BASTIODON]: "0411",
+    [Pkm.TIRTOUGA]: "0564",
+    [Pkm.CARRACOSTA]: "0565",
+    [Pkm.LILEEP]: "0345",
+    [Pkm.CRADILY]: "0346",
+    [Pkm.CRANIDOS]: "0408",
+    [Pkm.RAMPARDOS]: "0409",
+    [Pkm.KABUTO]: "0140",
+    [Pkm.KABUTOPS]: "0141",
+    [Pkm.OMANYTE]: "0138",
+    [Pkm.OMASTAR]: "0139",
+    [Pkm.TYRUNT]: "0696",
+    [Pkm.TYRANTRUM]: "0697",
+    [Pkm.BUDEW]: "0406",
+    [Pkm.ROSELIA]: "0315",
+    [Pkm.ROSERADE]: "0407",
+    [Pkm.BUNEARY]: "0427",
+    [Pkm.LOPUNNY]: "0428",
+    [Pkm.MEGA_LOPUNNY]: "0428-0001",
+    [Pkm.AXEW]: "0610",
+    [Pkm.FRAXURE]: "0611",
+    [Pkm.HAXORUS]: "0612",
+    [Pkm.VENIPEDE]: "0543",
+    [Pkm.WHIRLIPEDE]: "0544",
+    [Pkm.SCOLIPEDE]: "0545",
+    [Pkm.PORYGON]: "0137",
+    [Pkm.PORYGON_2]: "0233",
+    [Pkm.PORYGON_Z]: "0474",
+    [Pkm.ELECTRIKE]: "0309",
+    [Pkm.MANECTRIC]: "0310",
+    [Pkm.MEGA_MANECTRIC]: "0310-0001",
+    [Pkm.SHUPPET]: "0353",
+    [Pkm.BANETTE]: "0354",
+    [Pkm.MEGA_BANETTE]: "0354-0001",
+    [Pkm.HONEDGE]: "0679",
+    [Pkm.DOUBLADE]: "0680",
+    [Pkm.AEGISLASH]: "0681",
+    [Pkm.AEGISLASH_BLADE]: "0681-0001",
+    [Pkm.CUBONE]: "0104",
+    [Pkm.MAROWAK]: "0105",
+    [Pkm.ALOLAN_MAROWAK]: "0105-0001",
+    [Pkm.WHISMUR]: "0293",
+    [Pkm.LOUDRED]: "0294",
+    [Pkm.EXPLOUD]: "0295",
+    [Pkm.TYMPOLE]: "0535",
+    [Pkm.PALPITOAD]: "0536",
+    [Pkm.SEISMITOAD]: "0537",
+    [Pkm.SEWADDLE]: "0540",
+    [Pkm.SWADLOON]: "0541",
+    [Pkm.LEAVANNY]: "0542",
+    [Pkm.PETILIL]: "0548",
+    [Pkm.LILIGANT]: "0549",
+    [Pkm.PIKIPEK]: "0731",
+    [Pkm.TRUMBEAK]: "0732",
+    [Pkm.TOUCANNON]: "0733",
+    [Pkm.FLABEBE]: "0669",
+    [Pkm.FLOETTE]: "0670",
+    [Pkm.FLORGES]: "0671",
+    [Pkm.JANGMO_O]: "0782",
+    [Pkm.HAKAMO_O]: "0783",
+    [Pkm.KOMMO_O]: "0784",
+    [Pkm.MELOETTA]: "0648",
+    [Pkm.PIROUETTE_MELOETTA]: "0648-0001",
+    [Pkm.ALTARIA]: "0334",
+    [Pkm.MEGA_ALTARIA]: "0334-0001",
+    [Pkm.CASTFORM]: "0351",
+    [Pkm.CASTFORM_SUN]: "0351-0001",
+    [Pkm.CASTFORM_RAIN]: "0351-0002",
+    [Pkm.CASTFORM_HAIL]: "0351-0003",
+    [Pkm.CORPHISH]: "0341",
+    [Pkm.CRAWDAUNT]: "0342",
+    [Pkm.JOLTIK]: "0595",
+    [Pkm.GALVANTULA]: "0596",
+    [Pkm.GENESECT]: "0649",
+    [Pkm.RELICANTH]: "0369",
+    [Pkm.DIANCIE]: "0719",
+    [Pkm.HATENNA]: "0856",
+    [Pkm.HATTREM]: "0857",
+    [Pkm.HATTERENE]: "0858",
+    [Pkm.FENNEKIN]: "0653",
+    [Pkm.BRAIXEN]: "0654",
+    [Pkm.DELPHOX]: "0655",
+    [Pkm.MAKUHITA]: "0296",
+    [Pkm.HARIYAMA]: "0297",
+    [Pkm.REGIELEKI]: "0894",
+    [Pkm.REGIDRAGO]: "0895",
+    [Pkm.GUZZLORD]: "0799",
+    [Pkm.ETERNATUS]: "0890",
+    [Pkm.NOIBAT]: "0714",
+    [Pkm.NOIVERN]: "0715",
+    [Pkm.PUMPKABOO]: "0710",
+    [Pkm.GOURGEIST]: "0711",
+    [Pkm.NINCADA]: "0290",
+    [Pkm.NINJASK]: "0291",
+    [Pkm.SHEDINJA]: "0292",
+    [Pkm.PONYTA]: "0077",
+    [Pkm.RAPIDASH]: "0078",
+    [Pkm.GALARIAN_PONYTA]: "0077-0001",
+    [Pkm.GALARIAN_RAPIDASH]: "0078-0001",
+    [Pkm.CACNEA]: "0331",
+    [Pkm.CACTURNE]: "0332",
+    [Pkm.TAUROS]: "0128",
+    [Pkm.HAPPINY]: "0440",
+    [Pkm.CHANSEY]: "0113",
+    [Pkm.BLISSEY]: "0242",
+    [Pkm.TAPU_KOKO]: "0785",
+    [Pkm.TAPU_LELE]: "0786",
+    [Pkm.STAKATAKA]: "0805",
+    [Pkm.BLACEPHALON]: "0806",
+    [Pkm.HOUNDOUR]: "0228",
+    [Pkm.HOUNDOOM]: "0229",
+    [Pkm.MEGA_HOUNDOOM]: "0229-0001",
+    [Pkm.CLAMPERL]: "0366",
+    [Pkm.HUNTAIL]: "0367",
+    [Pkm.GOREBYSS]: "0368",
+    [Pkm.SMOOCHUM]: "0238",
+    [Pkm.JYNX]: "0124",
+    [Pkm.SALANDIT]: "0757",
+    [Pkm.SALAZZLE]: "0758",
+    [Pkm.VENONAT]: "0048",
+    [Pkm.VENOMOTH]: "0049",
+    [Pkm.VOLTORB]: "0100",
+    [Pkm.ELECTRODE]: "0101",
+    [Pkm.SLUGMA]: "0218",
+    [Pkm.MAGCARGO]: "0219",
+    [Pkm.SNEASEL]: "0215",
+    [Pkm.WEAVILE]: "0461",
+    [Pkm.CROAGUNK]: "0453",
+    [Pkm.TOXICROAK]: "0454",
+    [Pkm.CHINCHOU]: "0170",
+    [Pkm.LANTURN]: "0171",
+    [Pkm.POOCHYENA]: "0261",
+    [Pkm.MIGHTYENA]: "0262",
+    [Pkm.BRONZOR]: "0436",
+    [Pkm.BRONZONG]: "0437",
+    [Pkm.DRIFLOON]: "0425",
+    [Pkm.DRIFBLIM]: "0426",
+    [Pkm.SHROOMISH]: "0285",
+    [Pkm.BRELOOM]: "0286",
+    [Pkm.TENTACOOL]: "0072",
+    [Pkm.TENTACRUEL]: "0073",
+    [Pkm.SNUBULL]: "0209",
+    [Pkm.GRANBULL]: "0210",
+    [Pkm.SEVIPER]: "0336",
+    [Pkm.VULPIX]: "0037",
+    [Pkm.NINETALES]: "0038",
+    [Pkm.ALOLAN_VULPIX]: "0037-0001",
+    [Pkm.ALOLAN_NINETALES]: "0038-0001",
+    [Pkm.BUIZEL]: "0418",
+    [Pkm.FLOATZEL]: "0419",
+    [Pkm.KECLEON]: "0352",
+    [Pkm.MAWILE]: "0303",
+    [Pkm.CARBINK]: "0703",
+    [Pkm.CHATOT]: "0441",
+    [Pkm.GOOMY]: "0704",
+    [Pkm.SLIGOO]: "0705",
+    [Pkm.GOODRA]: "0706",
+    [Pkm.HISUI_SLIGGOO]: "0705-0001",
+    [Pkm.HISUI_GOODRA]: "0706-0001",
+    [Pkm.MEW]: "0151",
+    [Pkm.BOUNSWEET]: "0761",
+    [Pkm.STEENEE]: "0762",
+    [Pkm.TSAREENA]: "0763",
+    [Pkm.VOLCANION]: "0721",
+    [Pkm.APPLIN]: "0840",
+    [Pkm.APPLETUN]: "0842",
+    [Pkm.OSHAWOTT]: "0501",
+    [Pkm.DEWOTT]: "0502",
+    [Pkm.SAMUROTT]: "0503",
+    [Pkm.SNOM]: "0872",
+    [Pkm.FROSMOTH]: "0873",
+    [Pkm.WAILMER]: "0320",
+    [Pkm.WAILORD]: "0321",
+    [Pkm.DREEPY]: "0885",
+    [Pkm.DRAKLOAK]: "0886",
+    [Pkm.DRAGAPULT]: "0887",
+    [Pkm.SNIVY]: "0495",
+    [Pkm.SERVINE]: "0496",
+    [Pkm.SERPERIOR]: "0497",
+    [Pkm.SCORBUNNY]: "0813",
+    [Pkm.RABOOT]: "0814",
+    [Pkm.CINDERACE]: "0815",
+    [Pkm.POPPLIO]: "0728",
+    [Pkm.BRIONNE]: "0729",
+    [Pkm.PRIMARINA]: "0730",
+    [Pkm.GOTHITA]: "0574",
+    [Pkm.GOTHORITA]: "0575",
+    [Pkm.GOTHITELLE]: "0576",
+    [Pkm.FARFETCH_D]: "0083",
     [Pkm.UNOWN_A]: "0201",
     [Pkm.UNOWN_B]: "0201-0001",
     [Pkm.UNOWN_C]: "0201-0002",
@@ -1142,225 +1372,250 @@ exports.PkmIndex = {
     [Pkm.UNOWN_Z]: "0201-0025",
     [Pkm.UNOWN_QUESTION]: "0201-0027",
     [Pkm.UNOWN_EXCLAMATION]: "0201-0026",
-    [Pkm.WOBBUFFET]: "0202",
+    [Pkm.TAPU_FINI]: "0788",
+    [Pkm.TAPU_BULU]: "0787",
+    [Pkm.DIGLETT]: "0050",
+    [Pkm.ALOLAN_DIGLETT]: "0050-0001",
+    [Pkm.DUGTRIO]: "0051",
+    [Pkm.ALOLAN_DUGTRIO]: "0051-0001",
+    [Pkm.ROWLET]: "0722",
+    [Pkm.DARTIX]: "0723",
+    [Pkm.DECIDUEYE]: "0724",
+    [Pkm.ZORUA]: "0570",
+    [Pkm.ZOROARK]: "0571",
+    [Pkm.FROAKIE]: "0656",
+    [Pkm.FROGADIER]: "0657",
+    [Pkm.GRENINJA]: "0658",
+    [Pkm.TYROGUE]: "0236",
+    [Pkm.HITMONLEE]: "0106",
+    [Pkm.HITMONCHAN]: "0107",
+    [Pkm.HITMONTOP]: "0237",
+    [Pkm.MIMIKYU]: "0778",
+    [Pkm.MIMIKYU_BUSTED]: "0778-0001",
+    [Pkm.GRIMER]: "0088",
+    [Pkm.MUK]: "0089",
+    [Pkm.SHARPEDO]: "0319",
+    [Pkm.HISUI_ZORUA]: "0570-0001",
+    [Pkm.HISUI_ZOROARK]: "0571-0001",
+    [Pkm.ALOLAN_GRIMER]: "0088-0001",
+    [Pkm.ALOLAN_MUK]: "0089-0001",
     [Pkm.PINECO]: "0204",
     [Pkm.FORRETRESS]: "0205",
-    [Pkm.GLIGAR]: "0207",
-    [Pkm.STEELIX]: "0208",
-    [Pkm.MEGA_STEELIX]: "0208-0001",
-    [Pkm.SNUBULL]: "0209",
-    [Pkm.GRANBULL]: "0210",
-    [Pkm.HISUIAN_QWILFISH]: "0211-0001",
-    [Pkm.SCIZOR]: "0212",
+    [Pkm.SEEL]: "0086",
+    [Pkm.DEWGONG]: "0087",
+    [Pkm.ALOLAN_GEODUDE]: "0074-0001",
+    [Pkm.ALOLAN_GRAVELER]: "0075-0001",
+    [Pkm.ALOLAN_GOLEM]: "0076-0001",
+    [Pkm.EKANS]: "0023",
+    [Pkm.ARBOK]: "0024",
+    [Pkm.MIME_JR]: "0439",
+    [Pkm.MR_MIME]: "0122",
+    [Pkm.ORIGIN_GIRATINA]: "0487-0001",
+    [Pkm.MELMETAL]: "0809",
+    [Pkm.HOOPA]: "0720",
+    [Pkm.HOOPA_UNBOUND]: "0720-0001",
+    [Pkm.ZERAORA]: "0807",
+    [Pkm.XERNEAS]: "0716",
+    [Pkm.YVELTAL]: "0717",
+    [Pkm.MARSHADOW]: "0802",
+    [Pkm.HOOTHOOT]: "0163",
+    [Pkm.NOCTOWL]: "0164",
+    [Pkm.BONSLEY]: "0438",
+    [Pkm.SUDOWOODO]: "0185",
+    [Pkm.PHIONE]: "0489",
+    [Pkm.COMBEE]: "0415",
+    [Pkm.VESPIQUEEN]: "0416",
     [Pkm.SHUCKLE]: "0213",
-    [Pkm.HERACROSS]: "0214",
-    [Pkm.SNEASEL]: "0215",
-    [Pkm.HISUI_SNEASEL]: "0215-0001",
-    [Pkm.TEDDIURSA]: "0216",
-    [Pkm.URSARING]: "0217",
-    [Pkm.SLUGMA]: "0218",
-    [Pkm.MAGCARGO]: "0219",
-    [Pkm.SWINUB]: "0220",
-    [Pkm.PILOSWINE]: "0221",
-    [Pkm.CORSOLA]: "0222",
-    [Pkm.GALAR_CORSOLA]: "0222-0001",
-    [Pkm.REMORAID]: "0223",
-    [Pkm.OCTILLERY]: "0224",
-    [Pkm.DELIBIRD]: "0225",
-    [Pkm.MANTINE]: "0226",
-    [Pkm.SKARMORY]: "0227",
-    [Pkm.HOUNDOUR]: "0228",
-    [Pkm.HOUNDOOM]: "0229",
-    [Pkm.MEGA_HOUNDOOM]: "0229-0001",
-    [Pkm.KINGDRA]: "0230",
-    [Pkm.PHANPY]: "0231",
-    [Pkm.DONPHAN]: "0232",
-    [Pkm.PORYGON_2]: "0233",
-    [Pkm.STANTLER]: "0234",
-    [Pkm.SMEARGLE]: "0235",
-    [Pkm.TYROGUE]: "0236",
-    [Pkm.HITMONTOP]: "0237",
-    [Pkm.SMOOCHUM]: "0238",
-    [Pkm.ELEKID]: "0239",
-    [Pkm.MAGBY]: "0240",
-    [Pkm.MILTANK]: "0241",
-    [Pkm.BLISSEY]: "0242",
-    [Pkm.RAIKOU]: "0243",
-    [Pkm.ENTEI]: "0244",
-    [Pkm.SUICUNE]: "0245",
-    [Pkm.LARVITAR]: "0246",
-    [Pkm.PUPITAR]: "0247",
-    [Pkm.TYRANITAR]: "0248",
-    [Pkm.LUGIA]: "0249",
-    [Pkm.SHADOW_LUGIA]: "0249-0001",
-    [Pkm.HO_OH]: "0250",
-    [Pkm.CELEBI]: "0251",
-    [Pkm.TREECKO]: "0252",
-    [Pkm.GROVYLE]: "0253",
-    [Pkm.SCEPTILE]: "0254",
-    [Pkm.TORCHIC]: "0255",
-    [Pkm.COMBUSKEN]: "0256",
-    [Pkm.BLAZIKEN]: "0257",
-    [Pkm.MUDKIP]: "0258",
-    [Pkm.MARSHTOMP]: "0259",
-    [Pkm.SWAMPERT]: "0260",
-    [Pkm.POOCHYENA]: "0261",
-    [Pkm.MIGHTYENA]: "0262",
-    [Pkm.ZIGZAGOON]: "0263",
-    [Pkm.LINOONE]: "0264",
+    [Pkm.TEPIG]: "0498",
+    [Pkm.PIGNITE]: "0499",
+    [Pkm.EMBOAR]: "0500",
+    [Pkm.WYNAUT]: "0360",
+    [Pkm.WOBBUFFET]: "0202",
+    [Pkm.LUNATONE]: "0337",
+    [Pkm.SOLROCK]: "0338",
+    [Pkm.POLIWRATH]: "0062",
+    [Pkm.SHAYMIN_SKY]: "0492-0001",
     [Pkm.WURMPLE]: "0265",
     [Pkm.SILCOON]: "0266",
     [Pkm.BEAUTIFLY]: "0267",
     [Pkm.CASCOON]: "0268",
     [Pkm.DUSTOX]: "0269",
-    [Pkm.LOTAD]: "0270",
-    [Pkm.LOMBRE]: "0271",
-    [Pkm.LUDICOLO]: "0272",
-    [Pkm.SEEDOT]: "0273",
-    [Pkm.NUZLEAF]: "0274",
-    [Pkm.SHIFTRY]: "0275",
-    [Pkm.WINGULL]: "0278",
-    [Pkm.PELIPPER]: "0279",
-    [Pkm.RALTS]: "0280",
-    [Pkm.KIRLIA]: "0281",
-    [Pkm.GARDEVOIR]: "0282",
-    [Pkm.SHROOMISH]: "0285",
-    [Pkm.BRELOOM]: "0286",
-    [Pkm.SLAKOTH]: "0287",
-    [Pkm.VIGOROTH]: "0288",
-    [Pkm.SLAKING]: "0289",
-    [Pkm.NINCADA]: "0290",
-    [Pkm.NINJASK]: "0291",
-    [Pkm.SHEDINJA]: "0292",
-    [Pkm.WHISMUR]: "0293",
-    [Pkm.LOUDRED]: "0294",
-    [Pkm.EXPLOUD]: "0295",
-    [Pkm.MAKUHITA]: "0296",
-    [Pkm.HARIYAMA]: "0297",
-    [Pkm.AZURILL]: "0298",
-    [Pkm.NOSEPASS]: "0299",
-    [Pkm.SABLEYE]: "0302",
-    [Pkm.MEGA_SABLEYE]: "0302-0001",
-    [Pkm.MAWILE]: "0303",
-    [Pkm.ARON]: "0304",
-    [Pkm.LAIRON]: "0305",
-    [Pkm.AGGRON]: "0306",
-    [Pkm.MEDITITE]: "0307",
-    [Pkm.MEDICHAM]: "0308",
-    [Pkm.ELECTRIKE]: "0309",
-    [Pkm.MANECTRIC]: "0310",
-    [Pkm.MEGA_MANECTRIC]: "0310-0001",
+    [Pkm.TINKATINK]: "0957",
+    [Pkm.TINKATUFF]: "0958",
+    [Pkm.TINKATON]: "0959",
+    [Pkm.PARAS]: "0046",
+    [Pkm.PARASECT]: "0047",
+    [Pkm.MILTANK]: "0241",
+    [Pkm.MANKEY]: "0056",
+    [Pkm.PRIMEAPE]: "0057",
+    [Pkm.ANNIHILAPE]: "0979",
+    [Pkm.SUNKERN]: "0191",
+    [Pkm.SUNFLORA]: "0192",
+    [Pkm.MARACTUS]: "0556",
     [Pkm.PLUSLE]: "0311",
     [Pkm.MINUN]: "0312",
-    [Pkm.VOLBEAT]: "0313",
-    [Pkm.ILLUMISE]: "0314",
-    [Pkm.ROSELIA]: "0315",
-    [Pkm.CARVANHA]: "0318",
-    [Pkm.SHARPEDO]: "0319",
-    [Pkm.WAILMER]: "0320",
-    [Pkm.WAILORD]: "0321",
-    [Pkm.NUMEL]: "0322",
-    [Pkm.CAMERUPT]: "0323",
-    [Pkm.MEGA_CAMERUPT]: "0323-0001",
+    [Pkm.PINSIR]: "0127",
+    [Pkm.NATU]: "0177",
+    [Pkm.XATU]: "0178",
+    [Pkm.GLIGAR]: "0207",
+    [Pkm.GLISCOR]: "0472",
+    [Pkm.SHELLDER]: "0090",
+    [Pkm.CLOYSTER]: "0091",
+    [Pkm.SENTRET]: "0161",
+    [Pkm.FURRET]: "0162",
+    [Pkm.SPECTRIER]: "0897",
     [Pkm.TORKOAL]: "0324",
-    [Pkm.SPOINK]: "0325",
-    [Pkm.GRUMPIG]: "0326",
+    [Pkm.DELIBIRD]: "0225",
+    [Pkm.IRON_BUNDLE]: "0991",
+    [Pkm.KARTANA]: "0798",
+    [Pkm.CHINGLING]: "0433",
+    [Pkm.CHIMECHO]: "0358",
+    [Pkm.ALOLAN_RAICHU]: "0026-0001",
+    [Pkm.DHELMISE]: "0781",
+    [Pkm.STARYU]: "0120",
+    [Pkm.STARMIE]: "0121",
+    [Pkm.NOSEPASS]: "0299",
+    [Pkm.PROBOPASS]: "0476",
+    [Pkm.WOOBAT]: "0527",
+    [Pkm.SWOOBAT]: "0528",
+    [Pkm.CLAUNCHER]: "0692",
+    [Pkm.CLAWITZER]: "0693",
+    [Pkm.YANMA]: "0193",
+    [Pkm.YANMEGA]: "0469",
+    [Pkm.HELIOPTILE]: "0694",
+    [Pkm.HELIOLISK]: "0695",
+    [Pkm.BIDOOF]: "0399",
+    [Pkm.BIBAREL]: "0400",
     [Pkm.SPINDA]: "0327",
-    [Pkm.TRAPINCH]: "0328",
-    [Pkm.VIBRAVA]: "0329",
-    [Pkm.FLYGON]: "0330",
-    [Pkm.CACNEA]: "0331",
-    [Pkm.CACTURNE]: "0332",
-    [Pkm.SWABLU]: "0333",
-    [Pkm.ALTARIA]: "0334",
-    [Pkm.MEGA_ALTARIA]: "0334-0001",
-    [Pkm.ZANGOOSE]: "0335",
-    [Pkm.SEVIPER]: "0336",
-    [Pkm.LUNATONE]: "0337",
-    [Pkm.SOLROCK]: "0338",
-    [Pkm.BARBOACH]: "0339",
-    [Pkm.WHISCASH]: "0340",
-    [Pkm.CORPHISH]: "0341",
-    [Pkm.CRAWDAUNT]: "0342",
     [Pkm.BALTOY]: "0343",
     [Pkm.CLAYDOL]: "0344",
-    [Pkm.LILEEP]: "0345",
-    [Pkm.CRADILY]: "0346",
-    [Pkm.ANORITH]: "0347",
-    [Pkm.ARMALDO]: "0348",
+    [Pkm.HERACROSS]: "0214",
+    [Pkm.PURRLOIN]: "0509",
+    [Pkm.LIEPARD]: "0510",
+    [Pkm.BARBOACH]: "0339",
+    [Pkm.WHISCASH]: "0340",
+    [Pkm.SCRAGGY]: "0559",
+    [Pkm.SCRAFTY]: "0560",
+    [Pkm.FINNEON]: "0456",
+    [Pkm.LUMINEON]: "0457",
+    [Pkm.STUNKY]: "0434",
+    [Pkm.SKUNTANK]: "0435",
+    [Pkm.ILLUMISE]: "0314",
+    [Pkm.VOLBEAT]: "0313",
+    [Pkm.NECROZMA]: "0800",
+    [Pkm.ULTRA_NECROZMA]: "0800-0003",
+    [Pkm.CHERRUBI]: "0420",
+    [Pkm.CHERRIM]: "0421",
+    [Pkm.CHERRIM_SUNLIGHT]: "0421-0001",
+    [Pkm.MISDREAVUS]: "0200",
+    [Pkm.MISMAGIUS]: "0429",
+    [Pkm.DODUO]: "0084",
+    [Pkm.DODRIO]: "0085",
+    [Pkm.XURKITREE]: "0796",
+    [Pkm.TANDEMAUS]: "0924",
+    [Pkm.MAUSHOLD_THREE]: "0925-0001",
+    [Pkm.MAUSHOLD_FOUR]: "0925",
+    [Pkm.KRICKETOT]: "0401",
+    [Pkm.KRICKETUNE]: "0402",
+    [Pkm.HIPPOPOTAS]: "0449",
+    [Pkm.HIPPODOWN]: "0450",
+    [Pkm.WINGULL]: "0278",
+    [Pkm.PELIPPER]: "0279",
+    [Pkm.NIHILEGO]: "0793",
+    [Pkm.SOBBLE]: "0816",
+    [Pkm.DRIZZILE]: "0817",
+    [Pkm.INTELEON]: "0818",
+    [Pkm.TROPIUS]: "0357",
+    [Pkm.EXEGGCUTE]: "0102",
+    [Pkm.EXEGGUTOR]: "0103",
+    [Pkm.ALOLAN_EXEGGUTOR]: "0103-0001",
+    [Pkm.COMFEY]: "0764",
+    [Pkm.CARNIVINE]: "0455",
+    [Pkm.HISUIAN_QWILFISH]: "0211-0001",
+    [Pkm.OVERQWIL]: "0904",
+    [Pkm.HISUIAN_TYPHLOSION]: "0157-0001",
+    [Pkm.LILLIPUP]: "0506",
+    [Pkm.HERDIER]: "0507",
+    [Pkm.STOUTLAND]: "0508",
+    [Pkm.ZIGZAGOON]: "0263",
+    [Pkm.LINOONE]: "0264",
+    [Pkm.PHEROMOSA]: "0795",
+    [Pkm.SABLEYE]: "0302",
+    [Pkm.MEGA_SABLEYE]: "0302-0001",
+    [Pkm.DRACOVISH]: "0882",
+    [Pkm.CORSOLA]: "0222",
+    [Pkm.GALAR_CORSOLA]: "0222-0001",
+    [Pkm.CURSOLA]: "0864",
+    [Pkm.GIMMIGHOUL]: "0999-0001",
+    [Pkm.GHOLDENGO]: "1000",
+    [Pkm.PHANTUMP]: "0708",
+    [Pkm.TREVENANT]: "0709",
+    [Pkm.SMEARGLE]: "0235",
+    [Pkm.TOXEL]: "0848",
+    [Pkm.TOXTRICITY]: "0849",
+    [Pkm.BRUXISH]: "0779",
+    [Pkm.SUBSTITUTE]: "0000-0001",
+    [Pkm.CYCLIZAR]: "0967",
+    [Pkm.PAWNIARD]: "0624",
+    [Pkm.BISHARP]: "0625",
+    [Pkm.KINGAMBIT]: "0983",
+    [Pkm.MINIOR]: "0774",
+    [Pkm.MINIOR_KERNEL_RED]: "0774-0001",
+    [Pkm.MINIOR_KERNEL_BLUE]: "0774-0005",
+    [Pkm.MINIOR_KERNEL_ORANGE]: "0774-0002",
+    [Pkm.MINIOR_KERNEL_GREEN]: "0774-0004",
     [Pkm.FEEBAS]: "0349",
     [Pkm.MILOTIC]: "0350",
-    [Pkm.CASTFORM]: "0351",
-    [Pkm.CASTFORM_SUN]: "0351-0001",
-    [Pkm.CASTFORM_RAIN]: "0351-0002",
-    [Pkm.CASTFORM_HAIL]: "0351-0003",
-    [Pkm.KECLEON]: "0352",
-    [Pkm.SHUPPET]: "0353",
-    [Pkm.BANETTE]: "0354",
-    [Pkm.MEGA_BANETTE]: "0354-0001",
-    [Pkm.DUSKULL]: "0355",
-    [Pkm.DUSCLOPS]: "0356",
-    [Pkm.TROPIUS]: "0357",
-    [Pkm.CHIMECHO]: "0358",
-    [Pkm.ABSOL]: "0359",
-    [Pkm.WYNAUT]: "0360",
-    [Pkm.SNORUNT]: "0361",
-    [Pkm.GLALIE]: "0362",
-    [Pkm.SPHEAL]: "0363",
-    [Pkm.SEALEO]: "0364",
-    [Pkm.WALREIN]: "0365",
-    [Pkm.CLAMPERL]: "0366",
-    [Pkm.HUNTAIL]: "0367",
-    [Pkm.GOREBYSS]: "0368",
-    [Pkm.RELICANTH]: "0369",
-    [Pkm.LUVDISC]: "0370",
-    [Pkm.BAGON]: "0371",
-    [Pkm.SHELGON]: "0372",
-    [Pkm.SALAMENCE]: "0373",
-    [Pkm.BELDUM]: "0374",
-    [Pkm.METANG]: "0375",
-    [Pkm.METAGROSS]: "0376",
-    [Pkm.REGICE]: "0378",
-    [Pkm.REGIROCK]: "0377",
-    [Pkm.REGISTEEL]: "0379",
-    [Pkm.LATIAS]: "0380",
-    [Pkm.LATIOS]: "0381",
-    [Pkm.KYOGRE]: "0382",
-    [Pkm.GROUDON]: "0383",
-    [Pkm.RAYQUAZA]: "0384",
-    [Pkm.PRIMAL_KYOGRE]: "0382-0001",
-    [Pkm.PRIMAL_GROUDON]: "0383-0001",
-    [Pkm.MEGA_RAYQUAZA]: "0384-0001",
-    [Pkm.JIRACHI]: "0385",
+    [Pkm.MORPEKO]: "0877",
+    [Pkm.MORPEKO_HANGRY]: "0877-0001",
+    [Pkm.KANGASKHAN]: "0115",
+    [Pkm.TEDDIURSA]: "0216",
+    [Pkm.URSARING]: "0217",
+    [Pkm.URSALUNA]: "0901",
+    [Pkm.URSALUNA_BLOODMOON]: "0901-0001",
+    [Pkm.AIPOM]: "0190",
+    [Pkm.AMBIPOM]: "0424",
+    [Pkm.DEERLING]: "0585",
+    [Pkm.SAWSBUCK]: "0586",
+    [Pkm.LICKITUNG]: "0108",
+    [Pkm.LICKILICKY]: "0463",
+    [Pkm.PATRAT]: "0504",
+    [Pkm.WATCHOG]: "0505",
+    [Pkm.SPINARAK]: "0167",
+    [Pkm.ARIADOS]: "0168",
+    [Pkm.TYPE_NULL]: "0772",
+    [Pkm.SILVALLY]: "0773",
+    [Pkm.DEWPIDER]: "0751",
+    [Pkm.ARAQUANID]: "0752",
+    [Pkm.ROCKRUFF]: "0744",
+    [Pkm.LYCANROC_DAY]: "0745",
+    [Pkm.LYCANROC_DUSK]: "0745-0002",
+    [Pkm.LYCANROC_NIGHT]: "0745-0001",
+    [Pkm.DRUDDIGON]: "0621",
+    [Pkm.COSMOG]: "0789",
+    [Pkm.COSMOEM]: "0790",
+    [Pkm.SOLGALEO]: "0791",
+    [Pkm.LUNALA]: "0792",
+    [Pkm.MAGEARNA]: "0801",
+    [Pkm.IMPIDIMP]: "0859",
+    [Pkm.MORGREM]: "0860",
+    [Pkm.GRIMMSNARL]: "0861",
     [Pkm.DEOXYS]: "0386",
     [Pkm.DEOXYS_DEFENSE]: "0386-0002",
     [Pkm.DEOXYS_ATTACK]: "0386-0001",
     [Pkm.DEOXYS_SPEED]: "0386-0003",
-    [Pkm.TURTWIG]: "0387",
-    [Pkm.GROTLE]: "0388",
-    [Pkm.TORTERRA]: "0389",
-    [Pkm.CHIMCHAR]: "0390",
-    [Pkm.MONFERNO]: "0391",
-    [Pkm.INFERNAPE]: "0392",
-    [Pkm.PIPLUP]: "0393",
-    [Pkm.PRINPLUP]: "0394",
-    [Pkm.EMPOLEON]: "0395",
-    [Pkm.STARLY]: "0396",
-    [Pkm.STARAVIA]: "0397",
-    [Pkm.STARAPTOR]: "0398",
-    [Pkm.BIDOOF]: "0399",
-    [Pkm.BIBAREL]: "0400",
-    [Pkm.KRICKETOT]: "0401",
-    [Pkm.KRICKETUNE]: "0402",
-    [Pkm.SHINX]: "0403",
-    [Pkm.LUXIO]: "0404",
-    [Pkm.LUXRAY]: "0405",
-    [Pkm.BUDEW]: "0406",
-    [Pkm.ROSERADE]: "0407",
-    [Pkm.CRANIDOS]: "0408",
-    [Pkm.RAMPARDOS]: "0409",
-    [Pkm.SHIELDON]: "0410",
-    [Pkm.BASTIODON]: "0411",
+    [Pkm.CRABRAWLER]: "0739",
+    [Pkm.CRABOMINABLE]: "0740",
+    [Pkm.CUTIEFLY]: "0742",
+    [Pkm.RIBOMBEE]: "0743",
+    [Pkm.ZANGOOSE]: "0335",
+    [Pkm.NICKIT]: "0827",
+    [Pkm.THIEVUL]: "0828",
+    [Pkm.DROWZEE]: "0096",
+    [Pkm.HYPNO]: "0097",
+    [Pkm.WATTREL]: "0940",
+    [Pkm.KILOWATTREL]: "0941",
+    [Pkm.STANTLER]: "0234",
     [Pkm.BURMY_PLANT]: "0412",
     [Pkm.BURMY_SANDY]: "0412-0001",
     [Pkm.BURMY_TRASH]: "0412-0002",
@@ -1368,399 +1623,72 @@ exports.PkmIndex = {
     [Pkm.WORMADAM_SANDY]: "0413-0001",
     [Pkm.WORMADAM_TRASH]: "0413-0002",
     [Pkm.MOTHIM]: "0414",
-    [Pkm.COMBEE]: "0415",
-    [Pkm.VESPIQUEEN]: "0416",
-    [Pkm.BUIZEL]: "0418",
-    [Pkm.FLOATZEL]: "0419",
-    [Pkm.CHERRUBI]: "0420",
-    [Pkm.CHERRIM]: "0421",
-    [Pkm.CHERRIM_SUNLIGHT]: "0421-0001",
+    [Pkm.PALDEA_WOOPER]: "0194-0002",
+    [Pkm.CLODSIRE]: "0980",
+    [Pkm.FUECOCO]: "0909",
+    [Pkm.CROCALOR]: "0910",
+    [Pkm.SKELEDIRGE]: "0911",
+    [Pkm.TANGELA]: "0114",
+    [Pkm.TANGROWTH]: "0465",
+    [Pkm.PSYDUCK]: "0054",
+    [Pkm.GOLDUCK]: "0055",
+    [Pkm.PHANPY]: "0231",
+    [Pkm.DONPHAN]: "0232",
+    [Pkm.SPOINK]: "0325",
+    [Pkm.GRUMPIG]: "0326",
+    [Pkm.SINISTEA]: "0854",
+    [Pkm.POLTEAGEIST]: "0855",
+    [Pkm.FERROSEED]: "0597",
+    [Pkm.FERROTHORN]: "0598",
+    [Pkm.GOLETT]: "0622",
+    [Pkm.GOLURK]: "0623",
+    [Pkm.TRUBBISH]: "0568",
+    [Pkm.GARBODOR]: "0569",
+    [Pkm.GRUBBIN]: "0736",
+    [Pkm.CHARJABUG]: "0737",
+    [Pkm.VIKAVOLT]: "0738",
     [Pkm.SHELLOS_WEST_SEA]: "0422",
     [Pkm.GASTRODON_WEST_SEA]: "0423",
     [Pkm.SHELLOS_EAST_SEA]: "0422-0001",
     [Pkm.GASTRODON_EAST_SEA]: "0423-0001",
-    [Pkm.AMBIPOM]: "0424",
-    [Pkm.DRIFLOON]: "0425",
-    [Pkm.DRIFBLIM]: "0426",
-    [Pkm.BUNEARY]: "0427",
-    [Pkm.LOPUNNY]: "0428",
-    [Pkm.MEGA_LOPUNNY]: "0428-0001",
-    [Pkm.MISMAGIUS]: "0429",
-    [Pkm.HONCHKROW]: "0430",
-    [Pkm.CHINGLING]: "0433",
-    [Pkm.STUNKY]: "0434",
-    [Pkm.SKUNTANK]: "0435",
-    [Pkm.BRONZOR]: "0436",
-    [Pkm.BRONZONG]: "0437",
-    [Pkm.BONSLEY]: "0438",
-    [Pkm.MIME_JR]: "0439",
-    [Pkm.HAPPINY]: "0440",
-    [Pkm.CHATOT]: "0441",
-    [Pkm.SPIRITOMB]: "0442",
-    [Pkm.GIBLE]: "0443",
-    [Pkm.GABITE]: "0444",
-    [Pkm.GARCHOMP]: "0445",
-    [Pkm.MUNCHLAX]: "0446",
-    [Pkm.RIOLU]: "0447",
-    [Pkm.LUCARIO]: "0448",
-    [Pkm.HIPPOPOTAS]: "0449",
-    [Pkm.HIPPODOWN]: "0450",
-    [Pkm.SKORUPI]: "0451",
-    [Pkm.DRAPION]: "0452",
-    [Pkm.CROAGUNK]: "0453",
-    [Pkm.TOXICROAK]: "0454",
-    [Pkm.CARNIVINE]: "0455",
-    [Pkm.FINNEON]: "0456",
-    [Pkm.LUMINEON]: "0457",
-    [Pkm.MANTYKE]: "0458",
-    [Pkm.SNOVER]: "0459",
-    [Pkm.ABOMASNOW]: "0460",
-    [Pkm.MEGA_ABOMASNOW]: "0460-0001",
-    [Pkm.WEAVILE]: "0461",
-    [Pkm.MAGNEZONE]: "0462",
-    [Pkm.LICKILICKY]: "0463",
-    [Pkm.RHYPERIOR]: "0464",
-    [Pkm.TANGROWTH]: "0465",
-    [Pkm.ELECTIVIRE]: "0466",
-    [Pkm.MAGMORTAR]: "0467",
-    [Pkm.TOGEKISS]: "0468",
-    [Pkm.YANMEGA]: "0469",
-    [Pkm.LEAFEON]: "0470",
-    [Pkm.GLACEON]: "0471",
-    [Pkm.GLISCOR]: "0472",
-    [Pkm.MAMOSWINE]: "0473",
-    [Pkm.PORYGON_Z]: "0474",
-    [Pkm.PROBOPASS]: "0476",
-    [Pkm.DUSKNOIR]: "0477",
-    [Pkm.FROSLASS]: "0478",
-    [Pkm.ROTOM]: "0479",
-    [Pkm.ROTOM_DRONE]: "0479-0008",
-    [Pkm.UXIE]: "0480",
-    [Pkm.MESPRIT]: "0481",
-    [Pkm.AZELF]: "0482",
-    [Pkm.DIALGA]: "0483",
-    [Pkm.PALKIA]: "0484",
-    [Pkm.HEATRAN]: "0485",
-    [Pkm.REGIGIGAS]: "0486",
-    [Pkm.GIRATINA]: "0487",
-    [Pkm.ORIGIN_GIRATINA]: "0487-0001",
-    [Pkm.CRESSELIA]: "0488",
-    [Pkm.PHIONE]: "0489",
-    [Pkm.MANAPHY]: "0490",
-    [Pkm.DARKRAI]: "0491",
-    [Pkm.SHAYMIN]: "0492",
-    [Pkm.SHAYMIN_SKY]: "0492-0001",
-    [Pkm.ARCEUS]: "0493",
-    [Pkm.VICTINI]: "0494",
-    [Pkm.SNIVY]: "0495",
-    [Pkm.SERVINE]: "0496",
-    [Pkm.SERPERIOR]: "0497",
-    [Pkm.TEPIG]: "0498",
-    [Pkm.PIGNITE]: "0499",
-    [Pkm.EMBOAR]: "0500",
-    [Pkm.OSHAWOTT]: "0501",
-    [Pkm.DEWOTT]: "0502",
-    [Pkm.SAMUROTT]: "0503",
-    [Pkm.PATRAT]: "0504",
-    [Pkm.WATCHOG]: "0505",
-    [Pkm.LILLIPUP]: "0506",
-    [Pkm.HERDIER]: "0507",
-    [Pkm.STOUTLAND]: "0508",
-    [Pkm.PURRLOIN]: "0509",
-    [Pkm.LIEPARD]: "0510",
     [Pkm.MUNNA]: "0517",
     [Pkm.MUSHARNA]: "0518",
-    [Pkm.WOOBAT]: "0527",
-    [Pkm.SWOOBAT]: "0528",
-    [Pkm.AUDINO]: "0531",
-    [Pkm.TIMBURR]: "0532",
-    [Pkm.PILLAR_WOOD]: "0532-0002",
-    [Pkm.GURDURR]: "0533",
-    [Pkm.PILLAR_IRON]: "0533-0002",
-    [Pkm.CONKELDURR]: "0534",
-    [Pkm.PILLAR_CONCRETE]: "0534-0002",
-    [Pkm.TYMPOLE]: "0535",
-    [Pkm.PALPITOAD]: "0536",
-    [Pkm.SEISMITOAD]: "0537",
-    [Pkm.SEWADDLE]: "0540",
-    [Pkm.SWADLOON]: "0541",
-    [Pkm.LEAVANNY]: "0542",
-    [Pkm.VENIPEDE]: "0543",
-    [Pkm.WHIRLIPEDE]: "0544",
-    [Pkm.SCOLIPEDE]: "0545",
-    [Pkm.PETILIL]: "0548",
-    [Pkm.LILIGANT]: "0549",
-    [Pkm.SANDILE]: "0551",
-    [Pkm.KROKOROK]: "0552",
-    [Pkm.KROOKODILE]: "0553",
-    [Pkm.DARUMAKA]: "0554",
-    [Pkm.DARMANITAN]: "0555",
-    [Pkm.DARMANITAN_ZEN]: "0555-0001",
-    [Pkm.MARACTUS]: "0556",
-    [Pkm.SCRAGGY]: "0559",
-    [Pkm.SCRAFTY]: "0560",
-    [Pkm.SIGILYPH]: "0561",
-    [Pkm.ARCHEN]: "0566",
-    [Pkm.ARCHEOPS]: "0567",
-    [Pkm.TRUBBISH]: "0568",
-    [Pkm.GARBODOR]: "0569",
-    [Pkm.ZORUA]: "0570",
-    [Pkm.ZOROARK]: "0571",
-    [Pkm.HISUI_ZORUA]: "0570-0001",
-    [Pkm.HISUI_ZOROARK]: "0571-0001",
-    [Pkm.GOTHITA]: "0574",
-    [Pkm.GOTHORITA]: "0575",
-    [Pkm.GOTHITELLE]: "0576",
-    [Pkm.SOLOSIS]: "0577",
-    [Pkm.DUOSION]: "0578",
-    [Pkm.REUNICLUS]: "0579",
-    [Pkm.VANILLITE]: "0582",
-    [Pkm.VANILLISH]: "0583",
-    [Pkm.VANILLUXE]: "0584",
-    [Pkm.DEERLING]: "0585",
-    [Pkm.SAWSBUCK]: "0586",
-    [Pkm.JOLTIK]: "0595",
-    [Pkm.GALVANTULA]: "0596",
-    [Pkm.FERROSEED]: "0597",
-    [Pkm.FERROTHORN]: "0598",
-    [Pkm.ELGYEM]: "0605",
-    [Pkm.BEHEEYEM]: "0606",
-    [Pkm.LITWICK]: "0607",
-    [Pkm.LAMPENT]: "0608",
-    [Pkm.CHANDELURE]: "0609",
-    [Pkm.AXEW]: "0610",
-    [Pkm.FRAXURE]: "0611",
-    [Pkm.HAXORUS]: "0612",
-    [Pkm.MIENFOO]: "0619",
-    [Pkm.MIENSHAO]: "0620",
-    [Pkm.DRUDDIGON]: "0621",
-    [Pkm.GOLETT]: "0622",
-    [Pkm.GOLURK]: "0623",
-    [Pkm.PAWNIARD]: "0624",
-    [Pkm.BISHARP]: "0625",
     [Pkm.RUFFLET]: "0627",
     [Pkm.BRAVIARY]: "0628",
-    [Pkm.VULLABY]: "0629",
-    [Pkm.MANDIBUZZ]: "0630",
     [Pkm.HEATMOR]: "0631",
-    [Pkm.DURANT]: "0632",
-    [Pkm.DEINO]: "0633",
-    [Pkm.ZWEILOUS]: "0634",
-    [Pkm.HYDREIGON]: "0635",
-    [Pkm.LARVESTA]: "0636",
-    [Pkm.VOLCARONA]: "0637",
-    [Pkm.COBALION]: "0638",
-    [Pkm.TERRAKION]: "0639",
-    [Pkm.VIRIZION]: "0640",
-    [Pkm.TORNADUS]: "0641",
-    [Pkm.THUNDURUS]: "0642",
-    [Pkm.RESHIRAM]: "0643",
-    [Pkm.ZEKROM]: "0644",
-    [Pkm.LANDORUS]: "0645",
-    [Pkm.KYUREM]: "0646",
-    [Pkm.KELDEO]: "0647",
-    [Pkm.MELOETTA]: "0648",
-    [Pkm.PIROUETTE_MELOETTA]: "0648-0001",
-    [Pkm.GENESECT]: "0649",
-    [Pkm.FENNEKIN]: "0653",
-    [Pkm.BRAIXEN]: "0654",
-    [Pkm.DELPHOX]: "0655",
-    [Pkm.FROAKIE]: "0656",
-    [Pkm.FROGADIER]: "0657",
-    [Pkm.GRENINJA]: "0658",
-    [Pkm.FLETCHLING]: "0661",
-    [Pkm.FLETCHINDER]: "0662",
-    [Pkm.TALONFLAME]: "0663",
-    [Pkm.FLABEBE]: "0669",
-    [Pkm.FLOETTE]: "0670",
-    [Pkm.FLORGES]: "0671",
-    [Pkm.HONEDGE]: "0679",
-    [Pkm.DOUBLADE]: "0680",
-    [Pkm.AEGISLASH]: "0681",
-    [Pkm.AEGISLASH_BLADE]: "0681-0001",
-    [Pkm.INKAY]: "0686",
-    [Pkm.MALAMAR]: "0687",
-    [Pkm.BINACLE]: "0688",
-    [Pkm.BARBARACLE]: "0689",
-    [Pkm.CLAUNCHER]: "0692",
-    [Pkm.CLAWITZER]: "0693",
-    [Pkm.HELIOPTILE]: "0694",
-    [Pkm.HELIOLISK]: "0695",
-    [Pkm.TYRUNT]: "0696",
-    [Pkm.TYRANTRUM]: "0697",
-    [Pkm.AMAURA]: "0698",
-    [Pkm.AURORUS]: "0699",
-    [Pkm.SYLVEON]: "0700",
-    [Pkm.HAWLUCHA]: "0701",
-    [Pkm.CARBINK]: "0703",
-    [Pkm.GOOMY]: "0704",
-    [Pkm.SLIGOO]: "0705",
-    [Pkm.GOODRA]: "0706",
-    [Pkm.HISUI_SLIGGOO]: "0705-0001",
-    [Pkm.HISUI_GOODRA]: "0706-0001",
     [Pkm.KLEFKI]: "0707",
-    [Pkm.PHANTUMP]: "0708",
-    [Pkm.TREVENANT]: "0709",
-    [Pkm.PUMPKABOO]: "0710",
-    [Pkm.GOURGEIST]: "0711",
-    [Pkm.NOIBAT]: "0714",
-    [Pkm.NOIVERN]: "0715",
-    [Pkm.XERNEAS]: "0716",
-    [Pkm.YVELTAL]: "0717",
-    [Pkm.ZYGARDE_10]: "0718-0002",
-    [Pkm.ZYGARDE_50]: "0718",
-    [Pkm.ZYGARDE_100]: "0718-0001",
-    [Pkm.DIANCIE]: "0719",
-    [Pkm.HOOPA]: "0720",
-    [Pkm.HOOPA_UNBOUND]: "0720-0001",
-    [Pkm.VOLCANION]: "0721",
-    [Pkm.ROWLET]: "0722",
-    [Pkm.DARTIX]: "0723",
-    [Pkm.DECIDUEYE]: "0724",
-    [Pkm.LITTEN]: "0725",
-    [Pkm.TORRACAT]: "0726",
-    [Pkm.INCINEROAR]: "0727",
-    [Pkm.POPPLIO]: "0728",
-    [Pkm.BRIONNE]: "0729",
-    [Pkm.PRIMARINA]: "0730",
-    [Pkm.GRUBBIN]: "0736",
-    [Pkm.CHARJABUG]: "0737",
-    [Pkm.VIKAVOLT]: "0738",
-    [Pkm.CRABRAWLER]: "0739",
-    [Pkm.CRABOMINABLE]: "0740",
-    [Pkm.CUTIEFLY]: "0742",
-    [Pkm.RIBOMBEE]: "0743",
-    [Pkm.ROCKRUFF]: "0744",
-    [Pkm.LYCANROC_DAY]: "0745",
-    [Pkm.LYCANROC_DUSK]: "0745-0002",
-    [Pkm.LYCANROC_NIGHT]: "0745-0001",
-    [Pkm.WISHIWASHI]: "0746",
-    [Pkm.WISHIWASHI_SCHOOL]: "0746-0001",
-    [Pkm.DEWPIDER]: "0751",
-    [Pkm.ARAQUANID]: "0752",
-    [Pkm.SALANDIT]: "0757",
-    [Pkm.SALAZZLE]: "0758",
-    [Pkm.STUFFUL]: "0759",
-    [Pkm.BEWEAR]: "0760",
-    [Pkm.BOUNSWEET]: "0761",
-    [Pkm.STEENEE]: "0762",
-    [Pkm.TSAREENA]: "0763",
-    [Pkm.COMFEY]: "0764",
-    [Pkm.SANDYGAST]: "0769",
-    [Pkm.PALOSSAND]: "0770",
+    [Pkm.HAWLUCHA]: "0701",
+    [Pkm.MIENFOO]: "0619",
+    [Pkm.MIENSHAO]: "0620",
+    [Pkm.STONJOURNER]: "0874",
+    [Pkm.HISUI_SNEASEL]: "0215-0001",
+    [Pkm.SNEASLER]: "0903",
     [Pkm.PYUKUMUKU]: "0771",
-    [Pkm.TYPE_NULL]: "0772",
-    [Pkm.SILVALLY]: "0773",
-    [Pkm.MINIOR]: "0774",
-    [Pkm.MINIOR_KERNEL_RED]: "0774-0001",
-    [Pkm.MINIOR_KERNEL_BLUE]: "0774-0005",
-    [Pkm.MINIOR_KERNEL_ORANGE]: "0774-0002",
-    [Pkm.MINIOR_KERNEL_GREEN]: "0774-0004",
-    [Pkm.TURTONATOR]: "0776",
-    [Pkm.MIMIKYU]: "0778",
-    [Pkm.MIMIKYU_BUSTED]: "0778-0001",
-    [Pkm.BRUXISH]: "0779",
-    [Pkm.DHELMISE]: "0781",
-    [Pkm.JANGMO_O]: "0782",
-    [Pkm.HAKAMO_O]: "0783",
-    [Pkm.KOMMO_O]: "0784",
-    [Pkm.TAPU_KOKO]: "0785",
-    [Pkm.TAPU_LELE]: "0786",
-    [Pkm.TAPU_BULU]: "0787",
-    [Pkm.TAPU_FINI]: "0788",
-    [Pkm.COSMOG]: "0789",
-    [Pkm.COSMOEM]: "0790",
-    [Pkm.SOLGALEO]: "0791",
-    [Pkm.LUNALA]: "0792",
-    [Pkm.NIHILEGO]: "0793",
-    [Pkm.PHEROMOSA]: "0795",
-    [Pkm.XURKITREE]: "0796",
-    [Pkm.KARTANA]: "0798",
-    [Pkm.GUZZLORD]: "0799",
-    [Pkm.NECROZMA]: "0800",
-    [Pkm.ULTRA_NECROZMA]: "0800-0003",
-    [Pkm.MAGEARNA]: "0801",
-    [Pkm.MARSHADOW]: "0802",
     [Pkm.POIPOLE]: "0803",
     [Pkm.NAGANADEL]: "0804",
-    [Pkm.STAKATAKA]: "0805",
-    [Pkm.BLACEPHALON]: "0806",
-    [Pkm.ZERAORA]: "0807",
-    [Pkm.MELMETAL]: "0809",
-    [Pkm.SCORBUNNY]: "0813",
-    [Pkm.RABOOT]: "0814",
-    [Pkm.CINDERACE]: "0815",
-    [Pkm.SOBBLE]: "0816",
-    [Pkm.DRIZZILE]: "0817",
-    [Pkm.INTELEON]: "0818",
-    [Pkm.ROOKIDEE]: "0821",
-    [Pkm.CORVISQUIRE]: "0822",
-    [Pkm.CORVIKNIGHT]: "0823",
-    [Pkm.NICKIT]: "0827",
-    [Pkm.THIEVUL]: "0828",
-    [Pkm.APPLIN]: "0840",
-    [Pkm.APPLETUN]: "0842",
     [Pkm.CRAMORANT]: "0845",
     [Pkm.ARROKUDA]: "0846",
-    [Pkm.TOXEL]: "0848",
-    [Pkm.TOXTRICITY]: "0849",
-    [Pkm.SIZZLIPEDE]: "0850",
-    [Pkm.CENTISKORCH]: "0851",
-    [Pkm.SINISTEA]: "0854",
-    [Pkm.POLTEAGEIST]: "0855",
-    [Pkm.HATENNA]: "0856",
-    [Pkm.HATTREM]: "0857",
-    [Pkm.HATTERENE]: "0858",
-    [Pkm.IMPIDIMP]: "0859",
-    [Pkm.MORGREM]: "0860",
-    [Pkm.GRIMMSNARL]: "0861",
-    [Pkm.CURSOLA]: "0864",
-    [Pkm.SNOM]: "0872",
-    [Pkm.FROSMOTH]: "0873",
-    [Pkm.STONJOURNER]: "0874",
-    [Pkm.MORPEKO]: "0877",
-    [Pkm.MORPEKO_HANGRY]: "0877-0001",
-    [Pkm.DRACOVISH]: "0882",
-    [Pkm.DREEPY]: "0885",
-    [Pkm.DRAKLOAK]: "0886",
-    [Pkm.DRAGAPULT]: "0887",
-    [Pkm.ETERNATUS]: "0890",
-    [Pkm.REGIELEKI]: "0894",
-    [Pkm.REGIDRAGO]: "0895",
-    [Pkm.SPECTRIER]: "0897",
-    [Pkm.KLEAVOR]: "0900",
-    [Pkm.URSALUNA]: "0901",
-    [Pkm.URSALUNA_BLOODMOON]: "0901-0001",
-    [Pkm.SNEASLER]: "0903",
-    [Pkm.OVERQWIL]: "0904",
-    [Pkm.ENAMORUS]: "0905",
-    [Pkm.FUECOCO]: "0909",
-    [Pkm.CROCALOR]: "0910",
-    [Pkm.SKELEDIRGE]: "0911",
+    [Pkm.WISHIWASHI]: "0746",
+    [Pkm.WISHIWASHI_SCHOOL]: "0746-0001",
     [Pkm.PAWMI]: "0921",
     [Pkm.PAWMO]: "0922",
     [Pkm.PAWMOT]: "0923",
-    [Pkm.TANDEMAUS]: "0924",
-    [Pkm.MAUSHOLD_THREE]: "0925-0001",
-    [Pkm.MAUSHOLD_FOUR]: "0925",
-    [Pkm.WATTREL]: "0940",
-    [Pkm.KILOWATTREL]: "0941",
-    [Pkm.TINKATINK]: "0957",
-    [Pkm.TINKATUFF]: "0958",
-    [Pkm.TINKATON]: "0959",
-    [Pkm.CYCLIZAR]: "0967",
-    [Pkm.GLIMMET]: "0969",
-    [Pkm.GLIMMORA]: "0970",
-    [Pkm.ANNIHILAPE]: "0979",
-    [Pkm.CLODSIRE]: "0980",
-    [Pkm.KINGAMBIT]: "0983",
-    [Pkm.IRON_BUNDLE]: "0991",
-    [Pkm.IRON_HANDS]: "0992",
+    [Pkm.GOLDEEN]: "0118",
+    [Pkm.SEAKING]: "0119",
+    [Pkm.LUVDISC]: "0370",
+    [Pkm.AUDINO]: "0531",
+    [Pkm.MANTYKE]: "0458",
+    [Pkm.MANTINE]: "0226",
+    [Pkm.REMORAID]: "0223",
+    [Pkm.OCTILLERY]: "0224",
+    [Pkm.SIGILYPH]: "0561",
     [Pkm.FRIGIBAX]: "0996",
     [Pkm.ARCTIBAX]: "0997",
     [Pkm.BAXCALIBUR]: "0998",
-    [Pkm.GIMMIGHOUL]: "0999-0001",
-    [Pkm.GHOLDENGO]: "1000",
+    [Pkm.BINACLE]: "0688",
+    [Pkm.BARBARACLE]: "0689",
+    [Pkm.SKARMORY]: "0227",
+    [Pkm.DURANT]: "0632",
     [Pkm.OGERPON_TEAL]: "1017",
     [Pkm.OGERPON_TEAL_MASK]: "1017-0001",
     [Pkm.OGERPON_WELLSPRING]: "1017-0002",
@@ -1768,9 +1696,22 @@ exports.PkmIndex = {
     [Pkm.OGERPON_HEARTHFLAME]: "1017-0004",
     [Pkm.OGERPON_HEARTHFLAME_MASK]: "1017-0005",
     [Pkm.OGERPON_CORNERSTONE]: "1017-0006",
-    [Pkm.OGERPON_CORNERSTONE_MASK]: "1017-0007"
+    [Pkm.OGERPON_CORNERSTONE_MASK]: "1017-0007",
+    [Pkm.IRON_HANDS]: "0992",
+    [Pkm.ROOKIDEE]: "0821",
+    [Pkm.CORVISQUIRE]: "0822",
+    [Pkm.CORVIKNIGHT]: "0823",
+    [Pkm.MURKROW]: "0198",
+    [Pkm.HONCHKROW]: "0430",
+    [Pkm.SANDYGAST]: "0769",
+    [Pkm.PALOSSAND]: "0770",
+    [Pkm.TURTONATOR]: "0776",
+    [Pkm.SKORUPI]: "0451",
+    [Pkm.DRAPION]: "0452",
+    [Pkm.DARUMAKA]: "0554",
+    [Pkm.DARMANITAN]: "0555",
+    [Pkm.DARMANITAN_ZEN]: "0555-0001"
 };
-exports.PkmByIndex = Object.fromEntries(Object.entries(exports.PkmIndex).map(([pkm, index]) => [index, pkm]));
 exports.PkmFamily = {
     [Pkm.EGG]: Pkm.EGG,
     [Pkm.BULBASAUR]: Pkm.BULBASAUR,
@@ -2011,11 +1952,8 @@ exports.PkmFamily = {
     [Pkm.REGISTEEL]: Pkm.REGISTEEL,
     [Pkm.REGIROCK]: Pkm.REGIROCK,
     [Pkm.ARTICUNO]: Pkm.ARTICUNO,
-    [Pkm.GALARIAN_ARTICUNO]: Pkm.GALARIAN_ARTICUNO,
     [Pkm.ZAPDOS]: Pkm.ZAPDOS,
-    [Pkm.GALARIAN_ZAPDOS]: Pkm.GALARIAN_ZAPDOS,
     [Pkm.MOLTRES]: Pkm.MOLTRES,
-    [Pkm.GALARIAN_MOLTRES]: Pkm.GALARIAN_MOLTRES,
     [Pkm.AERODACTYL]: Pkm.AERODACTYL,
     [Pkm.GROUDON]: Pkm.GROUDON,
     [Pkm.KYOGRE]: Pkm.KYOGRE,
@@ -2067,6 +2005,8 @@ exports.PkmFamily = {
     [Pkm.ARCHEOPS]: Pkm.ARCHEN,
     [Pkm.SHIELDON]: Pkm.SHIELDON,
     [Pkm.BASTIODON]: Pkm.SHIELDON,
+    [Pkm.TIRTOUGA]: Pkm.TIRTOUGA,
+    [Pkm.CARRACOSTA]: Pkm.TIRTOUGA,
     [Pkm.LILEEP]: Pkm.LILEEP,
     [Pkm.CRADILY]: Pkm.LILEEP,
     [Pkm.KABUTO]: Pkm.KABUTO,
@@ -2114,6 +2054,9 @@ exports.PkmFamily = {
     [Pkm.SEWADDLE]: Pkm.SEWADDLE,
     [Pkm.SWADLOON]: Pkm.SEWADDLE,
     [Pkm.LEAVANNY]: Pkm.SEWADDLE,
+    [Pkm.PIKIPEK]: Pkm.PIKIPEK,
+    [Pkm.TRUMBEAK]: Pkm.PIKIPEK,
+    [Pkm.TOUCANNON]: Pkm.PIKIPEK,
     [Pkm.FLABEBE]: Pkm.FLABEBE,
     [Pkm.FLOETTE]: Pkm.FLABEBE,
     [Pkm.FLORGES]: Pkm.FLABEBE,
@@ -2180,9 +2123,7 @@ exports.PkmFamily = {
     [Pkm.VENONAT]: Pkm.VENONAT,
     [Pkm.VENOMOTH]: Pkm.VENONAT,
     [Pkm.VOLTORB]: Pkm.VOLTORB,
-    [Pkm.HISUI_VOLTORB]: Pkm.HISUI_VOLTORB,
     [Pkm.ELECTRODE]: Pkm.VOLTORB,
-    [Pkm.HISUI_ELECTRODE]: Pkm.HISUI_VOLTORB,
     [Pkm.SLUGMA]: Pkm.SLUGMA,
     [Pkm.MAGCARGO]: Pkm.SLUGMA,
     [Pkm.SNEASEL]: Pkm.SNEASEL,
@@ -2623,36 +2564,7 @@ exports.PkmFamily = {
     [Pkm.DRAPION]: Pkm.SKORUPI,
     [Pkm.DARUMAKA]: Pkm.DARUMAKA,
     [Pkm.DARMANITAN]: Pkm.DARUMAKA,
-    [Pkm.DARMANITAN_ZEN]: Pkm.DARUMAKA,
-    [Pkm.KRABBY]: Pkm.KRABBY,
-    [Pkm.KINGLER]: Pkm.KRABBY,
-    [Pkm.SIZZLIPEDE]: Pkm.SIZZLIPEDE,
-    [Pkm.CENTISKORCH]: Pkm.SIZZLIPEDE,
-    [Pkm.ZYGARDE_10]: Pkm.ZYGARDE_10,
-    [Pkm.ZYGARDE_50]: Pkm.ZYGARDE_50,
-    [Pkm.ZYGARDE_100]: Pkm.ZYGARDE_100,
-    [Pkm.STUFFUL]: Pkm.STUFFUL,
-    [Pkm.BEWEAR]: Pkm.STUFFUL,
-    [Pkm.GLIMMET]: Pkm.GLIMMET,
-    [Pkm.GLIMMORA]: Pkm.GLIMMET,
-    [Pkm.FLETCHLING]: Pkm.FLETCHLING,
-    [Pkm.FLETCHINDER]: Pkm.FLETCHLING,
-    [Pkm.TALONFLAME]: Pkm.FLETCHLING,
-    [Pkm.VULLABY]: Pkm.VULLABY,
-    [Pkm.MANDIBUZZ]: Pkm.VULLABY,
-    [Pkm.INKAY]: Pkm.INKAY,
-    [Pkm.MALAMAR]: Pkm.INKAY,
-    [Pkm.TIMBURR]: Pkm.TIMBURR,
-    [Pkm.GURDURR]: Pkm.TIMBURR,
-    [Pkm.CONKELDURR]: Pkm.TIMBURR,
-    [Pkm.PILLAR_WOOD]: Pkm.PILLAR_WOOD,
-    [Pkm.PILLAR_IRON]: Pkm.PILLAR_IRON,
-    [Pkm.PILLAR_CONCRETE]: Pkm.PILLAR_CONCRETE,
-    [Pkm.ELGYEM]: Pkm.ELGYEM,
-    [Pkm.BEHEEYEM]: Pkm.ELGYEM,
-    [Pkm.LITTEN]: Pkm.LITTEN,
-    [Pkm.TORRACAT]: Pkm.LITTEN,
-    [Pkm.INCINEROAR]: Pkm.LITTEN
+    [Pkm.DARMANITAN_ZEN]: Pkm.DARUMAKA
 };
 exports.PkmRegionalVariants = {
     [Pkm.RATTATA]: [Pkm.ALOLAN_RATTATA],
@@ -2665,8 +2577,7 @@ exports.PkmRegionalVariants = {
     [Pkm.NIDORANF]: [Pkm.NIDORANM],
     [Pkm.SNEASEL]: [Pkm.HISUI_SNEASEL],
     [Pkm.MEOWTH]: [Pkm.ALOLAN_MEOWTH],
-    [Pkm.PONYTA]: [Pkm.GALARIAN_PONYTA],
-    [Pkm.VOLTORB]: [Pkm.HISUI_VOLTORB]
+    [Pkm.PONYTA]: [Pkm.GALARIAN_PONYTA]
 };
 var PkmDuo;
 (function (PkmDuo) {
@@ -3144,17 +3055,17 @@ exports.AnimationConfig = {
     },
     [Pkm.PIPLUP]: {
         attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Strike,
+        ability: Animation_1.AnimationType.Swing,
         emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.PRINPLUP]: {
         attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
+        ability: Animation_1.AnimationType.Swing,
         emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.EMPOLEON]: {
         attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
+        ability: Animation_1.AnimationType.Swing,
         emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.NIDORANF]: {
@@ -3677,7 +3588,7 @@ exports.AnimationConfig = {
     [Pkm.ZAPDOS]: {
         attack: Animation_1.AnimationType.Shoot,
         ability: Animation_1.AnimationType.Emit,
-        emote: Animation_1.AnimationType.Emit
+        emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.MOLTRES]: {
         attack: Animation_1.AnimationType.Shoot,
@@ -3688,22 +3599,6 @@ exports.AnimationConfig = {
         attack: Animation_1.AnimationType.Shoot,
         ability: Animation_1.AnimationType.RearUp,
         emote: Animation_1.AnimationType.Pose
-    },
-    [Pkm.GALARIAN_ZAPDOS]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.SpAttack,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.GALARIAN_MOLTRES]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Charge,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.GALARIAN_ARTICUNO]: {
-        attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.SpAttack,
-        emote: Animation_1.AnimationType.RearUp,
-        shinyUnavailable: true
     },
     [Pkm.DIALGA]: {
         attack: Animation_1.AnimationType.RearUp,
@@ -3982,14 +3877,14 @@ exports.AnimationConfig = {
         emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.TERRAKION]: {
-        attack: Animation_1.AnimationType.Strike,
+        attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Attack,
-        emote: Animation_1.AnimationType.RearUp
+        emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.VIRIZION]: {
         attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.RearUp
+        ability: Animation_1.AnimationType.RearUp,
+        emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.COBALION]: {
         attack: Animation_1.AnimationType.Attack,
@@ -4263,6 +4158,16 @@ exports.AnimationConfig = {
         ability: Animation_1.AnimationType.Shoot,
         emote: Animation_1.AnimationType.Shoot
     },
+    [Pkm.TIRTOUGA]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Shoot
+    },
+    [Pkm.CARRACOSTA]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Shoot
+    },
     [Pkm.LILEEP]: {
         attack: Animation_1.AnimationType.SpAttack,
         ability: Animation_1.AnimationType.Shoot,
@@ -4496,6 +4401,21 @@ exports.AnimationConfig = {
         emote: Animation_1.AnimationType.Shoot
     },
     [Pkm.LEAVANNY]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Shoot
+    },
+    [Pkm.PIKIPEK]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Shoot
+    },
+    [Pkm.TRUMBEAK]: {
+        attack: Animation_1.AnimationType.Attack,
+        ability: Animation_1.AnimationType.Attack,
+        emote: Animation_1.AnimationType.Shoot
+    },
+    [Pkm.TOUCANNON]: {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Attack,
         emote: Animation_1.AnimationType.Shoot
@@ -4834,17 +4754,6 @@ exports.AnimationConfig = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Hurt,
         emote: Animation_1.AnimationType.Twirl
-    },
-    [Pkm.HISUI_VOLTORB]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Pose,
-        emote: Animation_1.AnimationType.Twirl
-    },
-    [Pkm.HISUI_ELECTRODE]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Hurt,
-        emote: Animation_1.AnimationType.Twirl,
-        shinyUnavailable: true
     },
     [Pkm.SLUGMA]: {
         attack: Animation_1.AnimationType.Shoot,
@@ -7074,166 +6983,6 @@ exports.AnimationConfig = {
         attack: Animation_1.AnimationType.Attack,
         ability: Animation_1.AnimationType.Charge,
         emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.KRABBY]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Slam,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.KINGLER]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Strike,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.ZYGARDE_10]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.RearUp
-    },
-    [Pkm.ZYGARDE_50]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Charge,
-        emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.ZYGARDE_100]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Emit,
-        emote: Animation_1.AnimationType.Emit,
-        shinyUnavailable: true
-    },
-    [Pkm.SIZZLIPEDE]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.CENTISKORCH]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.STUFFUL]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.SpAttack,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.BEWEAR]: {
-        attack: Animation_1.AnimationType.Slap,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.GLIMMET]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Twirl,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.GLIMMORA]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.FLETCHLING]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.FLETCHINDER]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Hover,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.TALONFLAME]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Hover,
-        emote: Animation_1.AnimationType.Shoot
-    },
-    [Pkm.VULLABY]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge,
-        shinyUnavailable: true
-    },
-    [Pkm.MANDIBUZZ]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.INKAY]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Charge,
-        emote: Animation_1.AnimationType.Twirl
-    },
-    [Pkm.MALAMAR]: {
-        attack: Animation_1.AnimationType.Strike,
-        ability: Animation_1.AnimationType.Shoot,
-        emote: Animation_1.AnimationType.Charge
-    },
-    [Pkm.TIMBURR]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Swing,
-        emote: Animation_1.AnimationType.Pose
-    },
-    [Pkm.GURDURR]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Punch,
-        emote: Animation_1.AnimationType.RearUp,
-        shinyUnavailable: true
-    },
-    [Pkm.CONKELDURR]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.Strike,
-        emote: Animation_1.AnimationType.Shoot,
-        shinyUnavailable: true
-    },
-    [Pkm.PILLAR_WOOD]: {
-        attack: Animation_1.AnimationType.Idle,
-        ability: Animation_1.AnimationType.Idle,
-        emote: Animation_1.AnimationType.Idle,
-        shinyUnavailable: true,
-        noShadow: true
-    },
-    [Pkm.PILLAR_IRON]: {
-        attack: Animation_1.AnimationType.Idle,
-        ability: Animation_1.AnimationType.Idle,
-        emote: Animation_1.AnimationType.Idle,
-        shinyUnavailable: true,
-        noShadow: true
-    },
-    [Pkm.PILLAR_CONCRETE]: {
-        attack: Animation_1.AnimationType.Idle,
-        ability: Animation_1.AnimationType.Idle,
-        emote: Animation_1.AnimationType.Idle,
-        shinyUnavailable: true,
-        noShadow: true
-    },
-    [Pkm.ELGYEM]: {
-        attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.Charge,
-        emote: Animation_1.AnimationType.DeepBreath
-    },
-    [Pkm.BEHEEYEM]: {
-        attack: Animation_1.AnimationType.Shoot,
-        ability: Animation_1.AnimationType.SpAttack,
-        emote: Animation_1.AnimationType.SpAttack
-    },
-    [Pkm.LITTEN]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.MultiScratch,
-        emote: Animation_1.AnimationType.Pose
-    },
-    [Pkm.TORRACAT]: {
-        attack: Animation_1.AnimationType.Attack,
-        ability: Animation_1.AnimationType.MultiScratch,
-        emote: Animation_1.AnimationType.Emit
-    },
-    [Pkm.INCINEROAR]: {
-        attack: Animation_1.AnimationType.Punch,
-        ability: Animation_1.AnimationType.Ricochet,
-        emote: Animation_1.AnimationType.Pose,
         shinyUnavailable: true
     }
 };

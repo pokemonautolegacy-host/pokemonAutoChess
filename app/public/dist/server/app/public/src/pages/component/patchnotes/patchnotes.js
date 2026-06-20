@@ -6,8 +6,6 @@ require("./patchnotes.css");
 const poster_1 = require("./poster");
 function PatchNotes() {
     const PATCHES = [
-        "5.9",
-        "5.8",
         "5.7",
         "5.6",
         "5.5",

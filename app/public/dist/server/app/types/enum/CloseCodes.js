@@ -13,7 +13,6 @@ var CloseCodes;
     CloseCodes[CloseCodes["USER_NOT_AUTHENTICATED"] = 4004] = "USER_NOT_AUTHENTICATED";
     CloseCodes[CloseCodes["USER_RANK_TOO_LOW"] = 4005] = "USER_RANK_TOO_LOW";
     CloseCodes[CloseCodes["USER_RANK_TOO_HIGH"] = 4006] = "USER_RANK_TOO_HIGH";
-    CloseCodes[CloseCodes["USER_TIMEOUT"] = 4007] = "USER_TIMEOUT";
     CloseCodes[CloseCodes["ROOM_FULL"] = 4010] = "ROOM_FULL";
     CloseCodes[CloseCodes["ROOM_EMPTY"] = 4011] = "ROOM_EMPTY";
     CloseCodes[CloseCodes["ROOM_DELETED"] = 4012] = "ROOM_DELETED";
@@ -24,7 +23,6 @@ exports.CloseCodesMessages = {
     [CloseCodes.USER_BANNED]: "USER_BANNED",
     [CloseCodes.USER_RANK_TOO_LOW]: "USER_RANK_TOO_LOW",
     [CloseCodes.USER_NOT_AUTHENTICATED]: "USER_NOT_AUTHENTICATED",
-    [CloseCodes.USER_TIMEOUT]: "USER_TIMEOUT",
     [CloseCodes.ROOM_FULL]: "ROOM_FULL",
     [CloseCodes.ROOM_EMPTY]: "ROOM_EMPTY",
     [CloseCodes.ROOM_DELETED]: "ROOM_DELETED"

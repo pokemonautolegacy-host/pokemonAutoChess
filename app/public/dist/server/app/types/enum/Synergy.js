@@ -35,7 +35,7 @@ var Synergy;
     Synergy["BABY"] = "BABY";
     Synergy["AMORPHOUS"] = "AMORPHOUS";
 })(Synergy || (exports.Synergy = Synergy = {}));
-exports.SynergyEffects = {
+exports.SynergyEffects = Object.freeze({
     [Synergy.NORMAL]: [
         Effect_1.Effect.STAMINA,
         Effect_1.Effect.STRENGTH,
@@ -156,5 +156,5 @@ exports.SynergyEffects = {
         Effect_1.Effect.BERSERK
     ],
     [Synergy.AMORPHOUS]: [Effect_1.Effect.FLUID, Effect_1.Effect.SHAPELESS, Effect_1.Effect.ETHEREAL]
-};
+});
 //# sourceMappingURL=Synergy.js.map

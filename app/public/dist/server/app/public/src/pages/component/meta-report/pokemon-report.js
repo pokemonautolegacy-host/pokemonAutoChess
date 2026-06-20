@@ -12,8 +12,8 @@ const Config_1 = require("../../../../../types/Config");
 const EloRank_1 = require("../../../../../types/enum/EloRank");
 const Game_1 = require("../../../../../types/enum/Game");
 const Synergy_1 = require("../../../../../types/enum/Synergy");
-const pokemon_typeahead_1 = require("../typeahead/pokemon-typeahead");
 const pokemon_statistic_1 = __importDefault(require("./pokemon-statistic"));
+const pokemon_typeahead_1 = require("../typeahead/pokemon-typeahead");
 require("./pokemon-report.css");
 function PokemonReport() {
     var _a;
@@ -21,7 +21,7 @@ function PokemonReport() {
     const [synergy, setSynergy] = (0, react_1.useState)("all");
     const [rarity, setRarity] = (0, react_1.useState)("all");
     const [loading, setLoading] = (0, react_1.useState)(true);
-    const [eloThreshold, setEloTreshold] = (0, react_1.useState)(EloRank_1.EloRank.LEVEL_BALL);
+    const [eloThreshold, setEloTreshold] = (0, react_1.useState)(EloRank_1.EloRank.BEGINNER);
     const [selectedPkm, setSelectedPkm] = (0, react_1.useState)("");
     const [metaPokemons, setMetaPokemons] = (0, react_1.useState)([]);
     (0, react_1.useEffect)(() => {

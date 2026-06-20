@@ -14,8 +14,6 @@ const atlas_json_1 = __importDefault(require("../assets/atlas.json"));
 const delays_json_1 = __importDefault(require("../../../types/delays.json"));
 const durations_json_1 = __importDefault(require("../assets/pokemons/durations.json"));
 const indexList_json_1 = __importDefault(require("../assets/pokemons/indexList.json"));
-const precomputed_pokemon_data_1 = require("../../../models/precomputed/precomputed-pokemon-data");
-const Passive_1 = require("../../../types/enum/Passive");
 const FPS_EFFECTS = 20;
 const FPS_POKEMON_ANIMS = 36;
 class AnimationManager {
@@ -26,37 +24,32 @@ class AnimationManager {
             tints.forEach((shiny) => {
                 const actions = [
                     Animation_1.AnimationType.Idle,
+                    Animation_1.AnimationType.Walk,
+                    Animation_1.AnimationType.Sleep,
+                    Animation_1.AnimationType.Hop,
                     Animation_1.AnimationType.Hurt
                 ];
-                const pkm = Pokemon_1.PkmByIndex[index];
-                const pokemonData = (0, precomputed_pokemon_data_1.getPokemonData)(pkm);
-                if (pokemonData.passive !== Passive_1.Passive.INANIMATE) {
-                    actions.push(Animation_1.AnimationType.Walk, Animation_1.AnimationType.Sleep, Animation_1.AnimationType.Hop);
-                }
-                if (pkm && Pokemon_1.AnimationConfig[pkm]) {
-                    if (Pokemon_1.AnimationConfig[pkm].shinyUnavailable &&
+                const conf = Object.keys(Pokemon_1.PkmIndex).find((p) => index === Pokemon_1.PkmIndex[p]);
+                if (conf && Pokemon_1.AnimationConfig[conf]) {
+                    if (Pokemon_1.AnimationConfig[conf].shinyUnavailable &&
                         shiny === Game_1.PokemonTint.SHINY)
                         return;
-                    const config = Pokemon_1.AnimationConfig[pkm];
-                    if (!actions.includes(config.attack)) {
-                        actions.push(config.attack);
+                    if (!actions.includes(Pokemon_1.AnimationConfig[conf].attack)) {
+                        actions.push(Pokemon_1.AnimationConfig[conf].attack);
                     }
-                    if (!actions.includes(config.ability)) {
-                        actions.push(config.ability);
+                    if (!actions.includes(Pokemon_1.AnimationConfig[conf].ability)) {
+                        actions.push(Pokemon_1.AnimationConfig[conf].ability);
                     }
-                    if (!actions.includes(config.emote)) {
-                        actions.push(config.emote);
+                    if (!actions.includes(Pokemon_1.AnimationConfig[conf].emote)) {
+                        actions.push(Pokemon_1.AnimationConfig[conf].emote);
                     }
                 }
                 else {
                     actions.push(Animation_1.AnimationType.Attack);
                 }
                 actions.forEach((action) => {
-                    const config = Pokemon_1.AnimationConfig[pkm];
-                    const spriteTypes = config.noShadow
-                        ? [Game_1.SpriteType.ANIM]
-                        : [Game_1.SpriteType.ANIM, Game_1.SpriteType.SHADOW];
-                    spriteTypes.forEach((mode) => {
+                    const modes = Object.values(Game_1.SpriteType);
+                    modes.forEach((mode) => {
                         const directionArray = Animation_1.AnimationComplete[action] === false
                             ? [Game_1.Orientation.DOWN]
                             : Object.values(Game_1.Orientation);
@@ -191,9 +184,9 @@ class AnimationManager {
             case Game_1.PokemonActionState.WALK:
                 return Animation_1.AnimationType.Walk;
             case Game_1.PokemonActionState.ATTACK:
-                return Pokemon_1.AnimationConfig[Pokemon_1.PkmByIndex[entity.index]].attack;
+                return Pokemon_1.AnimationConfig[entity.name].attack;
             case Game_1.PokemonActionState.EMOTE:
-                return Pokemon_1.AnimationConfig[Pokemon_1.PkmByIndex[entity.index]].emote;
+                return Pokemon_1.AnimationConfig[entity.name].emote;
             case Game_1.PokemonActionState.IDLE:
             default:
                 return Animation_1.AnimationType.Idle;
@@ -230,8 +223,7 @@ class AnimationManager {
         const textureIndex = entity.scene && entity.scene.textures.exists(entity.index)
             ? entity.index
             : "0000";
-        const tint = entity.shiny &&
-            !Pokemon_1.AnimationConfig[Pokemon_1.PkmByIndex[entity.index]].shinyUnavailable
+        const tint = entity.shiny && !Pokemon_1.AnimationConfig[entity.name].shinyUnavailable
             ? Game_1.PokemonTint.SHINY
             : Game_1.PokemonTint.NORMAL;
         const animKey = `${textureIndex}/${tint}/${animation}/${Game_1.SpriteType.ANIM}/${orientationCorrected}`;
@@ -244,13 +236,11 @@ class AnimationManager {
             repeat: config.repeat,
             timeScale: config.timeScale
         });
-        if (entity.shadow) {
-            entity.shadow.anims.play({
-                key: shadowKey,
-                repeat: config.repeat,
-                timeScale: config.timeScale
-            });
-        }
+        entity.shadow.anims.play({
+            key: shadowKey,
+            repeat: config.repeat,
+            timeScale: config.timeScale
+        });
         if (config.lock) {
             entity.animationLocked = true;
         }

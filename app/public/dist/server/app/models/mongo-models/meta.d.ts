@@ -28,7 +28,7 @@ export interface IMeta {
 declare const _default: import("mongoose").Model<IMeta, {}, {}, {}, import("mongoose").Document<unknown, {}, IMeta> & IMeta & {
     _id: import("mongoose").Types.ObjectId;
 } & {
-    __v: number;
+    __v?: number;
 }, any>;
 export default _default;
 export declare function fetchMeta(): Promise<IMeta[]>;

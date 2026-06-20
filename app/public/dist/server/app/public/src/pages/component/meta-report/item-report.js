@@ -34,6 +34,7 @@ function ItemReport() {
             key: "artificial_items",
             items: Item_1.ArtificialItems
         },
+        { label: (0, i18next_1.t)("weather_rocks"), key: "weather_rocks", items: Item_1.WeatherRocks },
         { label: (0, i18next_1.t)("shiny_items"), key: "shiny_items", items: Item_1.ShinyItems }
     ];
     return ((0, jsx_runtime_1.jsxs)("div", { id: "item-report", children: [(0, jsx_runtime_1.jsxs)("header", { children: [(0, jsx_runtime_1.jsx)("h2", { children: (0, i18next_1.t)("best_items") }), (0, jsx_runtime_1.jsxs)("select", { value: itemRankingBy, onChange: (e) => {

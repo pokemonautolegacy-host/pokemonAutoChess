@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRank = getRank;
 exports.formatMinMaxRanks = formatMinMaxRanks;
-const Config_1 = require("../types/Config");
 const EloRank_1 = require("../types/enum/EloRank");
+const Config_1 = require("../types/Config");
 function getRank(elo) {
-    let rank = EloRank_1.EloRank.LEVEL_BALL;
+    let rank = EloRank_1.EloRank.BEGINNER;
     Object.keys(Config_1.EloRankThreshold).forEach((e) => {
         if (elo >= Config_1.EloRankThreshold[e]) {
             rank = e;
@@ -16,9 +16,9 @@ function getRank(elo) {
 function formatMinMaxRanks(minRank, maxRank) {
     var _a;
     const ranksThresholds = Object.values(Config_1.EloRankThreshold);
-    if (minRank === EloRank_1.EloRank.LEVEL_BALL)
+    if (minRank === EloRank_1.EloRank.BEGINNER)
         minRank = null;
-    if (maxRank === EloRank_1.EloRank.BEAST_BALL)
+    if (maxRank === EloRank_1.EloRank.MASTERBALL)
         maxRank = null;
     const min = minRank ? Config_1.EloRankThreshold[minRank] : 0;
     const max = maxRank

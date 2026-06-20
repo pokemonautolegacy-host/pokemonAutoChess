@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConditionBasedEvolutionRule = exports.HatchEvolutionRule = exports.ItemEvolutionRule = exports.CountEvolutionRule = exports.EvolutionRule = void 0;
-exports.carryOverPermanentStats = carryOverPermanentStats;
 const pokemon_1 = require("../models/colyseus-models/pokemon");
 const pokemon_factory_1 = __importDefault(require("../models/pokemon-factory"));
 const Config_1 = require("../types/Config");
@@ -102,7 +101,16 @@ class CountEvolutionRule extends EvolutionRule {
             }
         });
         const pokemonEvolved = pokemon_factory_1.default.createPokemonFromName(pokemonEvolutionName, player);
-        carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution);
+        const permanentBuffStats = ["hp", "atk", "def", "speDef"];
+        for (const stat of permanentBuffStats) {
+            const statStacked = (0, array_1.sum)(pokemonsBeforeEvolution.map((p) => p[stat] - new pokemon_1.PokemonClasses[p.name]()[stat]));
+            if (statStacked > 0) {
+                pokemonEvolved[stat] += statStacked;
+            }
+        }
+        if (pokemon.onEvolve) {
+            pokemon.onEvolve({ pokemonEvolved, pokemonsBeforeEvolution, player });
+        }
         (0, random_1.shuffleArray)(itemsToAdd);
         for (const item of itemsToAdd) {
             if (pokemonEvolved.items.has(item) || pokemonEvolved.items.size >= 3) {
@@ -110,9 +118,6 @@ class CountEvolutionRule extends EvolutionRule {
             }
             else {
                 pokemonEvolved.items.add(item);
-                if (item === Item_1.Item.SHINY_CHARM) {
-                    pokemonEvolved.shiny = true;
-                }
             }
         }
         (0, random_1.shuffleArray)(itemComponentsToAdd);
@@ -132,9 +137,6 @@ class CountEvolutionRule extends EvolutionRule {
         }
         else {
             logger_1.logger.error("no coordinate found for new evolution");
-        }
-        if (pokemon.afterEvolve) {
-            pokemon.afterEvolve({ pokemonEvolved, pokemonsBeforeEvolution, player });
         }
         return pokemonEvolved;
     }
@@ -217,21 +219,4 @@ class ConditionBasedEvolutionRule extends EvolutionRule {
     }
 }
 exports.ConditionBasedEvolutionRule = ConditionBasedEvolutionRule;
-function carryOverPermanentStats(pokemonEvolved, pokemonsBeforeEvolution) {
-    const permanentBuffStats = ["hp", "atk", "def", "speDef"];
-    const baseData = new pokemon_1.PokemonClasses[pokemonsBeforeEvolution[0].name]();
-    for (const stat of permanentBuffStats) {
-        const statStacked = (0, array_1.sum)(pokemonsBeforeEvolution.map((p) => p[stat] - baseData[stat]));
-        if (statStacked > 0) {
-            pokemonEvolved[stat] += statStacked;
-        }
-    }
-    const existingTms = pokemonsBeforeEvolution
-        .map((p) => p.tm)
-        .filter((tm) => tm != null);
-    if (existingTms.length > 0) {
-        pokemonEvolved.tm = (0, random_1.pickRandomIn)(existingTms);
-        pokemonEvolved.skill = pokemonEvolved.tm;
-    }
-}
 //# sourceMappingURL=evolution-rules.js.map

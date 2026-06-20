@@ -1,7 +1,7 @@
 import { Schema } from "@colyseus/schema";
 import Board from "../../core/board";
 import { PokemonEntity } from "../../core/pokemon-entity";
-import { IPokemonEntity, ISimulation, IStatus } from "../../types";
+import { IPokemonEntity, IStatus } from "../../types";
 export default class Status extends Schema implements IStatus {
     burn: boolean;
     silence: boolean;
@@ -17,7 +17,6 @@ export default class Status extends Schema implements IStatus {
     paralysis: boolean;
     pokerus: boolean;
     locked: boolean;
-    blinded: boolean;
     armorReduction: boolean;
     runeProtect: boolean;
     charm: boolean;
@@ -66,7 +65,6 @@ export default class Status extends Schema implements IStatus {
     runeProtectCooldown: number;
     charmCooldown: number;
     flinchCooldown: number;
-    enrageCooldown: number;
     spikeArmorCooldown: number;
     magicBounceCooldown: number;
     synchroCooldown: number;
@@ -79,7 +77,6 @@ export default class Status extends Schema implements IStatus {
     curseCooldown: number;
     pokerusCooldown: number;
     lockedCooldown: number;
-    blindCooldown: number;
     enrageDelay: number;
     darkHarvest: boolean;
     darkHarvestCooldown: number;
@@ -87,15 +84,13 @@ export default class Status extends Schema implements IStatus {
     stoneEdge: boolean;
     stoneEdgeCooldown: number;
     bideCooldown: number;
-    constructor(simulation: ISimulation);
     clearNegativeStatus(): void;
     hasNegativeStatus(): boolean;
     updateAllStatus(dt: number, pokemon: PokemonEntity, board: Board): void;
-    triggerMagmaStorm(delay: number, origin: PokemonEntity | null): void;
+    triggerMagmaStorm(pkm: PokemonEntity, origin: PokemonEntity | null): void;
     updateMagmaStorm(dt: number, board: Board, pkm: PokemonEntity): void;
     triggerArmorReduction(duration: number, pkm: PokemonEntity): void;
     updateArmorReduction(dt: number): void;
-    triggerRage(duration: number, pokemon: PokemonEntity): void;
     updateRage(dt: number, pokemon: PokemonEntity): void;
     triggerClearWing(timer: number): void;
     updateClearWing(dt: number, pkm: PokemonEntity): void;
@@ -124,13 +119,13 @@ export default class Status extends Schema implements IStatus {
     updateProtect(dt: number): void;
     triggerSleep(duration: number, pkm: PokemonEntity): void;
     updateSleep(dt: number): void;
-    triggerConfusion(duration: number, pkm: PokemonEntity, origin: PokemonEntity, apBoost?: boolean): void;
+    triggerConfusion(duration: number, pkm: PokemonEntity): void;
     updateConfusion(dt: number): void;
     triggerCharm(duration: number, pkm: IPokemonEntity, origin: PokemonEntity, apBoost?: boolean): void;
     updateCharm(dt: number): void;
     triggerWound(duration: number, pkm: PokemonEntity, origin: PokemonEntity | undefined): void;
     updateWound(dt: number): void;
-    triggerParalysis(duration: number, pkm: PokemonEntity, origin: PokemonEntity | null, apBoost?: boolean): void;
+    triggerParalysis(duration: number, pkm: PokemonEntity): void;
     updateParalysis(dt: number, pkm: PokemonEntity): void;
     healParalysis(pkm: PokemonEntity): void;
     triggerRuneProtect(timer: number): void;
@@ -141,16 +136,13 @@ export default class Status extends Schema implements IStatus {
     updateSpikeArmor(dt: number): void;
     triggerMagicBounce(timer: number): void;
     updateMagicBounce(dt: number): void;
-    addResurrection(pokemon: PokemonEntity): void;
     triggerResurection(pokemon: PokemonEntity): void;
     updateResurecting(dt: number, pokemon: PokemonEntity): void;
     triggerCurse(timer: number): void;
     updateCurse(dt: number, board: Board, pokemon: PokemonEntity): void;
-    triggerPokerus(pokemon: PokemonEntity): void;
+    triggerPokerus(): void;
     updatePokerus(dt: number, pokemon: PokemonEntity, board: Board): void;
     triggerLocked(duration: number, pkm: PokemonEntity): void;
     updateLocked(dt: number, pokemon: PokemonEntity): void;
-    triggerBlinded(duration: number, pkm: PokemonEntity): void;
-    updateBlinded(dt: number): void;
     private applyAquaticReduction;
 }

@@ -3,7 +3,6 @@ import { Client } from "colyseus";
 import Player from "../../models/colyseus-models/player";
 import { IClient, IDragDropCombineMessage, IDragDropItemMessage, IDragDropMessage } from "../../types";
 import { Pkm } from "../../types/enum/Pokemon";
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 import GameRoom from "../game-room";
 export declare class OnShopCommand extends Command<GameRoom, {
     playerId: string;
@@ -39,7 +38,7 @@ export declare class OnDragDropCommand extends Command<GameRoom, {
     execute({ client, detail }: {
         client: any;
         detail: any;
-    }): any[];
+    }): never[] | undefined;
 }
 export declare class OnSwitchBenchAndBoardCommand extends Command<GameRoom, {
     client: Client;
@@ -118,15 +117,15 @@ export declare class OnUpdateCommand extends Command<GameRoom, {
 }> {
     execute({ deltaTime }: {
         deltaTime: any;
-    }): OnUpdatePhaseCommand[];
+    }): OnUpdatePhaseCommand[] | undefined;
 }
 export declare class OnUpdatePhaseCommand extends Command<GameRoom> {
     execute(): void;
     computeAchievements(): void;
     checkSuccess(player: Player): void;
-    checkEndGame(): boolean;
+    checkEndGame(): void;
     computeStreak(isPVE: boolean): void;
-    computeIncome(isPVE: boolean, specialGameRule: SpecialGameRule): void;
+    computeIncome(): void;
     checkDeath(): void;
     initializePickingPhase(): Command<import("colyseus").Room<any, any>, unknown>[];
     checkForLazyTeam(): void;
@@ -135,5 +134,4 @@ export declare class OnUpdatePhaseCommand extends Command<GameRoom> {
     initializeMinigamePhase(): void;
     initializeFightingPhase(): void;
     spawnWanderingPokemons(): void;
-    spawnBabyEggs(player: Player, isPVE: boolean): void;
 }

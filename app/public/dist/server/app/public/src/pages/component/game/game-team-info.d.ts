@@ -1,1 +1,1 @@
-export declare function GameTeamInfo(): import("react/jsx-runtime").JSX.Element;
+export declare function GameTeamInfo(): import("react/jsx-runtime").JSX.Element | null;

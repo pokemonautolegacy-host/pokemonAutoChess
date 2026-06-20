@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonAvatarModel = void 0;
 const schema_1 = require("@colyseus/schema");
-const avatar_1 = require("../../utils/avatar");
+const utils_1 = require("../../public/src/utils");
 const Game_1 = require("../../types/enum/Game");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 class PokemonAvatarModel extends schema_1.Schema {
@@ -24,8 +24,8 @@ class PokemonAvatarModel extends schema_1.Schema {
         this.targetX = x;
         this.targetY = y;
         this.timer = timer;
-        const { index, shiny } = (0, avatar_1.getPokemonConfigFromAvatar)(avatar);
-        this.name = Pokemon_1.PkmByIndex[index];
+        const { index, shiny } = (0, utils_1.getPokemonConfigFromAvatar)(avatar);
+        this.name = Object.keys(Pokemon_1.PkmIndex).find((pkm) => Pokemon_1.PkmIndex[pkm] === index);
         this.shiny = shiny;
     }
 }

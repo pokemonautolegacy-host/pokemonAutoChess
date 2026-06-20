@@ -21,23 +21,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -52,28 +42,21 @@ const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const Weather_1 = require("../../types/enum/Weather");
 const array_1 = require("../../utils/array");
-const avatar_1 = require("../../utils/avatar");
 const board_1 = require("../../utils/board");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const effects_1 = require("../effects");
-const egg_factory_1 = require("../egg-factory");
 const pokemon_factory_1 = __importDefault(require("../pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../precomputed/precomputed-pokemon-data");
-const precomputed_rarity_1 = require("../precomputed/precomputed-rarity");
-const shop_1 = require("../shop");
 const experience_manager_1 = __importDefault(require("./experience-manager"));
 const history_item_1 = __importDefault(require("./history-item"));
 const pokemon_1 = require("./pokemon");
 const pokemon_collection_1 = __importDefault(require("./pokemon-collection"));
 const pokemon_config_1 = __importDefault(require("./pokemon-config"));
 const synergies_1 = __importStar(require("./synergies"));
-const evolution_rules_1 = require("../../core/evolution-rules");
-const bot_logic_1 = require("../../public/src/pages/component/bot-builder/bot-logic");
-const number_1 = require("../../utils/number");
 class Player extends schema_1.Schema {
     constructor(id, name, elo, avatar, isBot, rank, pokemonCollection, title, role, state) {
-        var _a, _b, _c;
+        var _a, _b;
         super();
         this.simulationId = "";
         this.team = Game_1.Team.BLUE_TEAM;
@@ -112,7 +95,6 @@ class Player extends schema_1.Schema {
         this.totalMoneyEarned = 0;
         this.totalPlayerDamageDealt = 0;
         this.eggChance = 0;
-        this.goldenEggChance = 0;
         this.wildChance = 0;
         this.commonRegionalPool = new Array();
         this.uncommonRegionalPool = new Array();
@@ -122,12 +104,11 @@ class Player extends schema_1.Schema {
         this.opponents = new Map();
         this.titles = new Set();
         this.artificialItems = (0, random_1.pickNRandomIn)(Item_1.ArtificialItems, 3);
-        this.tms = pickRandomTMs();
         this.weatherRocks = [];
         this.randomComponentsGiven = [];
         this.randomEggsGiven = [];
+        this.canRegainLife = true;
         this.ghost = false;
-        this.hasLeftGame = false;
         this.id = id;
         this.spectatedPlayerId = id;
         this.name = name;
@@ -147,19 +128,22 @@ class Player extends schema_1.Schema {
             this.lightX = 3;
             this.lightY = 2;
         }
-        if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DITTO_PARTY) {
-            for (let i = 0; i < 5; i++) {
-                const ditto = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.DITTO, this);
-                ditto.positionX = (_a = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _a !== void 0 ? _a : 0;
-                ditto.positionY = 0;
-                this.board.set(ditto.id, ditto);
-                ditto.onAcquired(this);
-            }
+        if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.NINE_LIVES) {
+            this.life = 9;
+            this.canRegainLife = false;
         }
+        else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DESPERATE_MOVES) {
+            this.life = 150;
+        }
+        const randomStarter = state.shop.getRandomPokemonFromPool(Game_1.Rarity.COMMON, this);
+        const pokemon = pokemon_factory_1.default.createPokemonFromName(randomStarter, this);
+        pokemon.positionX = (_a = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _a !== void 0 ? _a : 0;
+        pokemon.positionY = 0;
+        this.board.set(pokemon.id, pokemon);
+        pokemon.onAcquired(this);
         if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.UNIQUE_STARTER) {
             const randomUnique = (0, random_1.pickRandomIn)(Config_1.UniqueShop);
             const pokemonsObtained = (randomUnique in Pokemon_1.PkmDuos ? Pokemon_1.PkmDuos[randomUnique] : [randomUnique]).map((p) => pokemon_factory_1.default.createPokemonFromName(p, this));
-            this.firstPartner = pokemonsObtained[0].name;
             pokemonsObtained.forEach((pokemon) => {
                 var _a;
                 pokemon.positionX = (_a = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _a !== void 0 ? _a : 0;
@@ -168,55 +152,21 @@ class Player extends schema_1.Schema {
                 pokemon.onAcquired(this);
             });
         }
-        else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DO_IT_ALL_YOURSELF) {
-            const { index, emotion, shiny } = (0, avatar_1.getPokemonConfigFromAvatar)(this.avatar);
-            this.firstPartner = Pokemon_1.PkmByIndex[index];
-            let avatar;
-            if (this.firstPartner === Pokemon_1.Pkm.EGG) {
-                avatar = (0, egg_factory_1.createRandomEgg)(shiny, this);
+        if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DITTO_PARTY) {
+            for (let i = 0; i < 5; i++) {
+                const ditto = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.DITTO, this);
+                ditto.positionX = (_b = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _b !== void 0 ? _b : 0;
+                ditto.positionY = 0;
+                this.board.set(ditto.id, ditto);
+                ditto.onAcquired(this);
             }
-            else {
-                avatar = pokemon_factory_1.default.createPokemonFromName(this.firstPartner, {
-                    selectedEmotion: emotion,
-                    selectedShiny: shiny
-                });
-            }
-            avatar.positionX = (_b = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _b !== void 0 ? _b : 0;
-            avatar.positionY = 0;
-            let powerScore = (0, bot_logic_1.getUnitPowerScore)(avatar.name);
-            if (avatar.name === Pokemon_1.Pkm.EGG) {
-                powerScore = 5;
-                if (avatar.shiny) {
-                    this.money = 1;
-                }
-            }
-            if (powerScore < 5) {
-                this.money += 55 - Math.round(10 * powerScore);
-            }
-            const bonusHP = Math.round(150 - powerScore * 25);
-            avatar.hp = (0, number_1.min)(10)(avatar.hp + bonusHP);
-            this.board.set(avatar.id, avatar);
-            avatar.onAcquired(this);
-        }
-        else if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER) {
-            const randomCommons = (0, random_1.pickNRandomIn)((0, shop_1.getRegularsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.COMMON).filter((p) => (0, precomputed_pokemon_data_1.getPokemonData)(p).stages === 3), 3);
-            this.pokemonsProposition.push(...randomCommons);
-        }
-        else {
-            this.firstPartner = state.shop.getRandomPokemonFromPool(Game_1.Rarity.COMMON, this);
-            const pokemon = pokemon_factory_1.default.createPokemonFromName(this.firstPartner, this);
-            pokemon.positionX = (_c = (0, board_1.getFirstAvailablePositionInBench)(this.board)) !== null && _c !== void 0 ? _c : 0;
-            pokemon.positionY = 0;
-            this.board.set(pokemon.id, pokemon);
-            pokemon.onAcquired(this);
-        }
-        if (state.specialGameRule === SpecialGameRule_1.SpecialGameRule.SLAMINGO) {
-            for (let i = 0; i < 4; i++)
-                this.items.push((0, random_1.pickRandomIn)(Item_1.ItemComponents));
         }
     }
     addMoney(value, countTotalEarned, origin) {
-        if (origin === null || origin === void 0 ? void 0 : origin.isGhostOpponent) {
+        var _a;
+        if (origin &&
+            origin.simulation.isGhostBattle &&
+            ((_a = origin.player) === null || _a === void 0 ? void 0 : _a.team) === Game_1.Team.RED_TEAM) {
             return;
         }
         this.money += value;
@@ -239,9 +189,6 @@ class Player extends schema_1.Schema {
         const newPokemon = pokemon_factory_1.default.createPokemonFromName(newEntry, this);
         pokemon.items.forEach((item) => {
             newPokemon.items.add(item);
-            if (item === Item_1.Item.SHINY_CHARM) {
-                newPokemon.shiny = true;
-            }
         });
         newPokemon.positionX = pokemon.positionX;
         newPokemon.positionY = pokemon.positionY;
@@ -249,7 +196,6 @@ class Player extends schema_1.Schema {
         this.board.set(newPokemon.id, newPokemon);
         newPokemon.onAcquired(this);
         this.updateSynergies();
-        (0, evolution_rules_1.carryOverPermanentStats)(newPokemon, [pokemon]);
         return newPokemon;
     }
     updateSynergies() {
@@ -270,7 +216,6 @@ class Player extends schema_1.Schema {
             this.onLightChange();
         this.updateFishingRods();
         this.updateWeatherRocks();
-        this.updateTms();
         this.updateWildChance();
         this.effects.update(this.synergies, this.board);
     }
@@ -325,6 +270,7 @@ class Player extends schema_1.Schema {
     }
     updateWeatherRocks() {
         const nbWeatherRocks = Config_1.SynergyTriggers[Synergy_1.Synergy.ROCK].filter((n) => { var _a; return ((_a = this.synergies.get(Synergy_1.Synergy.ROCK)) !== null && _a !== void 0 ? _a : 0) >= n; }).length;
+        const rocksCollected = this.weatherRocks.slice(-nbWeatherRocks);
         let weatherRockInInventory;
         do {
             weatherRockInInventory = this.items.findIndex((item, index) => Item_1.WeatherRocks.includes(item));
@@ -332,26 +278,7 @@ class Player extends schema_1.Schema {
                 this.items.splice(weatherRockInInventory, 1);
             }
         } while (weatherRockInInventory != -1);
-        if (nbWeatherRocks > 0) {
-            const rocksCollected = this.weatherRocks.slice(-nbWeatherRocks);
-            this.items.push(...rocksCollected);
-        }
-    }
-    updateTms() {
-        const nbTMs = Config_1.SynergyTriggers[Synergy_1.Synergy.HUMAN].filter((n) => { var _a; return ((_a = this.synergies.get(Synergy_1.Synergy.HUMAN)) !== null && _a !== void 0 ? _a : 0) >= n; }).length;
-        let tmInInventory;
-        do {
-            tmInInventory = this.items.findIndex((item, index) => Item_1.TMs.includes(item) || Item_1.HMs.includes(item));
-            if (tmInInventory != -1) {
-                this.items.splice(tmInInventory, 1);
-            }
-        } while (tmInInventory != -1);
-        if (nbTMs > 0) {
-            const tmsCollected = this.tms
-                .slice(0, nbTMs)
-                .filter((tm) => tm != null);
-            this.items.push(...tmsCollected);
-        }
+        this.items.push(...rocksCollected);
     }
     updateFishingRods() {
         const fishingLevel = Config_1.SynergyTriggers[Synergy_1.Synergy.WATER].filter((n) => { var _a; return ((_a = this.synergies.get(Synergy_1.Synergy.WATER)) !== null && _a !== void 0 ? _a : 0) >= n; }).length;
@@ -385,7 +312,6 @@ class Player extends schema_1.Schema {
                 }
             });
         }
-        newRegionalPokemons.sort((a, b) => (0, precomputed_pokemon_data_1.getPokemonData)(a).stars - (0, precomputed_pokemon_data_1.getPokemonData)(b).stars);
         (0, schemas_1.resetArraySchema)(this.regionalPokemons, newRegionalPokemons.filter((p, index, array) => array.findIndex((p2) => Pokemon_1.PkmFamily[p] === Pokemon_1.PkmFamily[p2]) === index));
     }
     onLightChange() {
@@ -534,14 +460,5 @@ __decorate([
 ], Player.prototype, "eggChance", void 0);
 __decorate([
     (0, schema_1.type)("float32")
-], Player.prototype, "goldenEggChance", void 0);
-__decorate([
-    (0, schema_1.type)("float32")
 ], Player.prototype, "wildChance", void 0);
-function pickRandomTMs() {
-    const firstTM = (0, random_1.pickRandomIn)(Item_1.TMs);
-    const secondTM = (0, random_1.pickRandomIn)(Item_1.TMs.filter((tm) => tm !== firstTM));
-    const hm = (0, random_1.pickRandomIn)(Item_1.HMs);
-    return [firstTM, secondTM, hm];
-}
 //# sourceMappingURL=player.js.map

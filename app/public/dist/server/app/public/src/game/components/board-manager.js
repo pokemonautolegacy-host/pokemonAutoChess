@@ -20,7 +20,6 @@ const stores_1 = __importDefault(require("../../stores"));
 const pokemon_1 = __importDefault(require("./pokemon"));
 const pokemon_avatar_2 = __importDefault(require("./pokemon-avatar"));
 const pokemon_special_1 = __importDefault(require("./pokemon-special"));
-const boosts_animations_1 = require("./boosts-animations");
 var BoardMode;
 (function (BoardMode) {
     BoardMode["PICK"] = "pick";
@@ -132,7 +131,7 @@ class BoardManager {
                 this.addPokemonSprite(pokemon);
             }
         });
-        if (this.specialGameRule != null) {
+        if (this.gameMode === Game_1.GameMode.SCRIBBLE) {
             if (this.smeargle) {
                 this.smeargle.destroy();
                 this.smeargle = null;
@@ -416,12 +415,6 @@ class BoardManager {
                     pokemonUI.shiny = value;
                     this.animationManager.animatePokemon(pokemonUI, pokemonUI.action, false);
                     break;
-                case "skill":
-                    if (pokemonUI.skill !== value) {
-                        pokemonUI.skill = value;
-                        pokemonUI.evolutionAnimation();
-                    }
-                    break;
             }
         }
     }
@@ -463,8 +456,15 @@ class BoardManager {
     }
     displayBoost(stat, pokemon) {
         pokemon.emoteAnimation();
-        const coords = (0, utils_1.transformCoordinate)(pokemon.positionX, pokemon.positionY);
-        (0, boosts_animations_1.displayBoost)(this.scene, coords[0], coords[1], stat);
+        const coordinates = (0, utils_1.transformCoordinate)(pokemon.positionX, pokemon.positionY);
+        const boost = this.scene.add
+            .sprite(coordinates[0], coordinates[1] - 10, "boosts", `BOOST_${stat}/000.png`)
+            .setDepth(7)
+            .setScale(2, 2);
+        boost.anims.play(`BOOST_${stat}`);
+        boost.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            boost.destroy();
+        });
     }
 }
 exports.default = BoardManager;

@@ -74,27 +74,27 @@ export declare const lobbySlice: import("@reduxjs/toolkit").Slice<IUserLobbyStat
         value: any;
     }>) => void;
 }, "lobby", "lobby", import("@reduxjs/toolkit").SliceSelectors<IUserLobbyState>>;
-export declare const removeMessage: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<Message, "lobby/removeMessage">, setBoosterContent: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<PkmWithConfig[], "lobby/setBoosterContent">, changePokemonConfig: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+export declare const removeMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/removeMessage">, setBoosterContent: import("@reduxjs/toolkit").ActionCreatorWithPayload<PkmWithConfig[], "lobby/setBoosterContent">, changePokemonConfig: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     id: string;
     field: string;
     value: any;
-}, "lobby/changePokemonConfig">, pushMessage: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<Message, "lobby/pushMessage">, setLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ILeaderboardInfo[], "lobby/setLeaderboard">, setBotLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ILeaderboardBotInfo[], "lobby/setBotLeaderboard">, setLevelLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ILeaderboardInfo[], "lobby/setLevelLeaderboard">, setTabIndex: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "lobby/setTabIndex">, addRoom: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<RoomAvailable<any>, "lobby/addRoom">, removeRoom: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<string, "lobby/removeRoom">, setCcu: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "lobby/setCcu">, setSearchedUser: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IUserMetadata, "lobby/setSearchedUser">, resetLobby: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/resetLobby">, setSuggestions: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ISuggestionUser[], "lobby/setSuggestions">, pushBotLog: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<string, "lobby/pushBotLog">, addTournament: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<TournamentSchema, "lobby/addTournament">, removeTournament: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<TournamentSchema, "lobby/removeTournament">, changeTournament: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "lobby/changePokemonConfig">, pushMessage: import("@reduxjs/toolkit").ActionCreatorWithPayload<Message, "lobby/pushMessage">, setLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLeaderboard">, setBotLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardBotInfo[], "lobby/setBotLeaderboard">, setLevelLeaderboard: import("@reduxjs/toolkit").ActionCreatorWithPayload<ILeaderboardInfo[], "lobby/setLevelLeaderboard">, setTabIndex: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setTabIndex">, addRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<RoomAvailable<any>, "lobby/addRoom">, removeRoom: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "lobby/removeRoom">, setCcu: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "lobby/setCcu">, setSearchedUser: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IUserMetadata | undefined, "lobby/setSearchedUser">, resetLobby: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/resetLobby">, setSuggestions: import("@reduxjs/toolkit").ActionCreatorWithPayload<ISuggestionUser[], "lobby/setSuggestions">, pushBotLog: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "lobby/pushBotLog">, addTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/addTournament">, removeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<TournamentSchema, "lobby/removeTournament">, changeTournament: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamentId: string;
     field: string;
     value: any;
-}, "lobby/changeTournament">, updateTournament: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/updateTournament">, changeTournamentPlayer: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "lobby/changeTournament">, updateTournament: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"lobby/updateTournament">, changeTournamentPlayer: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamentId: string;
     playerId: string;
     field: string;
     value: any;
-}, "lobby/changeTournamentPlayer">, addTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "lobby/changeTournamentPlayer">, addTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamendId: string;
     bracketId: string;
     bracket: TournamentBracketSchema;
-}, "lobby/addTournamentBracket">, removeTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "lobby/addTournamentBracket">, removeTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamendId: string;
     bracketId: string;
-}, "lobby/removeTournamentBracket">, changeTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "lobby/removeTournamentBracket">, changeTournamentBracket: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     tournamentId: string;
     bracketId: string;
     field: string;

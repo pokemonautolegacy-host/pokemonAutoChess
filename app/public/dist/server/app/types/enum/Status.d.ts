@@ -24,6 +24,5 @@ export declare enum Status {
     FAIRY_FIELD = "FAIRY_FIELD",
     SPIKE_ARMOR = "SPIKE_ARMOR",
     MAGIC_BOUNCE = "MAGIC_BOUNCE",
-    LOCKED = "LOCKED",
-    BLINDED = "BLINDED"
+    LOCKED = "LOCKED"
 }

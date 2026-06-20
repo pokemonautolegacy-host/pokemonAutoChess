@@ -12,10 +12,12 @@ class Count extends schema_1.Schema {
         super(...arguments);
         this.crit = 0;
         this.ult = 0;
+        this.petalDanceCount = 0;
         this.fieldCount = 0;
         this.soundCount = 0;
         this.fairyCritCount = 0;
         this.attackCount = 0;
+        this.growGroundCount = 0;
         this.fightingBlockCount = 0;
         this.dodgeCount = 0;
         this.powerLensCount = 0;
@@ -23,13 +25,17 @@ class Count extends schema_1.Schema {
         this.tripleAttackCount = 0;
         this.staticHolderCount = 0;
         this.defensiveRibbonCount = 0;
+        this.earthquakeCount = 0;
+        this.mindBlownCount = 0;
         this.spellBlockedCount = 0;
         this.manaBurnCount = 0;
         this.moneyCount = 0;
         this.amuletCoinCount = 0;
-        this.bottleCapCount = 0;
+        this.futureSightCount = 0;
         this.upgradeCount = 0;
         this.soulDewCount = 0;
+        this.healOrderCount = 0;
+        this.attackOrderCount = 0;
         this.magmarizerCount = 0;
     }
 }
@@ -42,6 +48,9 @@ __decorate([
 ], Count.prototype, "ult", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
+], Count.prototype, "petalDanceCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
 ], Count.prototype, "fieldCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
@@ -52,6 +61,9 @@ __decorate([
 __decorate([
     (0, schema_1.type)("uint8")
 ], Count.prototype, "attackCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
+], Count.prototype, "growGroundCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
 ], Count.prototype, "fightingBlockCount", void 0);
@@ -75,6 +87,12 @@ __decorate([
 ], Count.prototype, "defensiveRibbonCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
+], Count.prototype, "earthquakeCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
+], Count.prototype, "mindBlownCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
 ], Count.prototype, "spellBlockedCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
@@ -87,13 +105,19 @@ __decorate([
 ], Count.prototype, "amuletCoinCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
-], Count.prototype, "bottleCapCount", void 0);
+], Count.prototype, "futureSightCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
 ], Count.prototype, "upgradeCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
 ], Count.prototype, "soulDewCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
+], Count.prototype, "healOrderCount", void 0);
+__decorate([
+    (0, schema_1.type)("uint8")
+], Count.prototype, "attackOrderCount", void 0);
 __decorate([
     (0, schema_1.type)("uint8")
 ], Count.prototype, "magmarizerCount", void 0);

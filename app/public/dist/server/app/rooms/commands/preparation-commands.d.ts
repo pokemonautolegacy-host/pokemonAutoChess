@@ -5,12 +5,10 @@ import { IBot } from "../../models/mongo-models/bot-v2";
 import { EloRank } from "../../types/Config";
 import { BotDifficulty } from "../../types/enum/Game";
 import PreparationRoom from "../preparation-room";
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
-import { UserRecord } from "firebase-admin/lib/auth/user-record";
 export declare class OnJoinCommand extends Command<PreparationRoom, {
-    client: Client<undefined, UserRecord>;
+    client: Client;
     options: any;
-    auth: UserRecord;
+    auth: any;
 }> {
     execute({ client, options, auth }: {
         client: any;
@@ -72,16 +70,7 @@ export declare class OnRoomChangeRankCommand extends Command<PreparationRoom, {
         maxRank: any;
     }): void;
 }
-export declare class OnRoomChangeSpecialRule extends Command<PreparationRoom, {
-    client: Client;
-    specialRule: SpecialGameRule | null;
-}> {
-    execute({ client, specialRule }: {
-        client: any;
-        specialRule: any;
-    }): void;
-}
-export declare class OnChangeNoEloCommand extends Command<PreparationRoom, {
+export declare class OnToggleEloCommand extends Command<PreparationRoom, {
     client: Client;
     message: boolean;
 }> {
@@ -117,15 +106,12 @@ export declare class OnLeaveCommand extends Command<PreparationRoom, {
 }
 export declare class OnToggleReadyCommand extends Command<PreparationRoom, {
     client: Client;
-    ready: boolean;
+    ready: boolean | undefined;
 }> {
     execute({ client, ready }: {
         client: any;
         ready: any;
-    }): CheckAutoStartRoom;
-}
-export declare class CheckAutoStartRoom extends Command<PreparationRoom, void> {
-    execute(): Promise<OnGameStartRequestCommand>;
+    }): OnGameStartRequestCommand[] | undefined;
 }
 export declare class InitializeBotsCommand extends Command<PreparationRoom, {
     ownerId: string;

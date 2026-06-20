@@ -8,4 +8,4 @@ export declare const useAppDispatch: () => import("redux-thunk").ThunkDispatch<{
     after: import("./stores/AfterGameStore").IUserAfterState;
 }, undefined, import("redux").UnknownAction> & import("redux").Dispatch<import("redux").UnknownAction>;
 export declare const useAppSelector: TypedUseSelectorHook<RootState>;
-export declare const selectCurrentPlayer: (state: RootState) => import("../../types").IPlayer;
+export declare const selectCurrentPlayer: (state: RootState) => import("../../types").IPlayer | undefined;

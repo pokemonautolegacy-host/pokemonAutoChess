@@ -11,7 +11,7 @@ const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/pr
 const Config_1 = require("../../../../../types/Config");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const Weather_1 = require("../../../../../types/enum/Weather");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const descriptions_1 = require("../../utils/descriptions");
 const jsx_1 = require("../../utils/jsx");
 const game_pokemon_detail_1 = require("../game/game-pokemon-detail");
@@ -25,7 +25,7 @@ function WikiWeather() {
                                     .map((p) => ((0, jsx_runtime_1.jsx)("li", { children: (0, jsx_runtime_1.jsxs)("div", { className: (0, jsx_1.cc)("pokemon-portrait", {
                                             additional: p.additional,
                                             regional: p.regional
-                                        }), "data-tooltip-id": `pokemon-detail-${p.index}`, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index) }), (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: `pokemon-detail-${p.index}`, className: "custom-theme-tooltip game-pokemon-detail-tooltip", children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: p.name }) })] }, p.name) }, p.index))) })] }, weather));
+                                        }), "data-tooltip-id": `pokemon-detail-${p.index}`, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(p.index) }), (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: `pokemon-detail-${p.index}`, className: "custom-theme-tooltip game-pokemon-detail-tooltip", children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: p.name }) })] }, p.name) }, p.index))) })] }, weather));
                 }) })] }));
 }
 const pokemonsInfluencingWeather = new Map([

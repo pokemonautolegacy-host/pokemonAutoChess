@@ -4,7 +4,6 @@ exports.BOT_SCORES = exports.POWER_AVERAGES = exports.POWER_SCORE_BY_CATEGORY = 
 exports.getBotScore = getBotScore;
 exports.getCategory = getCategory;
 exports.getPowerScore = getPowerScore;
-exports.getUnitPowerScore = getUnitPowerScore;
 exports.getPowerEvaluation = getPowerEvaluation;
 exports.getMaxItemComponents = getMaxItemComponents;
 exports.getNbComponentsOnBoard = getNbComponentsOnBoard;
@@ -126,11 +125,11 @@ Object.values(Pokemon_1.Pkm).forEach((pkm) => {
     }
 });
 function getPowerScore(board) {
-    return board.reduce((sum, pkm) => sum + getUnitPowerScore(pkm.name), 0);
-}
-function getUnitPowerScore(pkm) {
-    var _a;
-    return (_a = exports.POWER_SCORE_BY_CATEGORY[getCategory(pkm)]) !== null && _a !== void 0 ? _a : 1;
+    return board.reduce((sum, pkm) => {
+        var _a;
+        const category = getCategory(pkm.name);
+        return sum + ((_a = exports.POWER_SCORE_BY_CATEGORY[category]) !== null && _a !== void 0 ? _a : 1);
+    }, 0);
 }
 function getPowerEvaluation(powerScore, stage) {
     var _a;

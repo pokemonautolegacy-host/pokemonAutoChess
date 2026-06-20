@@ -8,7 +8,6 @@ import { IDps, IExperienceManager, IPlayer, ISimulation } from "../../../types";
 import { GamePhaseState, Team } from "../../../types/enum/Game";
 import { Item } from "../../../types/enum/Item";
 import { Pkm, PkmProposition } from "../../../types/enum/Pokemon";
-import { SpecialGameRule } from "../../../types/enum/SpecialGameRule";
 import { Weather } from "../../../types/enum/Weather";
 export interface GameStateStore {
     afterGameId: string;
@@ -19,7 +18,6 @@ export interface GameStateStore {
     simulations: ISimulation[];
     stageLevel: number;
     noElo: boolean;
-    specialGameRule: SpecialGameRule | null;
     currentPlayerId: string;
     currentSimulationId: string;
     currentTeam: Team;
@@ -45,7 +43,6 @@ export declare const gameSlice: import("@reduxjs/toolkit").Slice<GameStateStore,
     setPhase: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<GamePhaseState>) => void;
     setStageLevel: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<number>) => void;
     setNoELO: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<boolean>) => void;
-    setSpecialGameRule: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<SpecialGameRule | null>) => void;
     addPlayer: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<IPlayer>) => void;
     removePlayer: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<IPlayer>) => void;
     setMoney: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<number>) => void;
@@ -100,35 +97,35 @@ export declare const gameSlice: import("@reduxjs/toolkit").Slice<GameStateStore,
     setPokemonCollection: (state: import("immer").WritableDraft<GameStateStore>, action: PayloadAction<PokemonCollection>) => void;
     leaveGame: () => GameStateStore;
 }, "game", "game", import("@reduxjs/toolkit").SliceSelectors<GameStateStore>>;
-export declare const setSimulation: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<Simulation, "game/setSimulation">, setAdditionalPokemons: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<Pkm[], "game/setAdditionalPokemons">, setPokemonProposition: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<PkmProposition[], "game/setPokemonProposition">, setPokemonCollection: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<PokemonCollection, "game/setPokemonCollection">, leaveGame: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"game/leaveGame">, removeDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+export declare const setSimulation: import("@reduxjs/toolkit").ActionCreatorWithPayload<Simulation, "game/setSimulation">, setAdditionalPokemons: import("@reduxjs/toolkit").ActionCreatorWithPayload<Pkm[], "game/setAdditionalPokemons">, setPokemonProposition: import("@reduxjs/toolkit").ActionCreatorWithPayload<PkmProposition[], "game/setPokemonProposition">, setPokemonCollection: import("@reduxjs/toolkit").ActionCreatorWithPayload<PokemonCollection, "game/setPokemonCollection">, leaveGame: import("@reduxjs/toolkit").ActionCreatorWithoutPayload<"game/leaveGame">, removeDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     team: Team;
     simulationId: string;
-}, "game/removeDpsMeter">, changeDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/removeDpsMeter">, changeDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     id: string;
     team: Team;
     field: string;
     value: string | number;
     simulationId: string;
-}, "game/changeDpsMeter">, addDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/changeDpsMeter">, addDpsMeter: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     value: IDps;
     team: Team;
     id: string;
-}, "game/addDpsMeter">, setLoadingProgress: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/addDpsMeter">, setLoadingProgress: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     value: number;
     id: string;
-}, "game/setLoadingProgress">, setPlayer: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IPlayer, "game/setPlayer">, setLife: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/setLoadingProgress">, setPlayer: import("@reduxjs/toolkit").ActionCreatorWithPayload<IPlayer, "game/setPlayer">, setLife: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     value: number;
     id: string;
-}, "game/setLife">, setSynergies: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/setLife">, setSynergies: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     value: Synergies;
     id: string;
-}, "game/setSynergies">, setRoundTime: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setRoundTime">, setAfterGameId: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<string, "game/setAfterGameId">, setPhase: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<GamePhaseState, "game/setPhase">, setStageLevel: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setStageLevel">, setWeather: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/setSynergies">, setRoundTime: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setRoundTime">, setAfterGameId: import("@reduxjs/toolkit").ActionCreatorWithPayload<string, "game/setAfterGameId">, setPhase: import("@reduxjs/toolkit").ActionCreatorWithPayload<GamePhaseState, "game/setPhase">, setStageLevel: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setStageLevel">, setWeather: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     value: Weather;
     id: string;
-}, "game/setWeather">, setNoELO: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<boolean, "game/setNoELO">, setSpecialGameRule: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<SpecialGameRule, "game/setSpecialGameRule">, addPlayer: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IPlayer, "game/addPlayer">, removePlayer: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IPlayer, "game/removePlayer">, updateExperienceManager: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<IExperienceManager, "game/updateExperienceManager">, setStreak: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setStreak">, setInterest: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setInterest">, setMoney: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setMoney">, setShopFreeRolls: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<number, "game/setShopFreeRolls">, setShopLocked: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<boolean, "game/setShopLocked">, changePlayer: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<{
+}, "game/setWeather">, setNoELO: import("@reduxjs/toolkit").ActionCreatorWithPayload<boolean, "game/setNoELO">, addPlayer: import("@reduxjs/toolkit").ActionCreatorWithPayload<IPlayer, "game/addPlayer">, removePlayer: import("@reduxjs/toolkit").ActionCreatorWithPayload<IPlayer, "game/removePlayer">, updateExperienceManager: import("@reduxjs/toolkit").ActionCreatorWithPayload<IExperienceManager, "game/updateExperienceManager">, setStreak: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setStreak">, setInterest: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setInterest">, setMoney: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setMoney">, setShopFreeRolls: import("@reduxjs/toolkit").ActionCreatorWithPayload<number, "game/setShopFreeRolls">, setShopLocked: import("@reduxjs/toolkit").ActionCreatorWithPayload<boolean, "game/setShopLocked">, changePlayer: import("@reduxjs/toolkit").ActionCreatorWithPayload<{
     id: string;
     field: string;
     value: any;
-}, "game/changePlayer">, setShop: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ArraySchema<Pkm>, "game/setShop">, setItemsProposition: import("@reduxjs/toolkit").ActionCreatorWithOptionalPayload<ArraySchema<Item>, "game/setItemsProposition">;
+}, "game/changePlayer">, setShop: import("@reduxjs/toolkit").ActionCreatorWithPayload<ArraySchema<Pkm>, "game/setShop">, setItemsProposition: import("@reduxjs/toolkit").ActionCreatorWithPayload<ArraySchema<Item>, "game/setItemsProposition">;
 declare const _default: import("redux").Reducer<GameStateStore>;
 export default _default;

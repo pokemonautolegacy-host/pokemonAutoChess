@@ -1,1 +1,1 @@
-export declare function GadgetsTab(): import("react/jsx-runtime").JSX.Element;
+export declare function GadgetsTab(): import("react/jsx-runtime").JSX.Element | null;

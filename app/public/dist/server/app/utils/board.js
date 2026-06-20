@@ -40,6 +40,8 @@ function getFreeSpaceOnBench(board) {
     return numberOfFreeSpace;
 }
 function getMaxTeamSize(playerLevel, specialGameRule) {
+    if (specialGameRule === SpecialGameRule_1.SpecialGameRule.SIX_PACK)
+        return 6;
     if (specialGameRule === SpecialGameRule_1.SpecialGameRule.CROWDED)
         return playerLevel + 3;
     return playerLevel;

@@ -19,7 +19,7 @@ const Ability_1 = require("../../../../../types/enum/Ability");
 const Game_1 = require("../../../../../types/enum/Game");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const array_1 = require("../../../../../utils/array");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const jsx_1 = require("../../utils/jsx");
 const game_pokemon_detail_1 = require("../game/game-pokemon-detail");
 const pokemon_typeahead_1 = require("../typeahead/pokemon-typeahead");
@@ -52,7 +52,7 @@ function WikiPokemon(props) {
             : Pokemon_1.PkmIndex[Pokemon_1.PkmFamily[a]].localeCompare(Pokemon_1.PkmIndex[Pokemon_1.PkmFamily[b]]);
     }), [props.rarity]);
     return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { selectedIndex: props.selected ? pokemons.indexOf(props.selected) : -1, onSelect: (index) => props.onSelect(pokemons[index]), children: [(0, jsx_runtime_1.jsx)(react_tabs_1.TabList, { children: pokemons.map((pkm) => {
-                    return ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: (0, jsx_runtime_1.jsx)("img", { className: "pokemon-portrait", src: (0, avatar_1.getPortraitSrc)(Pokemon_1.PkmIndex[pkm]) }) }, "title-" + pkm));
+                    return ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: (0, jsx_runtime_1.jsx)("img", { className: "pokemon-portrait", src: (0, utils_1.getPortraitSrc)(Pokemon_1.PkmIndex[pkm]) }) }, "title-" + pkm));
                 }) }), pokemons.map((pkm) => {
                 return ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: (0, jsx_runtime_1.jsx)(wiki_pokemon_detail_1.default, { pokemon: pkm }) }, pkm));
             })] }));
@@ -88,7 +88,7 @@ function WikiAllPokemons() {
                                             regional: p.regional
                                         }), onMouseOver: () => {
                                             setHoveredPokemon(p.name);
-                                        }, "data-tooltip-id": "pokemon-detail", children: (0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index) }) }, p.name));
+                                        }, "data-tooltip-id": "pokemon-detail", children: (0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(p.index) }) }, p.name));
                                 }) })] }, rarity));
                 }) }), hoveredPokemon && (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "pokemon-detail", className: "custom-theme-tooltip game-pokemon-detail-tooltip", float: true, children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: hoveredPokemon }) })] }));
 }

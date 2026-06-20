@@ -3,7 +3,6 @@ import { GameUser } from "../../models/colyseus-models/game-user";
 import Message from "../../models/colyseus-models/message";
 import { EloRank } from "../../types/Config";
 import { GameMode } from "../../types/enum/Game";
-import { SpecialGameRule } from "../../types/enum/SpecialGameRule";
 export interface IPreparationState {
     users: MapSchema<GameUser>;
     messages: ArraySchema<Message>;
@@ -25,11 +24,9 @@ export default class PreparationState extends Schema implements IPreparationStat
     minRank: EloRank | null;
     maxRank: EloRank | null;
     gameMode: GameMode;
-    specialGameRule: SpecialGameRule | null;
     noElo: boolean;
     whitelist: string[];
     blacklist: string[];
-    abortOnPlayerLeave?: AbortController;
     constructor(params: {
         ownerId?: string;
         roomName: string;
@@ -38,7 +35,6 @@ export default class PreparationState extends Schema implements IPreparationStat
         noElo?: boolean;
         password?: string;
         gameMode: GameMode;
-        specialGameRule?: SpecialGameRule;
         whitelist?: string[];
         blacklist?: string[];
     });

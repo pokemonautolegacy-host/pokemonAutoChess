@@ -7,7 +7,7 @@ const react_i18next_1 = require("react-i18next");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const hooks_1 = require("../../../hooks");
 const NetworkStore_1 = require("../../../stores/NetworkStore");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const pokemon_typeahead_1 = require("../typeahead/pokemon-typeahead");
 function AvatarTab() {
     const { t } = (0, react_i18next_1.useTranslation)();
@@ -29,7 +29,7 @@ function AvatarTab() {
                                         emotion: emotion,
                                         shiny: type === "shiny"
                                     }));
-                                }, src: (0, avatar_1.getPortraitSrc)(pokemonConfig.id, type === "shiny", emotion) }, `${type}-${pokemonConfig.id}${emotion}`));
+                                }, src: (0, utils_1.getPortraitSrc)(pokemonConfig.id, type === "shiny", emotion) }, `${type}-${pokemonConfig.id}${emotion}`));
                         });
                     }))] })] }));
 }

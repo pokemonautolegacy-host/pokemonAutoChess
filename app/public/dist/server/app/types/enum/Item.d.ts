@@ -1,4 +1,3 @@
-import { Ability } from "./Ability";
 import { Synergy } from "./Synergy";
 import { Weather } from "./Weather";
 export declare enum Item {
@@ -123,24 +122,7 @@ export declare enum Item {
     TEAL_MASK = "TEAL_MASK",
     WELLSPRING_MASK = "WELLSPRING_MASK",
     CORNERSTONE_MASK = "CORNERSTONE_MASK",
-    HEARTHFLAME_MASK = "HEARTHFLAME_MASK",
-    ZYGARDE_CUBE = "ZYGARDE_CUBE",
-    TM_RAGE = "TM_RAGE",
-    TM_BRICK_BREAK = "TM_BRICK_BREAK",
-    TM_TAUNT = "TM_TAUNT",
-    TM_BULK_UP = "TM_BULK_UP",
-    TM_BIDE = "TM_BIDE",
-    TM_PSYCH_UP = "TM_PSYCH_UP",
-    TM_RETALIATE = "TM_RETALIATE",
-    TM_PAYDAY = "TM_PAYDAY",
-    HM_CUT = "HM_CUT",
-    HM_FLY = "HM_FLY",
-    HM_SURF = "HM_SURF",
-    HM_STRENGTH = "HM_STRENGTH",
-    HM_FLASH = "HM_FLASH",
-    HM_ROCK_SMASH = "HM_ROCK_SMASH",
-    HM_WHIRLPOOL = "HM_WHIRLPOOL",
-    HM_WATERFALL = "HM_WATERFALL"
+    HEARTHFLAME_MASK = "HEARTHFLAME_MASK"
 }
 export declare const AllItems: Item[];
 export declare const SpecialItems: Item[];
@@ -155,7 +137,7 @@ export declare const ArtificialItems: Item[];
 export declare const ShinyItems: Item[];
 export declare const WeatherRocks: Item[];
 export declare const WeatherRocksByWeather: Map<Weather, (typeof WeatherRocks)[number] | null>;
-export declare const WeatherByWeatherRocks: Map<Item, Weather>;
+export declare const WeatherByWeatherRocks: Map<Item | null, Weather>;
 export declare const CraftableItems: Item[];
 export declare const SynergyStones: Item[];
 export declare const SynergyItems: readonly [Item.OLD_AMBER, Item.DAWN_STONE, Item.WATER_STONE, Item.THUNDER_STONE, Item.FIRE_STONE, Item.MOON_STONE, Item.DUSK_STONE, Item.LEAF_STONE, Item.ICE_STONE, Item.MACHO_BRACE, Item.LIGHT_BALL, Item.TOXIC_ORB, Item.METRONOME, Item.METAL_COAT, Item.SWIFT_WING, Item.HARD_STONE, Item.BIG_NUGGET, Item.ROTOM_PHONE, Item.SHINY_STONE, Item.SILK_SCARF, Item.TINY_MUSHROOM];
@@ -163,8 +145,3 @@ export declare const SynergyGivenByItem: Record<(typeof SynergyItems)[number], S
 export declare const NonSpecialItemComponents: Item[];
 export declare const NonHoldableItems: Item[];
 export declare const OgerponMasks: Item[];
-export declare const TMs: Item[];
-export declare const HMs: Item[];
-export declare const AbilityPerTM: {
-    [item in Item]?: Ability;
-};

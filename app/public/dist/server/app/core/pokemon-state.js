@@ -15,7 +15,6 @@ const distance_1 = require("../utils/distance");
 const logger_1 = require("../utils/logger");
 const number_1 = require("../utils/number");
 const random_1 = require("../utils/random");
-const effect_1 = require("./effect");
 class PokemonState {
     constructor() {
         this.name = "";
@@ -59,39 +58,6 @@ class PokemonState {
             if (pokemon.status.stoneEdge) {
                 damage += Math.round(pokemon.def * (1 + pokemon.ap / 100));
             }
-            let additionalSpecialDamagePart = 0;
-            if (pokemon.effects.has(Effect_1.Effect.AROMATIC_MIST)) {
-                additionalSpecialDamagePart += 0.2;
-            }
-            else if (pokemon.effects.has(Effect_1.Effect.FAIRY_WIND)) {
-                additionalSpecialDamagePart += 0.4;
-            }
-            else if (pokemon.effects.has(Effect_1.Effect.STRANGE_STEAM)) {
-                additionalSpecialDamagePart += 0.6;
-            }
-            else if (pokemon.effects.has(Effect_1.Effect.MOON_FORCE)) {
-                additionalSpecialDamagePart += 0.8;
-            }
-            let isAttackSuccessful = true;
-            let dodgeChance = target.dodge;
-            if (pokemon.status.blinded) {
-                dodgeChance += 0.5;
-            }
-            dodgeChance = (0, number_1.max)(0.9)(dodgeChance);
-            if ((0, random_1.chance)(dodgeChance, target) &&
-                !pokemon.items.has(Item_1.Item.XRAY_VISION) &&
-                !pokemon.effects.has(Effect_1.Effect.LOCK_ON) &&
-                !target.status.paralysis &&
-                !target.status.sleep &&
-                !target.status.freeze) {
-                isAttackSuccessful = false;
-                damage = 0;
-                target.count.dodgeCount += 1;
-            }
-            if (target.status.protect || target.status.skydiving) {
-                isAttackSuccessful = false;
-                damage = 0;
-            }
             let trueDamagePart = 0;
             if (pokemon.effects.has(Effect_1.Effect.STEEL_SURGE)) {
                 trueDamagePart += 0.33;
@@ -112,6 +78,39 @@ class PokemonState {
                 trueDamagePart += 2.0 * (1 + pokemon.ap / 100);
                 pokemon.effects.delete(Effect_1.Effect.LOCK_ON);
             }
+            let additionalSpecialDamagePart = 0;
+            if (pokemon.effects.has(Effect_1.Effect.AROMATIC_MIST)) {
+                additionalSpecialDamagePart += 0.15;
+            }
+            else if (pokemon.effects.has(Effect_1.Effect.FAIRY_WIND)) {
+                additionalSpecialDamagePart += 0.3;
+            }
+            else if (pokemon.effects.has(Effect_1.Effect.STRANGE_STEAM)) {
+                additionalSpecialDamagePart += 0.5;
+            }
+            else if (pokemon.effects.has(Effect_1.Effect.MOON_FORCE)) {
+                additionalSpecialDamagePart += 0.7;
+            }
+            let isAttackSuccessful = true;
+            let dodgeChance = target.dodge;
+            if (pokemon.effects.has(Effect_1.Effect.GAS)) {
+                dodgeChance += 0.5;
+            }
+            dodgeChance = (0, number_1.max)(0.9)(dodgeChance);
+            if ((0, random_1.chance)(dodgeChance, target) &&
+                !pokemon.items.has(Item_1.Item.XRAY_VISION) &&
+                !pokemon.effects.has(Effect_1.Effect.LOCK_ON) &&
+                !target.status.paralysis &&
+                !target.status.sleep &&
+                !target.status.freeze) {
+                isAttackSuccessful = false;
+                damage = 0;
+                target.count.dodgeCount += 1;
+            }
+            if (target.status.protect || target.status.skydiving) {
+                isAttackSuccessful = false;
+                damage = 0;
+            }
             if (trueDamagePart > 0) {
                 trueDamage = Math.ceil(damage * trueDamagePart);
                 damage = (0, number_1.min)(0)(damage * (1 - trueDamagePart));
@@ -124,10 +123,7 @@ class PokemonState {
                 });
                 totalTakenDamage += takenDamage;
             }
-            if (target.effects.has(Effect_1.Effect.WONDER_ROOM)) {
-                specialDamage = Math.ceil(damage * (1 + pokemon.ap / 100));
-            }
-            else if (pokemon.attackType === Game_1.AttackType.SPECIAL) {
+            if (pokemon.attackType === Game_1.AttackType.SPECIAL) {
                 specialDamage = damage;
             }
             else {
@@ -239,7 +235,7 @@ class PokemonState {
             if (pokemon.items.has(Item_1.Item.SILK_SCARF))
                 shield *= 1.3;
             shield = Math.round(shield);
-            pokemon.shield = (0, number_1.min)(0)(pokemon.shield + shield);
+            pokemon.shield += shield;
             if (caster && shield > 0) {
                 if (pokemon.simulation.room.state.time < Config_1.FIGHTING_PHASE_DURATION) {
                     pokemon.simulation.room.broadcast(types_1.Transfer.POKEMON_HEAL, {
@@ -306,17 +302,12 @@ class PokemonState {
                 attacker.effects.has(Effect_1.Effect.SHEER_COLD)) {
                 damage = Math.ceil(damage * 1.3);
             }
-            let def = pokemon.status.armorReduction
+            const def = pokemon.status.armorReduction
                 ? Math.round(pokemon.def / 2)
                 : pokemon.def;
-            let speDef = pokemon.status.armorReduction
+            const speDef = pokemon.status.armorReduction
                 ? Math.round(pokemon.speDef / 2)
                 : pokemon.speDef;
-            if (pokemon.effects.has(Effect_1.Effect.WONDER_ROOM)) {
-                const swap = def;
-                def = speDef;
-                speDef = swap;
-            }
             let reducedDamage = damage;
             if (attackType == Game_1.AttackType.PHYSICAL) {
                 reducedDamage = damage / (1 + Config_1.ARMOR_FACTOR * def);
@@ -393,11 +384,11 @@ class PokemonState {
                 takenDamage = 0;
                 residualDamage = 0;
                 pokemon.status.triggerProtect(2000);
-                pokemon.removeItem(Item_1.Item.SHINY_CHARM);
+                pokemon.items.delete(Item_1.Item.SHINY_CHARM);
             }
             pokemon.life = Math.max(0, pokemon.life - residualDamage);
             if (shouldTargetGainMana) {
-                pokemon.addPP(Math.ceil(residualDamage / 10), pokemon, 0, false);
+                pokemon.addPP(Math.ceil(damage / 10), pokemon, 0, false);
             }
             if (takenDamage > 0) {
                 pokemon.onDamageReceived({ attacker, damage: takenDamage, board });
@@ -459,7 +450,7 @@ class PokemonState {
                     death = true;
                 }
                 if (pokemon.passive === Passive_1.Passive.PRIMEAPE) {
-                    pokemon.applyStat(Game_1.Stat.ATK, 1, true);
+                    pokemon.refToBoardPokemon.atk += 1;
                 }
             }
             if (death) {
@@ -519,26 +510,61 @@ class PokemonState {
     update(pokemon, dt, board, weather, player) {
         this.updateCommands(pokemon, dt);
         pokemon.status.updateAllStatus(dt, pokemon, board);
-        pokemon.effectsSet.forEach((effect) => {
-            if (effect instanceof effect_1.PeriodicEffect) {
-                effect.update(dt, pokemon);
-            }
-        });
         if ((pokemon.status.resurecting ||
             pokemon.status.freeze ||
             pokemon.status.sleep) &&
             pokemon.state.name !== "idle") {
             pokemon.toIdleState();
         }
+        if (pokemon.effects.has(Effect_1.Effect.TILLER) ||
+            pokemon.effects.has(Effect_1.Effect.DIGGER) ||
+            pokemon.effects.has(Effect_1.Effect.DRILLER) ||
+            pokemon.effects.has(Effect_1.Effect.DEEP_MINER)) {
+            pokemon.growGroundTimer -= dt;
+            if (pokemon.growGroundTimer <= 0) {
+                pokemon.growGroundTimer = 3000;
+                pokemon.count.growGroundCount += 1;
+                if (pokemon.effects.has(Effect_1.Effect.TILLER)) {
+                    pokemon.addDefense(1, pokemon, 0, false);
+                    pokemon.addSpecialDefense(1, pokemon, 0, false);
+                    pokemon.addAttack(1, pokemon, 0, false);
+                }
+                else if (pokemon.effects.has(Effect_1.Effect.DIGGER)) {
+                    pokemon.addDefense(2, pokemon, 0, false);
+                    pokemon.addSpecialDefense(2, pokemon, 0, false);
+                    pokemon.addAttack(2, pokemon, 0, false);
+                }
+                else if (pokemon.effects.has(Effect_1.Effect.DRILLER)) {
+                    pokemon.addDefense(3, pokemon, 0, false);
+                    pokemon.addSpecialDefense(3, pokemon, 0, false);
+                    pokemon.addAttack(3, pokemon, 0, false);
+                }
+                else if (pokemon.effects.has(Effect_1.Effect.DEEP_MINER)) {
+                    pokemon.addDefense(4, pokemon, 0, false);
+                    pokemon.addSpecialDefense(4, pokemon, 0, false);
+                    pokemon.addAttack(4, pokemon, 0, false);
+                }
+                if (pokemon.items.has(Item_1.Item.BIG_NUGGET) &&
+                    pokemon.count.growGroundCount === 5 &&
+                    player) {
+                    player.addMoney(3, true, pokemon);
+                    pokemon.count.moneyCount += 3;
+                }
+            }
+        }
         if (pokemon.effects.has(Effect_1.Effect.INGRAIN) ||
             pokemon.effects.has(Effect_1.Effect.GROWTH) ||
             pokemon.effects.has(Effect_1.Effect.SPORE)) {
             if (pokemon.grassHealCooldown - dt <= 0) {
-                const heal = pokemon.effects.has(Effect_1.Effect.SPORE)
+                let heal = pokemon.effects.has(Effect_1.Effect.SPORE)
                     ? 30
                     : pokemon.effects.has(Effect_1.Effect.GROWTH)
                         ? 15
                         : 7;
+                if (pokemon.effects.has(Effect_1.Effect.HYDRATATION) &&
+                    pokemon.simulation.weather === Weather_1.Weather.RAIN) {
+                    heal += 5;
+                }
                 pokemon.handleHeal(heal, pokemon, 0, false);
                 pokemon.grassHealCooldown = 2000;
                 pokemon.simulation.room.broadcast(types_1.Transfer.ABILITY, {
@@ -552,7 +578,8 @@ class PokemonState {
                 pokemon.grassHealCooldown = pokemon.grassHealCooldown - dt;
             }
         }
-        if (pokemon.simulation.weather === Weather_1.Weather.SANDSTORM) {
+        if (pokemon.simulation.weather === Weather_1.Weather.SANDSTORM &&
+            pokemon.types.has(Synergy_1.Synergy.GROUND) === false) {
             pokemon.sandstormDamageTimer -= dt;
             if (pokemon.sandstormDamageTimer <= 0 && !pokemon.simulation.finished) {
                 pokemon.sandstormDamageTimer = 1000;
@@ -562,15 +589,13 @@ class PokemonState {
                     sandstormDamage -= nbSmoothRocks;
                     pokemon.addAttackSpeed(nbSmoothRocks, pokemon, 0, false);
                 }
-                if (pokemon.types.has(Synergy_1.Synergy.GROUND) === false) {
-                    pokemon.handleDamage({
-                        damage: sandstormDamage,
-                        board,
-                        attackType: Game_1.AttackType.SPECIAL,
-                        attacker: null,
-                        shouldTargetGainMana: false
-                    });
-                }
+                pokemon.handleDamage({
+                    damage: sandstormDamage,
+                    board,
+                    attackType: Game_1.AttackType.SPECIAL,
+                    attacker: null,
+                    shouldTargetGainMana: false
+                });
             }
         }
         if (pokemon.oneSecondCooldown <= 0) {
@@ -600,10 +625,10 @@ class PokemonState {
             pokemon.addPP(4, pokemon, 0, false);
         }
         if (pokemon.effects.has(Effect_1.Effect.DRIZZLE)) {
-            pokemon.addPP(8, pokemon, 0, false);
+            pokemon.addPP(7, pokemon, 0, false);
         }
         if (pokemon.effects.has(Effect_1.Effect.PRIMORDIAL_SEA)) {
-            pokemon.addPP(12, pokemon, 0, false);
+            pokemon.addPP(10, pokemon, 0, false);
         }
         if (pokemon.simulation.weather === Weather_1.Weather.RAIN) {
             pokemon.addPP(3, pokemon, 0, false);
@@ -659,10 +684,6 @@ class PokemonState {
             });
             pokemon.status.triggerArmorReduction(1000, pokemon);
         }
-        if (pokemon.effects.has(Effect_1.Effect.TOXIC_SPIKES) &&
-            !pokemon.types.has(Synergy_1.Synergy.POISON)) {
-            pokemon.status.triggerPoison(1000, pokemon, undefined);
-        }
         if (pokemon.effects.has(Effect_1.Effect.HAIL) && !pokemon.types.has(Synergy_1.Synergy.ICE)) {
             pokemon.handleDamage({
                 damage: 10,
@@ -674,21 +695,10 @@ class PokemonState {
             pokemon.status.triggerFreeze(1000, pokemon);
             pokemon.effects.delete(Effect_1.Effect.HAIL);
         }
-        if (pokemon.effects.has(Effect_1.Effect.EMBER) &&
-            !(pokemon.types.has(Synergy_1.Synergy.FIRE) || pokemon.types.has(Synergy_1.Synergy.FLYING))) {
-            pokemon.handleDamage({
-                damage: 10,
-                board,
-                attackType: Game_1.AttackType.SPECIAL,
-                attacker: null,
-                shouldTargetGainMana: true
-            });
-            pokemon.status.triggerBurn(1100, pokemon, undefined);
-        }
         if (pokemon.effects.has(Effect_1.Effect.ZEN_MODE)) {
             const crit = pokemon.items.has(Item_1.Item.REAPER_CLOTH) &&
                 (0, random_1.chance)(pokemon.critChance / 100, pokemon);
-            pokemon.handleHeal(15, pokemon, 1, crit);
+            pokemon.handleHeal(10, pokemon, 1, crit);
             if (pokemon.life >= pokemon.hp) {
                 pokemon.index = Pokemon_1.PkmIndex[Pokemon_1.Pkm.DARMANITAN];
                 pokemon.name = Pokemon_1.Pkm.DARMANITAN;

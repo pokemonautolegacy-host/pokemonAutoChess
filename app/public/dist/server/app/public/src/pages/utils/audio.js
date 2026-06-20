@@ -68,7 +68,6 @@ function playMusic(scene, name) {
     scene.music = scene.sound.add("music_" + name, {
         loop: true
     });
-    scene.sound.pauseOnBlur = !preferences_1.preferences.playInBackground;
     const musicVolume = preferences_1.preferences.musicVolume / 100;
     try {
         scene.music.play({ volume: musicVolume, loop: true });

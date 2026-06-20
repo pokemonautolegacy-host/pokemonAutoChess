@@ -27,7 +27,6 @@ function WikiStatus() {
         Status_1.Status.WOUND,
         Status_1.Status.RAGE,
         Status_1.Status.LOCKED,
-        Status_1.Status.BLINDED,
         Status_1.Status.ELECTRIC_FIELD,
         Status_1.Status.FAIRY_FIELD,
         Status_1.Status.GRASS_FIELD,

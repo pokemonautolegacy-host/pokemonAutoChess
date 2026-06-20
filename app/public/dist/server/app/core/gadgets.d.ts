@@ -11,5 +11,4 @@ export declare const GADGETS: {
     readonly TEAM_PLANNER: Gadget;
     readonly JUKEBOX: Gadget;
     readonly BOT_BUILDER: Gadget;
-    readonly GAMEBOY: Gadget;
 };

@@ -26,7 +26,6 @@ precomputed_pokemons_1.precomputedPokemons.forEach((pokemon) => {
         evolution: pokemon.evolution === Pokemon_1.Pkm.DEFAULT ? null : pokemon.evolution,
         stages: (_a = pokemon.stages) !== null && _a !== void 0 ? _a : Math.max(...precomputed_pokemons_1.precomputedPokemons
             .filter((p) => Pokemon_1.PkmFamily[p.name] === Pokemon_1.PkmFamily[pokemon.name])
-            .filter((p) => p.skill !== Ability_1.Ability.DEFAULT)
             .map((p) => p.stars))
     });
 });

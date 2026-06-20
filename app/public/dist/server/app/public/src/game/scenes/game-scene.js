@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("firebase/compat/app"));
 const phaser_1 = require("phaser");
 const pokemon_entity_1 = require("../../../../core/pokemon-entity");
-const pokemon_1 = require("../../../../models/colyseus-models/pokemon");
 const types_1 = require("../../../../types");
 const Dungeon_1 = require("../../../../types/enum/Dungeon");
 const Game_1 = require("../../../../types/enum/Game");
 const Item_1 = require("../../../../types/enum/Item");
+const SpecialGameRule_1 = require("../../../../types/enum/SpecialGameRule");
 const logger_1 = require("../../../../utils/logger");
 const schemas_1 = require("../../../../utils/schemas");
 const window_1 = require("../../../../utils/window");
@@ -34,7 +34,7 @@ const item_container_1 = __importDefault(require("../components/item-container")
 const items_container_1 = __importDefault(require("../components/items-container"));
 const loading_manager_1 = __importDefault(require("../components/loading-manager"));
 const minigame_manager_1 = __importDefault(require("../components/minigame-manager"));
-const pokemon_2 = __importDefault(require("../components/pokemon"));
+const pokemon_1 = __importDefault(require("../components/pokemon"));
 const sell_zone_1 = require("../components/sell-zone");
 const unown_manager_1 = __importDefault(require("../components/unown-manager"));
 const weather_manager_1 = __importDefault(require("../components/weather-manager"));
@@ -152,12 +152,16 @@ class GameScene extends phaser_1.Scene {
         });
     }
     refreshShop() {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d;
         const player = (_a = this.room) === null || _a === void 0 ? void 0 : _a.state.players.get(this.uid);
-        const rollCost = ((_b = player === null || player === void 0 ? void 0 : player.shopFreeRolls) !== null && _b !== void 0 ? _b : 0) > 0 ? 0 : 1;
-        const canRoll = ((_c = player === null || player === void 0 ? void 0 : player.money) !== null && _c !== void 0 ? _c : 0) >= rollCost;
-        if (player && player.alive && canRoll && player === ((_d = this.board) === null || _d === void 0 ? void 0 : _d.player)) {
-            (_e = this.room) === null || _e === void 0 ? void 0 : _e.send(types_1.Transfer.REFRESH);
+        const rollCostType = ((_b = this.room) === null || _b === void 0 ? void 0 : _b.state.specialGameRule) === SpecialGameRule_1.SpecialGameRule.DESPERATE_MOVES
+            ? "life"
+            : "money";
+        if (player &&
+            player.alive &&
+            (player[rollCostType] >= 1 || player.shopFreeRolls > 0) &&
+            player === ((_c = this.board) === null || _c === void 0 ? void 0 : _c.player)) {
+            (_d = this.room) === null || _d === void 0 ? void 0 : _d.send(types_1.Transfer.REFRESH);
             (0, audio_1.playSound)(audio_1.SOUNDS.REFRESH, 0.5);
         }
     }
@@ -294,7 +298,7 @@ class GameScene extends phaser_1.Scene {
             }
         });
         this.input.on(Phaser.Input.Events.GAMEOBJECT_OVER, (pointer, gameObject) => {
-            if (gameObject instanceof pokemon_2.default && gameObject.draggable) {
+            if (gameObject instanceof pokemon_1.default && gameObject.draggable) {
                 this.setHovered(gameObject);
             }
         });
@@ -306,7 +310,7 @@ class GameScene extends phaser_1.Scene {
         });
         this.input.on("dragstart", (pointer, gameObject) => {
             var _a;
-            if (gameObject instanceof pokemon_2.default) {
+            if (gameObject instanceof pokemon_1.default) {
                 this.pokemonDragged = gameObject;
                 this.dropSpots.forEach((spot) => {
                     var _a;
@@ -330,18 +334,12 @@ class GameScene extends phaser_1.Scene {
             g.x = dragX;
             g.y = dragY;
             if (g && this.pokemonDragged != null) {
-                const pokemon = new pokemon_1.PokemonClasses[this.pokemonDragged.name]();
                 this.dropSpots.forEach((spot) => {
                     var _a;
-                    const inBench = spot.getData("y") === 0;
-                    let visible = false;
-                    if (inBench) {
-                        visible = pokemon.canBeBenched;
+                    if (((_a = this.room) === null || _a === void 0 ? void 0 : _a.state.phase) === Game_1.GamePhaseState.PICK ||
+                        spot.getData("y") === 0) {
+                        spot.setVisible(true);
                     }
-                    else if (((_a = this.room) === null || _a === void 0 ? void 0 : _a.state.phase) === Game_1.GamePhaseState.PICK) {
-                        visible = true;
-                    }
-                    spot.setVisible(visible);
                 });
                 if (((_a = this.sellZone) === null || _a === void 0 ? void 0 : _a.visible) === false &&
                     (0, pokemon_entity_1.canSell)(this.pokemonDragged.name, (_b = this.room) === null || _b === void 0 ? void 0 : _b.state.specialGameRule)) {
@@ -353,7 +351,7 @@ class GameScene extends phaser_1.Scene {
             var _a, _b, _c, _d, _e, _f;
             this.dropSpots.forEach((spot) => spot.setVisible(false));
             (_a = this.sellZone) === null || _a === void 0 ? void 0 : _a.hide();
-            if (gameObject instanceof pokemon_2.default) {
+            if (gameObject instanceof pokemon_1.default) {
                 if (dropZone.name == "board-zone") {
                     const [x, y] = [dropZone.getData("x"), dropZone.getData("y")];
                     if (gameObject.positionX !== x || gameObject.positionY !== y) {
@@ -429,11 +427,11 @@ class GameScene extends phaser_1.Scene {
                 }
             }
             if (dropZone.name === "board-zone" &&
-                gameObject instanceof pokemon_2.default) {
+                gameObject instanceof pokemon_1.default) {
                 (_b = dropZone.getData("sprite")) === null || _b === void 0 ? void 0 : _b.setFrame(1);
             }
             if (dropZone.name === "sell-zone" &&
-                gameObject instanceof pokemon_2.default) {
+                gameObject instanceof pokemon_1.default) {
                 (_c = dropZone.getData("rectangle")) === null || _c === void 0 ? void 0 : _c.setFillStyle(0x6b8bb2);
             }
         }, this);
@@ -444,11 +442,11 @@ class GameScene extends phaser_1.Scene {
                 gameObject.closeDetail();
             }
             if (dropZone.name === "board-zone" &&
-                gameObject instanceof pokemon_2.default) {
+                gameObject instanceof pokemon_1.default) {
                 (_a = dropZone.getData("sprite")) === null || _a === void 0 ? void 0 : _a.setFrame(0);
             }
             if (dropZone.name === "sell-zone" &&
-                gameObject instanceof pokemon_2.default) {
+                gameObject instanceof pokemon_1.default) {
                 (_b = dropZone.getData("rectangle")) === null || _b === void 0 ? void 0 : _b.setFillStyle(0x61738a);
             }
         }, this);

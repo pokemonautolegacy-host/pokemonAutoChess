@@ -4,7 +4,6 @@ exports.AttackCommand = exports.DelayedCommand = exports.SimulationCommand = voi
 const types_1 = require("../types");
 const Effect_1 = require("../types/enum/Effect");
 const Game_1 = require("../types/enum/Game");
-const Pokemon_1 = require("../types/enum/Pokemon");
 class SimulationCommand {
     constructor(delay) {
         this.executed = false;
@@ -65,7 +64,7 @@ class AttackCommand extends SimulationCommand {
                         if (cell) {
                             const enemy = this.board.getValue(cell.x, cell.y);
                             if (enemy && this.pokemon.team !== enemy.team) {
-                                enemy.handleSpecialDamage(20, this.board, Game_1.AttackType.SPECIAL, this.pokemon, false, false);
+                                enemy.handleSpecialDamage(10, this.board, Game_1.AttackType.SPECIAL, this.pokemon, false);
                                 this.pokemon.simulation.room.broadcast(types_1.Transfer.ABILITY, {
                                     id: this.pokemon.simulation.id,
                                     skill: "LINK_CABLE_link",
@@ -77,12 +76,6 @@ class AttackCommand extends SimulationCommand {
                             }
                         }
                     });
-                }
-                if (this.pokemon.name === Pokemon_1.Pkm.MORPEKO) {
-                    this.target.status.triggerParalysis(2000, this.target, this.pokemon);
-                }
-                if (this.pokemon.name === Pokemon_1.Pkm.MORPEKO_HANGRY) {
-                    this.target.status.triggerWound(4000, this.target, this.pokemon);
                 }
             }
         }

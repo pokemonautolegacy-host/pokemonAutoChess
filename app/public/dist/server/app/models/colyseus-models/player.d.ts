@@ -58,7 +58,6 @@ export default class Player extends Schema implements IPlayer {
     totalMoneyEarned: number;
     totalPlayerDamageDealt: number;
     eggChance: number;
-    goldenEggChance: number;
     wildChance: number;
     commonRegionalPool: Pkm[];
     uncommonRegionalPool: Pkm[];
@@ -69,15 +68,13 @@ export default class Player extends Schema implements IPlayer {
     opponents: Map<string, number>;
     titles: Set<Title>;
     artificialItems: Item[];
-    tms: (Item | null)[];
     weatherRocks: Item[];
     randomComponentsGiven: Item[];
     randomEggsGiven: Pkm[];
     lightX: number;
     lightY: number;
+    canRegainLife: boolean;
     ghost: boolean;
-    firstPartner: Pkm | undefined;
-    hasLeftGame: boolean;
     constructor(id: string, name: string, elo: number, avatar: string, isBot: boolean, rank: number, pokemonCollection: Map<string, IPokemonConfig>, title: Title | "", role: Role, state: GameState);
     addMoney(value: number, countTotalEarned: boolean, origin: PokemonEntity | null): void;
     addBattleResult(id: string, name: string, result: BattleResult, avatar: string, weather: Weather | undefined): void;
@@ -86,7 +83,6 @@ export default class Player extends Schema implements IPlayer {
     updateSynergies(): void;
     updateArtificialItems(updatedSynergies: Map<Synergy, number>): boolean;
     updateWeatherRocks(): void;
-    updateTms(): void;
     updateFishingRods(): void;
     updateWildChance(): void;
     updateRegionalPool(state: GameState, mapChanged: boolean): void;

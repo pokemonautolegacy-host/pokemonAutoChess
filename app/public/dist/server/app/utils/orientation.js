@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrientationArray = exports.OrientationVector = void 0;
 exports.effectInLine = effectInLine;
-exports.getOrientation = getOrientation;
 const pokemon_entity_1 = require("../core/pokemon-entity");
 const Game_1 = require("../types/enum/Game");
 exports.OrientationVector = {
@@ -81,40 +80,6 @@ function effectInLine(board, pokemon, target, effect) {
     }
     if (target instanceof pokemon_entity_1.PokemonEntity && targetsHit.has(target) === false) {
         effect({ x: target.positionX, y: target.positionY, value: target });
-    }
-}
-function getOrientation(x1, y1, x2, y2) {
-    let angle = Math.atan2(y2 - y1, x2 - x1);
-    if (angle < 0) {
-        angle += 2 * Math.PI;
-    }
-    const quarterPi = Math.PI / 4;
-    if (angle < quarterPi) {
-        return Game_1.Orientation.RIGHT;
-    }
-    else if (angle < 2 * quarterPi) {
-        return Game_1.Orientation.DOWNRIGHT;
-    }
-    else if (angle < 3 * quarterPi) {
-        return Game_1.Orientation.DOWN;
-    }
-    else if (angle < 4 * quarterPi) {
-        return Game_1.Orientation.DOWNLEFT;
-    }
-    else if (angle < 5 * quarterPi) {
-        return Game_1.Orientation.LEFT;
-    }
-    else if (angle < 6 * quarterPi) {
-        return Game_1.Orientation.UPLEFT;
-    }
-    else if (angle < 7 * quarterPi) {
-        return Game_1.Orientation.UP;
-    }
-    else if (angle < 8 * quarterPi) {
-        return Game_1.Orientation.UPRIGHT;
-    }
-    else {
-        return Game_1.Orientation.RIGHT;
     }
 }
 //# sourceMappingURL=orientation.js.map

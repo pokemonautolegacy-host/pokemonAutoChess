@@ -26,12 +26,12 @@ const item_picker_1 = __importDefault(require("./item-picker"));
 const pokemon_picker_1 = __importDefault(require("./pokemon-picker"));
 const selected_entity_1 = __importDefault(require("./selected-entity"));
 const team_editor_1 = __importDefault(require("./team-editor"));
+require("./team-builder.css");
 const react_i18next_1 = require("react-i18next");
 const react_router_dom_1 = require("react-router-dom");
 const hooks_1 = require("../../../hooks");
 const schemas_1 = require("../../../../../utils/schemas");
 const board_1 = require("../../../../../utils/board");
-require("./team-builder.css");
 function TeamBuilder(props) {
     var _a;
     const { t } = (0, react_i18next_1.useTranslation)();

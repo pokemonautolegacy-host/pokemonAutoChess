@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLevelUpCost = getLevelUpCost;
 const schema_1 = require("@colyseus/schema");
 const Config_1 = require("../../types/Config");
+const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 class ExperienceManager extends schema_1.Schema {
     constructor() {
         super();
@@ -50,7 +51,10 @@ __decorate([
     (0, schema_1.type)("uint8")
 ], ExperienceManager.prototype, "expNeeded", void 0);
 function getLevelUpCost(specialGameRule) {
-    const cost = 4;
+    let cost = 4;
+    if (specialGameRule === SpecialGameRule_1.SpecialGameRule.RARE_IS_EXPENSIVE) {
+        cost = 8;
+    }
     return cost;
 }
 //# sourceMappingURL=experience-manager.js.map

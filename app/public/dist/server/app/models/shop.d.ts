@@ -7,7 +7,6 @@ import { SpecialGameRule } from "../types/enum/SpecialGameRule";
 import { Synergy } from "../types/enum/Synergy";
 import Player from "./colyseus-models/player";
 export declare function getPoolSize(rarity: Rarity, maxStars: number): number;
-export declare function getRegularsTier1(pokemons: Pkm[]): Pkm[];
 export declare function getAdditionalsTier1(pokemons: Pkm[]): Pkm[];
 export declare function getSellPrice(pokemon: IPokemon | IPokemonEntity, specialGameRule?: SpecialGameRule | null): number;
 export declare function getBuyPrice(name: Pkm, specialGameRule?: SpecialGameRule | null): number;
@@ -18,8 +17,8 @@ export default class Shop {
     epicPool: Pkm[];
     ultraPool: Pkm[];
     constructor();
-    getPool(rarity: Rarity): Pkm[];
-    getRegionalPool(rarity: Rarity, player: Player): Pkm[];
+    getPool(rarity: Rarity): Pkm[] | undefined;
+    getRegionalPool(rarity: Rarity, player: Player): Pkm[] | undefined;
     addAdditionalPokemon(pkmProposition: PkmProposition): void;
     addRegionalPokemon(pkm: Pkm, player: Player): void;
     resetRegionalPool(player: Player): void;

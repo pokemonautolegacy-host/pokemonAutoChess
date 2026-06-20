@@ -5,7 +5,7 @@ const matter_js_1 = require("matter-js");
 const floating_item_1 = require("../../models/colyseus-models/floating-item");
 const pokemon_avatar_1 = require("../../models/colyseus-models/pokemon-avatar");
 const portal_1 = require("../../models/colyseus-models/portal");
-const orientation_1 = require("../../utils/orientation");
+const utils_1 = require("../../public/src/pages/utils/utils");
 const types_1 = require("../../types");
 const Config_1 = require("../../types/Config");
 const Dungeon_1 = require("../../types/enum/Dungeon");
@@ -397,7 +397,7 @@ class MiniGame {
             if (distanceToTarget > PLAYER_VELOCITY) {
                 avatar.action = Game_1.PokemonActionState.WALK;
                 let moveVector = matter_js_1.Vector.sub(matter_js_1.Vector.create(avatar.targetX, avatar.targetY), matter_js_1.Vector.create(avatar.x, avatar.y));
-                avatar.orientation = (0, orientation_1.getOrientation)(0, 0, moveVector.x, -1 * moveVector.y);
+                avatar.orientation = (0, utils_1.getOrientation)(0, 0, moveVector.x, -1 * moveVector.y);
                 moveVector = matter_js_1.Vector.normalise(moveVector);
                 moveVector = matter_js_1.Vector.mult(moveVector, PLAYER_VELOCITY);
                 matter_js_1.Body.setVelocity(body, moveVector);

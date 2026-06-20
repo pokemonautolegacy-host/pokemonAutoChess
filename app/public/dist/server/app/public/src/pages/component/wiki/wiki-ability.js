@@ -8,7 +8,7 @@ const react_tooltip_1 = require("react-tooltip");
 const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/precomputed-pokemon-data");
 const precomputed_ability_1 = require("../../../../../models/precomputed/precomputed-ability");
 const Ability_1 = require("../../../../../types/enum/Ability");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const descriptions_1 = require("../../utils/descriptions");
 const jsx_1 = require("../../utils/jsx");
 const game_pokemon_detail_1 = require("../game/game-pokemon-detail");
@@ -35,7 +35,7 @@ function WikiAbility() {
                                                 regional: p.regional
                                             }), "data-tooltip-id": "pokemon-detail", onMouseOver: () => {
                                                 setHoveredPokemon(p.name);
-                                            }, children: (0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index) }) }) }, p.name))) }) })] }, ability));
+                                            }, children: (0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(p.index) }) }) }, p.name))) }) })] }, ability));
                 }) }), hoveredPokemon && (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "pokemon-detail", className: "custom-theme-tooltip game-pokemon-detail-tooltip", float: true, children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: hoveredPokemon }) })] }));
 }
 //# sourceMappingURL=wiki-ability.js.map

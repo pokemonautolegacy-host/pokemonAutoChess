@@ -13,7 +13,7 @@ const Emotion_1 = require("../../../../types/enum/Emotion");
 const logger_1 = require("../../../../utils/logger");
 const jsx_1 = require("../../pages/utils/jsx");
 const stores_1 = __importDefault(require("../../stores"));
-const avatar_1 = require("../../../../utils/avatar");
+const utils_1 = require("../../utils");
 require("./emote-menu.css");
 function EmoteMenuComponent(props) {
     var _a;
@@ -31,7 +31,7 @@ function EmoteMenuComponent(props) {
     return emotions.length === 0 ? ((0, jsx_runtime_1.jsx)("div", { children: t("no_emotions_available") })) : ((0, jsx_runtime_1.jsx)("ul", { children: emotions.map((emotion, i) => {
             const emotions = props.shiny ? pConfig.shinyEmotions : pConfig.emotions;
             const unlocked = pConfig && emotions.includes(emotion);
-            return ((0, jsx_runtime_1.jsxs)("li", { children: [(0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(props.index, props.shiny, emotion), title: emotion + (!unlocked ? " (locked)" : ""), className: (0, jsx_1.cc)({ locked: !unlocked }), onClick: () => unlocked && props.sendEmote(emotion) }), (0, jsx_runtime_1.jsx)("span", { className: "counter", children: i + 1 })] }, emotion));
+            return ((0, jsx_runtime_1.jsxs)("li", { children: [(0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(props.index, props.shiny, emotion), title: emotion + (!unlocked ? " (locked)" : ""), className: (0, jsx_1.cc)({ locked: !unlocked }), onClick: () => unlocked && props.sendEmote(emotion) }), (0, jsx_runtime_1.jsx)("span", { className: "counter", children: i + 1 })] }, emotion));
         }) }));
 }
 class EmoteMenu extends phaser_1.GameObjects.DOMElement {

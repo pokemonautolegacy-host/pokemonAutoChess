@@ -11,7 +11,7 @@ export default class AfterGameRoom extends Room<AfterGameState> {
         elligibleToXP: boolean;
         elligibleToELO: boolean;
     }): void;
-    onAuth(client: Client, options: any, request: any): Promise<import("firebase-admin/lib/auth/user-record").UserRecord>;
+    onAuth(client: Client, options: any, request: any): Promise<import("firebase-admin/lib/auth/user-record").UserRecord | undefined>;
     onJoin(client: Client): void;
     onLeave(client: Client, consented: boolean): Promise<void>;
     onDispose(): void;

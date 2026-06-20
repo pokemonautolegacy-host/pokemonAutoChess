@@ -33,18 +33,11 @@ const BOT_BUILDER = {
     levelRequired: 20,
     disabled: !Config_1.BOTS_ENABLED
 };
-const GAMEBOY = {
-    name: "gadget.gameboy",
-    description: "gadget.gameboy_desc",
-    icon: "gameboy",
-    levelRequired: 30
-};
 exports.GADGETS = {
     TRAINER_CARD,
     BAG,
     TEAM_PLANNER,
     JUKEBOX,
-    BOT_BUILDER,
-    GAMEBOY
+    BOT_BUILDER
 };
 //# sourceMappingURL=gadgets.js.map

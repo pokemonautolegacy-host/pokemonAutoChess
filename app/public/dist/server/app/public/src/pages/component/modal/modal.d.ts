@@ -10,5 +10,5 @@ interface ModalProps {
     children?: JSX.Element | JSX.Element[];
     confirmText?: string;
 }
-export declare function Modal(props: ModalProps): React.ReactPortal;
+export declare function Modal(props: ModalProps): React.ReactPortal | null;
 export {};

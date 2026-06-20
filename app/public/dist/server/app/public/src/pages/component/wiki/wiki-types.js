@@ -20,7 +20,7 @@ const Game_1 = require("../../../../../types/enum/Game");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const Synergy_1 = require("../../../../../types/enum/Synergy");
 const array_1 = require("../../../../../utils/array");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const descriptions_1 = require("../../utils/descriptions");
 const jsx_1 = require("../../utils/jsx");
 const game_pokemon_detail_1 = require("../game/game-pokemon-detail");
@@ -64,7 +64,7 @@ function WikiType(props) {
                                         return ((0, jsx_runtime_1.jsxs)("div", { className: (0, jsx_1.cc)("pokemon-portrait", {
                                                 additional: p.additional,
                                                 regional: p.regional
-                                            }), children: [(0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index), "data-tooltip-id": `pokemon-detail-${p.index}` }), (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: `pokemon-detail-${p.index}`, className: "custom-theme-tooltip game-pokemon-detail-tooltip", children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: p.name }) })] }, p.name));
+                                            }), children: [(0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(p.index), "data-tooltip-id": `pokemon-detail-${p.index}` }), (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: `pokemon-detail-${p.index}`, className: "custom-theme-tooltip game-pokemon-detail-tooltip", children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: p.name }) })] }, p.name));
                                     }) })] }, rarity));
                     }) }) })] }));
 }
@@ -98,7 +98,7 @@ function WikiAllTypes() {
                                             regional: p.regional
                                         }), onMouseOver: () => {
                                             setHoveredPokemon(p.name);
-                                        }, "data-tooltip-id": "pokemon-detail", children: (0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getPortraitSrc)(p.index), "data-tooltip-id": `pokemon-detail-${p.index}` }) }, p.name));
+                                        }, "data-tooltip-id": "pokemon-detail", children: (0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getPortraitSrc)(p.index), "data-tooltip-id": `pokemon-detail-${p.index}` }) }, p.name));
                                 }) })] }, type));
                 }) }), hoveredPokemon && (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "pokemon-detail", className: "custom-theme-tooltip game-pokemon-detail-tooltip", float: true, children: (0, jsx_runtime_1.jsx)(game_pokemon_detail_1.GamePokemonDetail, { pokemon: hoveredPokemon }) })] }));
 }

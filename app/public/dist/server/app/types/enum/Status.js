@@ -29,6 +29,5 @@ var Status;
     Status["SPIKE_ARMOR"] = "SPIKE_ARMOR";
     Status["MAGIC_BOUNCE"] = "MAGIC_BOUNCE";
     Status["LOCKED"] = "LOCKED";
-    Status["BLINDED"] = "BLINDED";
 })(Status || (exports.Status = Status = {}));
 //# sourceMappingURL=Status.js.map

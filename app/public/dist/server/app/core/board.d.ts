@@ -31,14 +31,9 @@ export default class Board {
         y: number;
     }[];
     getCellsBetween(x0: number, y0: number, x1: number, y1: number): Cell[];
-    getTeleportationCell(x: number, y: number): Cell;
+    getTeleportationCell(x: number, y: number): Cell | undefined;
     getFlyAwayCell(x: number, y: number): Cell | null;
     getEffectOnCell(x: number, y: number): Effect | undefined;
-    getClosestAvailablePlace(targetX: number, targetY: number): {
-        x: number;
-        y: number;
-        distance: number;
-    } | null;
     getFarthestTargetCoordinateAvailablePlace(pokemon: IPokemonEntity, targetAlly?: boolean): {
         x: number;
         y: number;

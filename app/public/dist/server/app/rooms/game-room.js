@@ -28,8 +28,7 @@ const pokemon_factory_1 = __importDefault(require("../models/pokemon-factory"));
 const precomputed_pokemon_data_1 = require("../models/precomputed/precomputed-pokemon-data");
 const precomputed_rarity_1 = require("../models/precomputed/precomputed-rarity");
 const shop_1 = require("../models/shop");
-const Passive_1 = require("../types/enum/Passive");
-const avatar_1 = require("../utils/avatar");
+const utils_1 = require("../public/src/utils");
 const types_1 = require("../types");
 const Config_1 = require("../types/Config");
 const Game_1 = require("../types/enum/Game");
@@ -65,7 +64,7 @@ class GameRoom extends colyseus_1.Room {
                 tournamentId: options.tournamentId,
                 bracketId: options.bracketId
             });
-            this.setState(new game_state_1.default(options.preparationId, options.name, options.noElo, options.gameMode, options.minRank, options.maxRank, options.specialGameRule));
+            this.setState(new game_state_1.default(options.preparationId, options.name, options.noElo, options.gameMode, options.minRank, options.maxRank));
             this.miniGame.create(this.state.avatars, this.state.floatingItems, this.state.portals, this.state.symbols);
             this.additionalUncommonPool = (0, shop_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.UNCOMMON);
             this.additionalRarePool = (0, shop_1.getAdditionalsTier1)(precomputed_rarity_1.PRECOMPUTED_POKEMONS_PER_RARITY.RARE);
@@ -432,23 +431,11 @@ class GameRoom extends colyseus_1.Room {
             catch (e) {
                 if (client && client.auth && client.auth.displayName) {
                     const player = this.state.players.get(client.auth.uid);
-                    const hasLeftGameBeforeTheEnd = player && player.life > 0 && !this.state.gameFinished;
-                    if (hasLeftGameBeforeTheEnd) {
-                        this.presence.hset(client.auth.uid, "user_timeout", new Date(Date.now() + 1000 * 60 * 5).toISOString());
-                    }
-                    if (player && this.state.stageLevel <= 5 && !consented) {
+                    if (player && this.state.stageLevel <= 5) {
                         this.state.players.delete(client.auth.uid);
                         this.setMetadata({
                             playerIds: (0, array_1.removeInArray)(this.metadata.playerIds, client.auth.uid)
                         });
-                    }
-                    else if (player && !player.hasLeftGame) {
-                        player.hasLeftGame = true;
-                        if (!this.state.gameFinished && player.life > 0) {
-                            player.life = -99;
-                            this.rankPlayers();
-                        }
-                        this.updatePlayerAfterGame(player);
                     }
                 }
                 if ((0, schemas_1.values)(this.state.players).every((p) => p.loadingProgress === 100)) {
@@ -472,6 +459,19 @@ class GameRoom extends colyseus_1.Room {
             }
             try {
                 this.state.endTime = Date.now();
+                const players = [];
+                this.state.players.forEach((p) => {
+                    if (!p.isBot) {
+                        players.push(this.transformToSimplePlayer(p));
+                    }
+                });
+                history_1.default.create({
+                    id: this.state.preparationId,
+                    name: this.state.name,
+                    startTime: this.state.startTime,
+                    endTime: this.state.endTime,
+                    players
+                });
                 const humans = [];
                 const bots = [];
                 this.state.players.forEach((player) => {
@@ -482,31 +482,132 @@ class GameRoom extends colyseus_1.Room {
                         humans.push(player);
                     }
                 });
-                const players = [...humans, ...bots].map((p) => this.transformToSimplePlayer(p));
-                history_1.default.create({
-                    id: this.state.preparationId,
-                    name: this.state.name,
-                    startTime: this.state.startTime,
-                    endTime: this.state.endTime,
-                    players: humans.map((p) => this.transformToSimplePlayer(p))
-                });
-                if (this.state.stageLevel >= Config_1.MinStageLevelForGameToCount) {
-                    const elligibleToXP = this.state.players.size >= 2;
-                    if (elligibleToXP) {
-                        for (let i = 0; i < bots.length; i++) {
-                            const botPlayer = bots[i];
-                            const bot = yield bot_v2_1.BotV2.findOne({ id: botPlayer.id });
-                            if (bot) {
-                                bot.elo = (0, elo_1.computeElo)(this.transformToSimplePlayer(botPlayer), botPlayer.rank, bot.elo, players);
+                const elligibleToXP = this.state.players.size >= 2 &&
+                    this.state.stageLevel >= Config_1.RequiredStageLevelForXpElligibility;
+                const elligibleToELO = elligibleToXP && !this.state.noElo && humans.length >= 2;
+                if (elligibleToXP) {
+                    for (let i = 0; i < bots.length; i++) {
+                        const player = bots[i];
+                        const results = yield bot_v2_1.BotV2.find({ id: player.id });
+                        if (results) {
+                            results.forEach((bot) => {
+                                bot.elo = (0, elo_1.computeElo)(this.transformToSimplePlayer(player), player.rank, bot.elo, [...humans, ...bots].map((p) => this.transformToSimplePlayer(p)));
                                 bot.save();
-                            }
+                            });
                         }
-                        for (let i = 0; i < humans.length; i++) {
-                            const player = humans[i];
-                            if (!player.hasLeftGame) {
-                                player.hasLeftGame = true;
-                                this.updatePlayerAfterGame(player);
+                    }
+                    for (let i = 0; i < humans.length; i++) {
+                        const player = humans[i];
+                        const exp = Config_1.ExpPlace[player.rank - 1];
+                        let rank = player.rank;
+                        if (!this.state.gameFinished && player.life > 0) {
+                            let rankOfLastPlayerAlive = this.state.players.size;
+                            this.state.players.forEach((plyr) => {
+                                if (plyr.life <= 0 && plyr.rank < rankOfLastPlayerAlive) {
+                                    rankOfLastPlayerAlive = plyr.rank;
+                                }
+                            });
+                            rank = rankOfLastPlayerAlive;
+                        }
+                        const usr = yield user_metadata_1.default.findOne({ uid: player.id });
+                        if (usr) {
+                            const expThreshold = 1000;
+                            if (usr.exp + exp >= expThreshold) {
+                                usr.level += 1;
+                                usr.booster += 1;
+                                usr.exp = usr.exp + exp - expThreshold;
                             }
+                            else {
+                                usr.exp = usr.exp + exp;
+                            }
+                            usr.exp = !isNaN(usr.exp) ? usr.exp : 0;
+                            if (rank === 1) {
+                                usr.wins += 1;
+                                if (this.state.gameMode === Game_1.GameMode.RANKED) {
+                                    player.titles.add(types_1.Title.VANQUISHER);
+                                    const minElo = Math.min(...(0, schemas_1.values)(this.state.players).map((p) => p.elo));
+                                    if (usr.elo === minElo && humans.length >= 8) {
+                                        player.titles.add(types_1.Title.OUTSIDER);
+                                    }
+                                }
+                            }
+                            if (usr.level >= 10) {
+                                player.titles.add(types_1.Title.ROOKIE);
+                            }
+                            if (usr.level >= 20) {
+                                player.titles.add(types_1.Title.AMATEUR);
+                                player.titles.add(types_1.Title.BOT_BUILDER);
+                            }
+                            if (usr.level >= 30) {
+                                player.titles.add(types_1.Title.VETERAN);
+                            }
+                            if (usr.level >= 50) {
+                                player.titles.add(types_1.Title.PRO);
+                            }
+                            if (usr.level >= 100) {
+                                player.titles.add(types_1.Title.EXPERT);
+                            }
+                            if (usr.level >= 150) {
+                                player.titles.add(types_1.Title.ELITE);
+                            }
+                            if (usr.level >= 200) {
+                                player.titles.add(types_1.Title.MASTER);
+                            }
+                            if (usr.level >= 300) {
+                                player.titles.add(types_1.Title.GRAND_MASTER);
+                            }
+                            if (usr.elo != null && elligibleToELO) {
+                                const elo = (0, elo_1.computeElo)(this.transformToSimplePlayer(player), rank, usr.elo, humans.map((p) => this.transformToSimplePlayer(p)));
+                                if (elo) {
+                                    if (elo >= 1100) {
+                                        player.titles.add(types_1.Title.GYM_TRAINER);
+                                    }
+                                    if (elo >= 1200) {
+                                        player.titles.add(types_1.Title.GYM_CHALLENGER);
+                                    }
+                                    if (elo >= 1400) {
+                                        player.titles.add(types_1.Title.GYM_LEADER);
+                                    }
+                                    usr.elo = elo;
+                                }
+                                const dbrecord = this.transformToSimplePlayer(player);
+                                const synergiesMap = new Map();
+                                player.synergies.forEach((v, k) => {
+                                    v > 0 && synergiesMap.set(k, v);
+                                });
+                                detailled_statistic_v2_1.default.create({
+                                    time: Date.now(),
+                                    name: dbrecord.name,
+                                    pokemons: dbrecord.pokemons,
+                                    rank: dbrecord.rank,
+                                    nbplayers: humans.length + bots.length,
+                                    avatar: dbrecord.avatar,
+                                    playerId: dbrecord.id,
+                                    elo: elo,
+                                    synergies: synergiesMap
+                                });
+                            }
+                            if (player.life === 100 && rank === 1) {
+                                player.titles.add(types_1.Title.TYRANT);
+                            }
+                            if (player.life === 1 && rank === 1) {
+                                player.titles.add(types_1.Title.SURVIVOR);
+                            }
+                            if (player.rerollCount > 60) {
+                                player.titles.add(types_1.Title.GAMBLER);
+                            }
+                            else if (player.rerollCount < 20 && rank === 1) {
+                                player.titles.add(types_1.Title.NATURAL);
+                            }
+                            if (usr.titles === undefined) {
+                                usr.titles = [];
+                            }
+                            player.titles.forEach((t) => {
+                                if (!usr.titles.includes(t)) {
+                                    usr.titles.push(t);
+                                }
+                            });
+                            usr.save();
                         }
                     }
                 }
@@ -521,129 +622,6 @@ class GameRoom extends colyseus_1.Room {
             }
             catch (error) {
                 logger_1.logger.error(error);
-            }
-        });
-    }
-    updatePlayerAfterGame(player) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const elligibleToXP = this.state.players.size >= 2 &&
-                this.state.stageLevel >= Config_1.MinStageLevelForGameToCount;
-            const humans = [];
-            const bots = [];
-            this.state.players.forEach((player) => {
-                if (player.isBot) {
-                    bots.push(player);
-                }
-                else {
-                    humans.push(player);
-                }
-            });
-            const elligibleToELO = !this.state.noElo &&
-                this.state.stageLevel >= Config_1.MinStageLevelForGameToCount &&
-                humans.length >= 2;
-            const rank = player.rank;
-            const exp = Config_1.ExpPlace[rank - 1];
-            const usr = yield user_metadata_1.default.findOne({ uid: player.id });
-            if (usr) {
-                if (elligibleToXP) {
-                    const expThreshold = 1000;
-                    if (usr.exp + exp >= expThreshold) {
-                        usr.level += 1;
-                        usr.booster += 1;
-                        usr.exp = usr.exp + exp - expThreshold;
-                    }
-                    else {
-                        usr.exp = usr.exp + exp;
-                    }
-                    usr.exp = !isNaN(usr.exp) ? usr.exp : 0;
-                }
-                if (rank === 1) {
-                    usr.wins += 1;
-                    if (this.state.gameMode === Game_1.GameMode.RANKED) {
-                        player.titles.add(types_1.Title.VANQUISHER);
-                        const minElo = Math.min(...(0, schemas_1.values)(this.state.players).map((p) => p.elo));
-                        if (usr.elo === minElo && humans.length >= 8) {
-                            player.titles.add(types_1.Title.OUTSIDER);
-                        }
-                    }
-                }
-                if (usr.level >= 10) {
-                    player.titles.add(types_1.Title.ROOKIE);
-                }
-                if (usr.level >= 20) {
-                    player.titles.add(types_1.Title.AMATEUR);
-                    player.titles.add(types_1.Title.BOT_BUILDER);
-                }
-                if (usr.level >= 30) {
-                    player.titles.add(types_1.Title.VETERAN);
-                }
-                if (usr.level >= 50) {
-                    player.titles.add(types_1.Title.PRO);
-                }
-                if (usr.level >= 100) {
-                    player.titles.add(types_1.Title.EXPERT);
-                }
-                if (usr.level >= 150) {
-                    player.titles.add(types_1.Title.ELITE);
-                }
-                if (usr.level >= 200) {
-                    player.titles.add(types_1.Title.MASTER);
-                }
-                if (usr.level >= 300) {
-                    player.titles.add(types_1.Title.GRAND_MASTER);
-                }
-                if (usr.elo != null && elligibleToELO) {
-                    const elo = (0, elo_1.computeElo)(this.transformToSimplePlayer(player), rank, usr.elo, humans.map((p) => this.transformToSimplePlayer(p)));
-                    if (elo) {
-                        if (elo >= 1100) {
-                            player.titles.add(types_1.Title.GYM_TRAINER);
-                        }
-                        if (elo >= 1200) {
-                            player.titles.add(types_1.Title.GYM_CHALLENGER);
-                        }
-                        if (elo >= 1400) {
-                            player.titles.add(types_1.Title.GYM_LEADER);
-                        }
-                        usr.elo = elo;
-                    }
-                    const dbrecord = this.transformToSimplePlayer(player);
-                    const synergiesMap = new Map();
-                    player.synergies.forEach((v, k) => {
-                        v > 0 && synergiesMap.set(k, v);
-                    });
-                    detailled_statistic_v2_1.default.create({
-                        time: Date.now(),
-                        name: dbrecord.name,
-                        pokemons: dbrecord.pokemons,
-                        rank: dbrecord.rank,
-                        nbplayers: humans.length + bots.length,
-                        avatar: dbrecord.avatar,
-                        playerId: dbrecord.id,
-                        elo: elo,
-                        synergies: synergiesMap
-                    });
-                }
-                if (player.life === 100 && rank === 1) {
-                    player.titles.add(types_1.Title.TYRANT);
-                }
-                if (player.life === 1 && rank === 1) {
-                    player.titles.add(types_1.Title.SURVIVOR);
-                }
-                if (player.rerollCount > 60) {
-                    player.titles.add(types_1.Title.GAMBLER);
-                }
-                else if (player.rerollCount < 20 && rank === 1) {
-                    player.titles.add(types_1.Title.NATURAL);
-                }
-                if (usr.titles === undefined) {
-                    usr.titles = [];
-                }
-                player.titles.forEach((t) => {
-                    if (!usr.titles.includes(t)) {
-                        usr.titles.push(t);
-                    }
-                });
-                usr.save();
             }
         });
     }
@@ -664,7 +642,7 @@ class GameRoom extends colyseus_1.Room {
         });
         player.board.forEach((pokemon) => {
             if (pokemon.positionY != 0) {
-                const avatar = (0, avatar_1.getAvatarString)(pokemon.index, pokemon.shiny, pokemon.emotion);
+                const avatar = (0, utils_1.getAvatarString)(pokemon.index, pokemon.shiny, pokemon.emotion);
                 const s = {
                     name: pokemon.name,
                     avatar: avatar,
@@ -694,17 +672,17 @@ class GameRoom extends colyseus_1.Room {
         return (0, schemas_1.values)(player.board).find((pokemon) => pokemon.positionX == x && pokemon.positionY == y);
     }
     spawnOnBench(player, pkm, anim = "spawn") {
-        const pokemon = pokemon_factory_1.default.createPokemonFromName(pkm, player);
+        const fish = pokemon_factory_1.default.createPokemonFromName(pkm, player);
         const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
         if (x !== undefined) {
-            pokemon.positionX = x;
-            pokemon.positionY = 0;
+            fish.positionX = x;
+            fish.positionY = 0;
             if (anim === "fishing") {
-                pokemon.action = Game_1.PokemonActionState.FISH;
+                fish.action = Game_1.PokemonActionState.FISH;
             }
-            player.board.set(pokemon.id, pokemon);
+            player.board.set(fish.id, fish);
             this.clock.setTimeout(() => {
-                pokemon.action = Game_1.PokemonActionState.IDLE;
+                fish.action = Game_1.PokemonActionState.IDLE;
                 this.checkEvolutionsAfterPokemonAcquired(player.id);
             }, 1000);
         }
@@ -747,7 +725,7 @@ class GameRoom extends colyseus_1.Room {
     getTeamSize(board) {
         let size = 0;
         board.forEach((pokemon, key) => {
-            if (pokemon.positionY != 0 && pokemon.doesCountForTeamSize) {
+            if (pokemon.positionY != 0) {
                 size++;
             }
         });
@@ -790,10 +768,6 @@ class GameRoom extends colyseus_1.Room {
                 player.itemsProposition.clear();
             }
         }
-        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER &&
-            this.state.stageLevel === 1) {
-            player.firstPartner = pokemonsObtained[0].name;
-        }
         pokemonsObtained.forEach((pokemon) => {
             const freeCellX = (0, board_1.getFirstAvailablePositionInBench)(player.board);
             if (freeCellX !== undefined) {
@@ -812,10 +786,12 @@ class GameRoom extends colyseus_1.Room {
         }
     }
     computeRoundDamage(opponentTeam, stageLevel) {
+        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.NINE_LIVES)
+            return 1;
         let damage = Math.ceil(stageLevel / 2);
         if (opponentTeam.size > 0) {
             opponentTeam.forEach((pokemon) => {
-                if (!pokemon.isClone && pokemon.passive !== Passive_1.Passive.INANIMATE) {
+                if (!pokemon.isClone) {
                     damage += 1;
                 }
             });

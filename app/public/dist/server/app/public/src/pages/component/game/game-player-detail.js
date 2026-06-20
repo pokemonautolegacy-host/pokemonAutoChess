@@ -6,7 +6,7 @@ const react_1 = require("react");
 const react_i18next_1 = require("react-i18next");
 const Config_1 = require("../../../../../types/Config");
 const Game_1 = require("../../../../../types/enum/Game");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const life_1 = require("../icons/life");
 const money_1 = require("../icons/money");
 function GamePlayerDetail(props) {
@@ -32,7 +32,7 @@ function GamePlayerDetail(props) {
                                             : "4px solid #8c2022",
                                     marginLeft: "6px",
                                     borderRadius: "12px"
-                                }, src: (0, avatar_1.getAvatarSrc)(record.avatar) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "80%" }, children: (record.id === "pve" ? t(record.name) : record.name).slice(0, 5) })] }, `${record.name}${i}_game-player-detail`));
+                                }, src: (0, utils_1.getAvatarSrc)(record.avatar) }), (0, jsx_runtime_1.jsx)("p", { style: { fontSize: "80%" }, children: (record.id === "pve" ? t(record.name) : record.name).slice(0, 5) })] }, `${record.name}${i}_game-player-detail`));
                 }) }), (0, jsx_runtime_1.jsx)("div", { style: { display: "flex", justifyContent: "start" }, children: synergyList.map((synergy, i) => {
                     return ((0, jsx_runtime_1.jsx)("div", { style: {
                             display: "flex",

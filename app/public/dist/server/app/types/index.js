@@ -47,7 +47,7 @@ var Transfer;
     Transfer["ADD_BOT"] = "ADD_BOT";
     Transfer["REMOVE_BOT"] = "REMOVE_BOT";
     Transfer["TOGGLE_READY"] = "TOGGLE_READY";
-    Transfer["CHANGE_NO_ELO"] = "CHANGE_NO_ELO";
+    Transfer["TOGGLE_NO_ELO"] = "TOGGLE_NO_ELO";
     Transfer["REFRESH"] = "REFRESH";
     Transfer["SPECTATE"] = "SPECTATE";
     Transfer["LOCK"] = "LOCK";
@@ -60,7 +60,6 @@ var Transfer;
     Transfer["CHANGE_ROOM_NAME"] = "CHANGE_ROOM_NAME";
     Transfer["CHANGE_ROOM_PASSWORD"] = "CHANGE_ROOM_PASSWORD";
     Transfer["CHANGE_ROOM_RANKS"] = "CHANGE_ROOM_RANKS";
-    Transfer["CHANGE_SPECIAL_RULE"] = "CHANGE_SPECIAL_RULE";
     Transfer["BUY_EMOTION"] = "BUY_EMOTION";
     Transfer["BOOSTER_CONTENT"] = "BOOSTER_CONTENT";
     Transfer["USER"] = "USER";
@@ -119,7 +118,6 @@ var AttackSprite;
     AttackSprite["DARK_RANGE"] = "DARK/range";
     AttackSprite["DRAGON_MELEE"] = "DRAGON/melee";
     AttackSprite["DRAGON_RANGE"] = "DRAGON/range";
-    AttackSprite["DRAGON_GREEN_RANGE"] = "DRAGON_GREEN/range";
     AttackSprite["ELECTRIC_MELEE"] = "ELECTRIC/melee";
     AttackSprite["ELECTRIC_RANGE"] = "ELECTRIC/range";
     AttackSprite["FAIRY_MELEE"] = "FAIRY/melee";
@@ -154,7 +152,6 @@ exports.AttackSpriteScale = {
     "DARK/range": [1.5, 1.5],
     "DRAGON/melee": [2, 2],
     "DRAGON/range": [2, 2],
-    "DRAGON_GREEN/range": [2, 2],
     "ELECTRIC/melee": [1.5, 1.5],
     "ELECTRIC/range": [2, 2],
     "FAIRY/melee": [2, 2],

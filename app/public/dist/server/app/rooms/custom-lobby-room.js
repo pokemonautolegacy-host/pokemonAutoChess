@@ -73,6 +73,7 @@ class CustomLobbyRoom extends colyseus_1.Room {
             this.setState(new lobby_state_1.default());
             this.autoDispose = false;
             this.listing.unlisted = true;
+            this.maxClients = Config_1.MAX_CONCURRENT_PLAYERS_ON_LOBBY;
             this.clock.setInterval(() => __awaiter(this, void 0, void 0, function* () {
                 const ccu = yield colyseus_1.matchMaker.stats.getGlobalCCU();
                 this.state.ccu = ccu;

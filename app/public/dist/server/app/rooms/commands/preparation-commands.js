@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OnRemoveBotCommand = exports.OnAddBotCommand = exports.InitializeBotsCommand = exports.CheckAutoStartRoom = exports.OnToggleReadyCommand = exports.OnLeaveCommand = exports.OnDeleteRoomCommand = exports.OnKickPlayerCommand = exports.OnChangeNoEloCommand = exports.OnRoomChangeSpecialRule = exports.OnRoomChangeRankCommand = exports.OnRoomPasswordCommand = exports.OnRoomNameCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.OnGameStartRequestCommand = exports.OnJoinCommand = void 0;
+exports.OnRemoveBotCommand = exports.OnAddBotCommand = exports.InitializeBotsCommand = exports.OnToggleReadyCommand = exports.OnLeaveCommand = exports.OnDeleteRoomCommand = exports.OnKickPlayerCommand = exports.OnToggleEloCommand = exports.OnRoomChangeRankCommand = exports.OnRoomPasswordCommand = exports.OnRoomNameCommand = exports.RemoveMessageCommand = exports.OnNewMessageCommand = exports.OnGameStartRequestCommand = exports.OnJoinCommand = void 0;
 const node_process_1 = require("node:process");
 const command_1 = require("@colyseus/command");
 const colyseus_1 = require("colyseus");
@@ -29,19 +29,10 @@ const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 const CloseCodes_1 = require("../../types/enum/CloseCodes");
 const elo_1 = require("../../utils/elo");
-const promises_1 = require("node:timers/promises");
 class OnJoinCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ client, options, auth }) {
             try {
-                const timeoutDateStr = yield this.room.presence.hget(client.auth.uid, "user_timeout");
-                if (timeoutDateStr) {
-                    const timeout = new Date(timeoutDateStr).getTime();
-                    if (timeout > Date.now()) {
-                        client.leave(CloseCodes_1.CloseCodes.USER_TIMEOUT);
-                        return;
-                    }
-                }
                 const numberOfHumanPlayers = (0, schemas_1.values)(this.state.users).filter((u) => !u.isBot).length;
                 if (numberOfHumanPlayers >= Config_1.MAX_PLAYERS_PER_GAME) {
                     client.leave(CloseCodes_1.CloseCodes.ROOM_FULL);
@@ -206,7 +197,6 @@ class OnGameStartRequestCommand extends command_1.Command {
                         preparationId: this.room.roomId,
                         noElo: this.state.noElo,
                         gameMode: this.state.gameMode,
-                        specialGameRule: this.state.specialGameRule,
                         tournamentId: (_a = this.room.metadata) === null || _a === void 0 ? void 0 : _a.tournamentId,
                         bracketId: (_b = this.room.metadata) === null || _b === void 0 ? void 0 : _b.bracketId,
                         minRank: this.state.minRank
@@ -319,45 +309,14 @@ class OnRoomChangeRankCommand extends command_1.Command {
     }
 }
 exports.OnRoomChangeRankCommand = OnRoomChangeRankCommand;
-class OnRoomChangeSpecialRule extends command_1.Command {
-    execute({ client, specialRule }) {
-        var _a;
-        try {
-            if (((_a = client.auth) === null || _a === void 0 ? void 0 : _a.uid) == this.state.ownerId) {
-                this.state.specialGameRule = specialRule;
-                if (specialRule != null) {
-                    this.state.noElo = true;
-                    this.room.setNoElo(true);
-                }
-                const leader = this.state.users.get(client.auth.uid);
-                this.room.state.addMessage({
-                    author: "Server",
-                    authorId: "server",
-                    payload: `Room leader ${specialRule ? "enabled" : "disabled"} Smeargle's Scribble for this game. Players need to ready again.`,
-                    avatar: leader === null || leader === void 0 ? void 0 : leader.avatar
-                });
-                this.state.users.forEach((user) => {
-                    user.ready = false;
-                });
-            }
-        }
-        catch (error) {
-            logger_1.logger.error(error);
-        }
-    }
-}
-exports.OnRoomChangeSpecialRule = OnRoomChangeSpecialRule;
-class OnChangeNoEloCommand extends command_1.Command {
+class OnToggleEloCommand extends command_1.Command {
     execute({ client, message: noElo }) {
         var _a;
         try {
             if (((_a = client.auth) === null || _a === void 0 ? void 0 : _a.uid) === this.state.ownerId &&
                 this.state.noElo != noElo) {
                 this.state.noElo = noElo;
-                if (noElo === false) {
-                    this.room.state.specialGameRule = null;
-                }
-                this.room.setNoElo(noElo);
+                this.room.toggleElo(noElo);
                 const leader = this.state.users.get(client.auth.uid);
                 this.room.state.addMessage({
                     author: "Server",
@@ -375,7 +334,7 @@ class OnChangeNoEloCommand extends command_1.Command {
         }
     }
 }
-exports.OnChangeNoEloCommand = OnChangeNoEloCommand;
+exports.OnToggleEloCommand = OnToggleEloCommand;
 class OnKickPlayerCommand extends command_1.Command {
     execute({ client, message: userId }) {
         var _a, _b;
@@ -480,7 +439,7 @@ class OnToggleReadyCommand extends command_1.Command {
                 return;
             if (((_a = client.auth) === null || _a === void 0 ? void 0 : _a.uid) && this.state.users.has(client.auth.uid)) {
                 const user = this.state.users.get(client.auth.uid);
-                user.ready = ready;
+                user.ready = ready !== undefined ? ready : !user.ready;
             }
             const nbExpectedPlayers = ((_b = this.room.metadata) === null || _b === void 0 ? void 0 : _b.whitelist) &&
                 ((_c = this.room.metadata) === null || _c === void 0 ? void 0 : _c.whitelist.length) > 0
@@ -491,27 +450,7 @@ class OnToggleReadyCommand extends command_1.Command {
                 (0, schemas_1.values)(this.state.users).every((user) => user.ready)) {
                 this.room.state.addMessage({
                     authorId: "server",
-                    payload: "Lobby is full, starting match in 3..."
-                });
-                return new CheckAutoStartRoom();
-            }
-        }
-        catch (error) {
-            logger_1.logger.error(error);
-        }
-    }
-}
-exports.OnToggleReadyCommand = OnToggleReadyCommand;
-class CheckAutoStartRoom extends command_1.Command {
-    execute() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                this.state.abortOnPlayerLeave = new AbortController();
-                const signal = this.state.abortOnPlayerLeave.signal;
-                yield (0, promises_1.setTimeout)(3000, null, { signal });
-                this.room.state.addMessage({
-                    authorId: "server",
-                    payload: "Starting match..."
+                    payload: `Lobby is full, starting match...`
                 });
                 if ([Game_1.GameMode.RANKED, Game_1.GameMode.SCRIBBLE].includes(this.state.gameMode)) {
                     this.room.presence.publish("lobby-full", {
@@ -520,18 +459,15 @@ class CheckAutoStartRoom extends command_1.Command {
                         noElo: this.state.noElo
                     });
                 }
-                return new OnGameStartRequestCommand();
+                return [new OnGameStartRequestCommand()];
             }
-            catch (e) {
-                this.room.state.addMessage({
-                    authorId: "server",
-                    payload: "Waiting for the room to fill up."
-                });
-            }
-        });
+        }
+        catch (error) {
+            logger_1.logger.error(error);
+        }
     }
 }
-exports.CheckAutoStartRoom = CheckAutoStartRoom;
+exports.OnToggleReadyCommand = OnToggleReadyCommand;
 class InitializeBotsCommand extends command_1.Command {
     execute(_a) {
         return __awaiter(this, arguments, void 0, function* ({ ownerId }) {

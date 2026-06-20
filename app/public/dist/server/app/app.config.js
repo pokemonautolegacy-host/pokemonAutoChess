@@ -62,11 +62,7 @@ if (process.env.NODE_APP_INSTANCE) {
                         throw "Attempt to create one lobby";
                     }
                 }
-                const stats = yield colyseus_1.matchMaker.stats.fetchAll();
-                stats.sort((p1, p2) => p1.roomCount !== p2.roomCount
-                    ? p1.roomCount - p2.roomCount
-                    : p1.ccu - p2.ccu);
-                return stats[0].processId;
+                return (yield colyseus_1.matchMaker.stats.fetchAll()).sort((p1, p2) => p1.ccu > p2.ccu ? 1 : -1)[0].processId;
             });
         }
     };
@@ -116,9 +112,6 @@ exports.default = (0, tools_1.default)({
         app.get("/map-viewer", (req, res) => {
             res.sendFile(viewsSrc);
         });
-        app.get("/gameboy", (req, res) => {
-            res.sendFile(viewsSrc);
-        });
         app.get("/pokemons", (req, res) => {
             res.send(Pokemon_1.Pkm);
         });
@@ -135,7 +128,6 @@ exports.default = (0, tools_1.default)({
             res.send(Config_1.SynergyTriggers);
         });
         app.get("/meta", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-            res.set("Cache-Control", "no-cache");
             res.send(yield meta_1.default.find({}, [
                 "cluster_id",
                 "count",
@@ -152,11 +144,9 @@ exports.default = (0, tools_1.default)({
             res.send(yield title_statistic_1.default.find());
         }));
         app.get("/meta/items", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-            res.set("Cache-Control", "no-cache");
             res.send(yield items_statistic_1.default.find());
         }));
         app.get("/meta/pokemons", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-            res.set("Cache-Control", "no-cache");
             res.send(yield pokemons_statistic_v2_1.default.find());
         }));
         app.get("/tilemap/:map", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -164,11 +154,9 @@ exports.default = (0, tools_1.default)({
             res.send(tilemap);
         }));
         app.get("/leaderboards", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-            res.set("Cache-Control", "no-cache");
             res.send((0, leaderboard_1.getLeaderboard)());
         }));
         app.get("/game-history/:playerUid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-            res.set("Cache-Control", "no-cache");
             const { playerUid } = req.params;
             const { page = 1 } = req.query;
             const limit = 10;

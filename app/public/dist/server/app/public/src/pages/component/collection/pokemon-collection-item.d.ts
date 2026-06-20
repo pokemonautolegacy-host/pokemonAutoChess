@@ -9,4 +9,4 @@ export default function PokemonCollectionItem(props: {
     filter: string;
     shinyOnly: boolean;
     setPokemon: Dispatch<SetStateAction<Pkm | "">>;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react/jsx-runtime").JSX.Element | null;

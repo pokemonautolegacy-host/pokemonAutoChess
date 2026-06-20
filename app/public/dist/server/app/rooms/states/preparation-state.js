@@ -16,7 +16,7 @@ const message_1 = __importDefault(require("../../models/colyseus-models/message"
 const Game_1 = require("../../types/enum/Game");
 class PreparationState extends schema_1.Schema {
     constructor(params) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var _a, _b, _c, _d, _e, _f, _g;
         super();
         this.messages = new schema_1.ArraySchema();
         this.users = new schema_1.MapSchema();
@@ -31,9 +31,8 @@ class PreparationState extends schema_1.Schema {
         this.minRank = (_d = params.minRank) !== null && _d !== void 0 ? _d : null;
         this.maxRank = (_e = params.maxRank) !== null && _e !== void 0 ? _e : null;
         this.gameMode = params.gameMode;
-        this.specialGameRule = (_f = params.specialGameRule) !== null && _f !== void 0 ? _f : null;
-        this.whitelist = (_g = params.whitelist) !== null && _g !== void 0 ? _g : [];
-        this.blacklist = (_h = params.blacklist) !== null && _h !== void 0 ? _h : [];
+        this.whitelist = (_f = params.whitelist) !== null && _f !== void 0 ? _f : [];
+        this.blacklist = (_g = params.blacklist) !== null && _g !== void 0 ? _g : [];
     }
     addMessage(params) {
         var _a, _b;
@@ -80,9 +79,6 @@ __decorate([
 __decorate([
     (0, schema_1.type)("string")
 ], PreparationState.prototype, "gameMode", void 0);
-__decorate([
-    (0, schema_1.type)("string")
-], PreparationState.prototype, "specialGameRule", void 0);
 __decorate([
     (0, schema_1.type)("boolean")
 ], PreparationState.prototype, "noElo", void 0);

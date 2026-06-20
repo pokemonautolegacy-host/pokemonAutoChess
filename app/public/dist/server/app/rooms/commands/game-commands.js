@@ -26,6 +26,7 @@ const egg_factory_1 = require("../../models/egg-factory");
 const pokemon_factory_1 = __importDefault(require("../../models/pokemon-factory"));
 const pve_stages_1 = require("../../models/pve-stages");
 const shop_1 = require("../../models/shop");
+const utils_1 = require("../../public/src/utils");
 const types_1 = require("../../types");
 const Config_1 = require("../../types/Config");
 const Effect_1 = require("../../types/enum/Effect");
@@ -36,7 +37,6 @@ const Pokemon_1 = require("../../types/enum/Pokemon");
 const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Synergy_1 = require("../../types/enum/Synergy");
 const array_1 = require("../../utils/array");
-const avatar_1 = require("../../utils/avatar");
 const board_1 = require("../../utils/board");
 const function_1 = require("../../utils/function");
 const logger_1 = require("../../utils/logger");
@@ -75,8 +75,7 @@ class OnShopCommand extends command_1.Command {
         player.board.set(pokemon.id, pokemon);
         pokemon.onAcquired(player);
         if (pokemon.passive === Passive_1.Passive.UNOWN &&
-            player.shopFreeRolls > 0 &&
-            player.shop.every((p) => Pokemon_1.Unowns.includes(p) || p === Pokemon_1.Pkm.DEFAULT)) {
+            player.shop.every((p) => Pokemon_1.Unowns.includes(p))) {
             this.state.shop.assignShop(player, true, this.state);
             player.shopFreeRolls -= 1;
         }
@@ -186,19 +185,9 @@ class OnDragDropCommand extends command_1.Command {
                         (0, board_1.getMaxTeamSize)(player.experienceManager.level, this.room.state.specialGameRule);
                     const dropToEmptyPlace = (0, board_1.isPositionEmpty)(x, y, player.board);
                     if (dropOnBench) {
-                        if (pokemon.canBeBenched) {
-                            this.room.swap(player, pokemon, x, y);
-                            if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.SLAMINGO) {
-                                pokemon.items.forEach((item) => {
-                                    if (item !== Item_1.Item.RARE_CANDY) {
-                                        player.items.push(item);
-                                        pokemon.removeItem(item);
-                                    }
-                                });
-                            }
-                            pokemon.onChangePosition(x, y, player);
-                            success = true;
-                        }
+                        this.room.swap(player, pokemon, x, y);
+                        pokemon.onChangePosition(x, y, player);
+                        success = true;
                     }
                     else if (pokemon.canBePlaced &&
                         !(dropFromBench && dropToEmptyPlace && isBoardFull)) {
@@ -214,10 +203,8 @@ class OnDragDropCommand extends command_1.Command {
             if (dittoReplaced) {
                 this.room.checkEvolutionsAfterPokemonAcquired(playerId);
             }
-            if (success) {
-                player.updateSynergies();
-                player.boardSize = this.room.getTeamSize(player.board);
-            }
+            player.updateSynergies();
+            player.boardSize = this.room.getTeamSize(player.board);
         }
         if (commands.length > 0) {
             return commands;
@@ -351,19 +338,6 @@ class OnDragDropItemCommand extends command_1.Command {
             client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
             return;
         }
-        if (item === Item_1.Item.ZYGARDE_CUBE) {
-            if ((pokemon === null || pokemon === void 0 ? void 0 : pokemon.passive) === Passive_1.Passive.ZYGARDE10 ||
-                (pokemon === null || pokemon === void 0 ? void 0 : pokemon.passive) === Passive_1.Passive.ZYGARDE50) {
-                if (pokemon.name === Pokemon_1.Pkm.ZYGARDE_10) {
-                    player.transformPokemon(pokemon, Pokemon_1.Pkm.ZYGARDE_50);
-                }
-                else if (pokemon.name === Pokemon_1.Pkm.ZYGARDE_50) {
-                    player.transformPokemon(pokemon, Pokemon_1.Pkm.ZYGARDE_10);
-                }
-            }
-            client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
-            return;
-        }
         if (Item_1.OgerponMasks.includes(item)) {
             if (pokemon.passive === Passive_1.Passive.OGERPON_TEAL ||
                 pokemon.passive === Passive_1.Passive.OGERPON_WELLSPRING ||
@@ -417,23 +391,6 @@ class OnDragDropItemCommand extends command_1.Command {
             pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
             pokemon.items.delete(item);
         }
-        if (Item_1.TMs.includes(item) || Item_1.HMs.includes(item)) {
-            if (pokemon.types.has(Synergy_1.Synergy.HUMAN)) {
-                pokemon.tm = Item_1.AbilityPerTM[item];
-                pokemon.skill = Item_1.AbilityPerTM[item];
-                pokemon.maxPP = 100;
-                (0, array_1.removeInArray)(player.items, item);
-                const tmIndex = player.tms.findIndex((tm) => tm === item);
-                if (tmIndex !== -1) {
-                    player.tms[tmIndex] = null;
-                }
-                return;
-            }
-            else {
-                client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
-                return;
-            }
-        }
         if (Item_1.NonHoldableItems.includes(item) || !pokemon.canHoldItems) {
             client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
             return;
@@ -445,8 +402,9 @@ class OnDragDropItemCommand extends command_1.Command {
             client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
             return;
         }
-        if (Item_1.SynergyStones.includes(item) &&
-            pokemon.types.has(Item_1.SynergyGivenByItem[item])) {
+        if (Item_1.SynergyItems.includes(item) &&
+            pokemon.types.has(Item_1.SynergyGivenByItem[item]) &&
+            pokemon.passive !== Passive_1.Passive.RECYCLE) {
             client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
             return;
         }
@@ -472,7 +430,7 @@ class OnDragDropItemCommand extends command_1.Command {
                 return;
             }
             const itemCombined = recipe[0];
-            if (Item_1.SynergyStones.includes(itemCombined) &&
+            if (itemCombined in Item_1.SynergyGivenByItem &&
                 pokemon.types.has(Item_1.SynergyGivenByItem[itemCombined])) {
                 client.send(types_1.Transfer.DRAG_DROP_FAILED, message);
                 return;
@@ -522,7 +480,6 @@ class OnSellDropCommand extends command_1.Command {
                 player.board.delete(pokemonId);
                 player.updateSynergies();
                 player.boardSize = this.room.getTeamSize(player.board);
-                pokemon.afterSell(player);
             }
         }
     }
@@ -530,16 +487,17 @@ class OnSellDropCommand extends command_1.Command {
 exports.OnSellDropCommand = OnSellDropCommand;
 class OnRefreshCommand extends command_1.Command {
     execute(id) {
-        var _a;
         const player = this.state.players.get(id);
         if (!player)
             return;
         const rollCost = player.shopFreeRolls > 0 ? 0 : 1;
-        const canRoll = ((_a = player === null || player === void 0 ? void 0 : player.money) !== null && _a !== void 0 ? _a : 0) >= rollCost;
-        if (canRoll && player.alive) {
-            player.rerollCount++;
-            player.money -= rollCost;
+        const rollCostType = this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.DESPERATE_MOVES
+            ? "life"
+            : "money";
+        if (player[rollCostType] >= rollCost && player.alive) {
             this.state.shop.assignShop(player, true, this.state);
+            player[rollCostType] -= rollCost;
+            player.rerollCount++;
             if (player.shopFreeRolls > 0)
                 player.shopFreeRolls--;
         }
@@ -820,9 +778,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 this.room.broadcast(types_1.Transfer.GAME_END);
                 this.room.disconnect();
             }, 30 * 1000);
-            return true;
         }
-        return false;
     }
     computeStreak(isPVE) {
         if (isPVE)
@@ -845,17 +801,13 @@ class OnUpdatePhaseCommand extends command_1.Command {
             }
         });
     }
-    computeIncome(isPVE, specialGameRule) {
+    computeIncome() {
         this.state.players.forEach((player) => {
             let income = 0;
             if (player.alive && !player.isBot) {
-                if (specialGameRule !== SpecialGameRule_1.SpecialGameRule.BLOOD_MONEY) {
-                    player.interest = Math.min(Math.floor(player.money / 10), 5);
-                    income += player.interest;
-                }
-                if (!isPVE) {
-                    income += (0, number_1.max)(5)(player.streak);
-                }
+                player.interest = Math.min(Math.floor(player.money / 10), 5);
+                income += player.interest;
+                income += (0, number_1.max)(5)(player.streak);
                 income += 5;
                 player.addMoney(income, true, null);
                 if (income > 0) {
@@ -956,11 +908,6 @@ class OnUpdatePhaseCommand extends command_1.Command {
             for (let i = 0; i < nbTrees; i++) {
                 player.berryTreesStage[i] = (0, number_1.max)(3)(player.berryTreesStage[i] + 1);
             }
-            if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.FIRST_PARTNER &&
-                this.state.stageLevel < 10 &&
-                player.firstPartner) {
-                this.room.spawnOnBench(player, player.firstPartner, "spawn");
-            }
         });
         this.spawnWanderingPokemons();
         return commands;
@@ -976,7 +923,6 @@ class OnUpdatePhaseCommand extends command_1.Command {
                     const coordinate = (0, board_1.getFirstAvailablePositionOnBoard)(player.board);
                     if (coordinate && pokemon) {
                         this.room.swap(player, pokemon, coordinate[0], coordinate[1]);
-                        pokemon.onChangePosition(coordinate[0], coordinate[1], player);
                     }
                 }
                 if (numberOfPokemonsToMove > 0) {
@@ -1008,57 +954,119 @@ class OnUpdatePhaseCommand extends command_1.Command {
         this.computeAchievements();
         this.computeStreak(isPVE);
         this.checkDeath();
-        const isGameFinished = this.checkEndGame();
-        if (!isGameFinished) {
-            this.state.stageLevel += 1;
-            this.computeIncome(isPVE, this.state.specialGameRule);
-            this.state.players.forEach((player) => {
-                var _a;
-                if (player.alive) {
-                    if (player.isBot) {
-                        player.experienceManager.level = (0, number_1.max)(9)(Math.round(this.state.stageLevel / 2));
+        this.computeIncome();
+        this.state.players.forEach((player) => {
+            var _a, _b;
+            if (player.alive) {
+                if (player.isBot) {
+                    player.experienceManager.level = (0, number_1.max)(9)(Math.round(this.state.stageLevel / 2));
+                }
+                if (isPVE && ((_a = player.history.at(-1)) === null || _a === void 0 ? void 0 : _a.result) === Game_1.BattleResult.WIN) {
+                    while (player.pveRewards.length > 0) {
+                        const reward = player.pveRewards.pop();
+                        player.items.push(reward);
                     }
-                    if (isPVE && ((_a = player.history.at(-1)) === null || _a === void 0 ? void 0 : _a.result) === Game_1.BattleResult.WIN) {
-                        while (player.pveRewards.length > 0) {
-                            const reward = player.pveRewards.pop();
-                            player.items.push(reward);
-                        }
-                        if (player.pveRewardsPropositions.length > 0) {
-                            (0, schemas_1.resetArraySchema)(player.itemsProposition, player.pveRewardsPropositions);
-                            player.pveRewardsPropositions.clear();
-                        }
-                    }
-                    this.spawnBabyEggs(player, isPVE);
-                    player.board.forEach((pokemon, key) => {
-                        if (pokemon.evolutionRule) {
-                            if (pokemon.evolutionRule instanceof evolution_rules_1.HatchEvolutionRule) {
-                                pokemon.evolutionRule.updateHatch(pokemon, player, this.state.stageLevel);
-                            }
-                            if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
-                                pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
-                            }
-                        }
-                        if (pokemon.passive === Passive_1.Passive.UNOWN && !(0, board_1.isOnBench)(pokemon)) {
-                            player.board.delete(key);
-                            player.board.delete(pokemon.id);
-                        }
-                    });
-                    player.updateSynergies();
-                    if (!player.isBot) {
-                        if (!player.shopLocked) {
-                            if (player.shop.every((p) => Pokemon_1.Unowns.includes(p))) {
-                                player.shopFreeRolls -= 1;
-                            }
-                            this.state.shop.assignShop(player, false, this.state);
-                        }
-                        else {
-                            this.state.shop.refillShop(player, this.state);
-                            player.shopLocked = false;
-                        }
+                    if (player.pveRewardsPropositions.length > 0) {
+                        (0, schemas_1.resetArraySchema)(player.itemsProposition, player.pveRewardsPropositions);
+                        player.pveRewardsPropositions.clear();
                     }
                 }
-            });
-        }
+                const hasBabyActive = player.effects.has(Effect_1.Effect.HATCHER) ||
+                    player.effects.has(Effect_1.Effect.BREEDER) ||
+                    player.effects.has(Effect_1.Effect.GOLDEN_EGGS);
+                const hasLostLastBattle = ((_b = player.history.at(-1)) === null || _b === void 0 ? void 0 : _b.result) === Game_1.BattleResult.DEFEAT;
+                const eggsOnBench = (0, schemas_1.values)(player.board).filter((p) => p.name === Pokemon_1.Pkm.EGG);
+                const nbOfGoldenEggsOnBench = eggsOnBench.filter((p) => p.shiny).length;
+                let nbEggsFound = 0;
+                let goldenEggFound = false;
+                if (hasLostLastBattle && hasBabyActive) {
+                    const EGG_CHANCE = 0.1;
+                    const GOLDEN_EGG_CHANCE = 0.04;
+                    const playerEggChanceStacked = player.eggChance;
+                    const babies = (0, schemas_1.values)(player.board).filter((p) => !(0, board_1.isOnBench)(p) && p.types.has(Synergy_1.Synergy.BABY));
+                    for (const baby of babies) {
+                        if (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) &&
+                            nbOfGoldenEggsOnBench === 0 &&
+                            (0, random_1.chance)(GOLDEN_EGG_CHANCE, baby)) {
+                            nbEggsFound++;
+                            goldenEggFound = true;
+                        }
+                        else if ((0, random_1.chance)(EGG_CHANCE, baby)) {
+                            nbEggsFound++;
+                        }
+                        if (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) && !goldenEggFound) {
+                            player.eggChance += GOLDEN_EGG_CHANCE * (1 + baby.luck / 100);
+                        }
+                        else if (player.effects.has(Effect_1.Effect.HATCHER) &&
+                            nbEggsFound === 0) {
+                            player.eggChance += EGG_CHANCE * (1 + baby.luck / 100);
+                        }
+                    }
+                    if (nbEggsFound === 0 &&
+                        (player.effects.has(Effect_1.Effect.BREEDER) ||
+                            player.effects.has(Effect_1.Effect.GOLDEN_EGGS) ||
+                            (0, random_1.chance)(playerEggChanceStacked))) {
+                        nbEggsFound = 1;
+                    }
+                    if (goldenEggFound === false &&
+                        player.effects.has(Effect_1.Effect.GOLDEN_EGGS) &&
+                        nbOfGoldenEggsOnBench === 0 &&
+                        (0, random_1.chance)(playerEggChanceStacked)) {
+                        goldenEggFound = true;
+                    }
+                }
+                else if (!isPVE) {
+                    player.eggChance = 0;
+                }
+                if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.OMELETTE_COOK &&
+                    [1, 2, 3].includes(this.state.stageLevel)) {
+                    nbEggsFound = 1;
+                }
+                for (let i = 0; i < nbEggsFound; i++) {
+                    if ((0, board_1.getFreeSpaceOnBench)(player.board) === 0)
+                        continue;
+                    const isGoldenEgg = goldenEggFound && i === 0 && nbOfGoldenEggsOnBench === 0;
+                    const egg = (0, egg_factory_1.createRandomEgg)(isGoldenEgg, player);
+                    const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
+                    egg.positionX = x !== undefined ? x : -1;
+                    egg.positionY = 0;
+                    player.board.set(egg.id, egg);
+                    if (player.effects.has(Effect_1.Effect.HATCHER) ||
+                        (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) && isGoldenEgg)) {
+                        player.eggChance = 0;
+                    }
+                }
+                player.board.forEach((pokemon, key) => {
+                    if (pokemon.evolutionRule) {
+                        if (pokemon.evolutionRule instanceof evolution_rules_1.HatchEvolutionRule) {
+                            pokemon.evolutionRule.updateHatch(pokemon, player, this.state.stageLevel);
+                        }
+                        if (pokemon.evolutionRule instanceof evolution_rules_1.ConditionBasedEvolutionRule) {
+                            pokemon.evolutionRule.tryEvolve(pokemon, player, this.state.stageLevel);
+                        }
+                    }
+                    if (pokemon.passive === Passive_1.Passive.UNOWN && !(0, board_1.isOnBench)(pokemon)) {
+                        player.board.delete(key);
+                        player.board.delete(pokemon.id);
+                    }
+                });
+                player.updateSynergies();
+                if (!player.isBot) {
+                    if (!player.shopLocked) {
+                        if (player.shop.every((p) => Pokemon_1.Unowns.includes(p))) {
+                            player.shopFreeRolls -= 1;
+                        }
+                        this.state.shop.assignShop(player, false, this.state);
+                    }
+                    else {
+                        this.state.shop.refillShop(player, this.state);
+                        player.shopLocked = false;
+                    }
+                }
+            }
+        });
+        this.state.stageLevel += 1;
+        this.checkEndGame();
     }
     initializeMinigamePhase() {
         this.state.phase = Game_1.GamePhaseState.MINIGAME;
@@ -1091,7 +1099,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 if (player.alive) {
                     player.opponentId = "pve";
                     player.opponentName = pveStage.name;
-                    player.opponentAvatar = (0, avatar_1.getAvatarString)(Pokemon_1.PkmIndex[pveStage.avatar], this.state.shinyEncounter, pveStage.emotion);
+                    player.opponentAvatar = (0, utils_1.getAvatarString)(Pokemon_1.PkmIndex[pveStage.avatar], this.state.shinyEncounter, pveStage.emotion);
                     player.opponentTitle = "WILD";
                     player.team = Game_1.Team.BLUE_TEAM;
                     const rewards = (_b = (_a = pveStage.getRewards) === null || _a === void 0 ? void 0 : _a.call(pveStage, player)) !== null && _b !== void 0 ? _b : [];
@@ -1115,6 +1123,7 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 const { bluePlayer, redPlayer } = matchup;
                 const weather = (0, weather_1.getWeather)(bluePlayer, redPlayer, redPlayer.board);
                 const simulationId = (0, nanoid_1.nanoid)();
+                const simulation = new simulation_1.default(simulationId, this.room, bluePlayer.board, redPlayer.board, bluePlayer, redPlayer, this.state.stageLevel, weather, matchup.ghost);
                 bluePlayer.simulationId = simulationId;
                 bluePlayer.team = Game_1.Team.BLUE_TEAM;
                 bluePlayer.opponents.set(redPlayer.id, ((_a = bluePlayer.opponents.get(redPlayer.id)) !== null && _a !== void 0 ? _a : 0) + 1);
@@ -1133,7 +1142,6 @@ class OnUpdatePhaseCommand extends command_1.Command {
                     redPlayer.opponentAvatar = bluePlayer.avatar;
                     redPlayer.opponentTitle = (_d = bluePlayer.title) !== null && _d !== void 0 ? _d : "";
                 }
-                const simulation = new simulation_1.default(simulationId, this.room, bluePlayer.board, redPlayer.board, bluePlayer, redPlayer, this.state.stageLevel, weather, matchup.ghost);
                 this.state.simulations.set(simulation.id, simulation);
             });
         }
@@ -1162,77 +1170,6 @@ class OnUpdatePhaseCommand extends command_1.Command {
                 }
             }
         });
-    }
-    spawnBabyEggs(player, isPVE) {
-        var _a;
-        const hasBabyActive = player.effects.has(Effect_1.Effect.HATCHER) ||
-            player.effects.has(Effect_1.Effect.BREEDER) ||
-            player.effects.has(Effect_1.Effect.GOLDEN_EGGS);
-        const hasLostLastBattle = ((_a = player.history.at(-1)) === null || _a === void 0 ? void 0 : _a.result) === Game_1.BattleResult.DEFEAT;
-        const eggsOnBench = (0, schemas_1.values)(player.board).filter((p) => p.name === Pokemon_1.Pkm.EGG);
-        const nbOfGoldenEggsOnBench = eggsOnBench.filter((p) => p.shiny).length;
-        let nbEggsFound = 0;
-        let goldenEggFound = false;
-        if (hasLostLastBattle && hasBabyActive) {
-            const EGG_CHANCE = 0.08;
-            const GOLDEN_EGG_CHANCE = 0.04;
-            const playerEggChanceStacked = player.eggChance;
-            const playerGoldenEggChanceStacked = player.goldenEggChance;
-            const babies = (0, schemas_1.values)(player.board).filter((p) => !(0, board_1.isOnBench)(p) && p.types.has(Synergy_1.Synergy.BABY));
-            for (const baby of babies) {
-                if (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) &&
-                    nbOfGoldenEggsOnBench === 0 &&
-                    (0, random_1.chance)(GOLDEN_EGG_CHANCE, baby)) {
-                    nbEggsFound++;
-                    goldenEggFound = true;
-                }
-                else if ((0, random_1.chance)(EGG_CHANCE, baby)) {
-                    nbEggsFound++;
-                }
-                if (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) && !goldenEggFound) {
-                    player.goldenEggChance += GOLDEN_EGG_CHANCE * (1 + baby.luck / 100);
-                }
-                else if (player.effects.has(Effect_1.Effect.HATCHER) && nbEggsFound === 0) {
-                    player.eggChance += EGG_CHANCE * (1 + baby.luck / 100);
-                }
-            }
-            if (nbEggsFound === 0 &&
-                (player.effects.has(Effect_1.Effect.BREEDER) ||
-                    player.effects.has(Effect_1.Effect.GOLDEN_EGGS) ||
-                    (0, random_1.chance)(playerEggChanceStacked))) {
-                nbEggsFound = 1;
-            }
-            if (goldenEggFound === false &&
-                player.effects.has(Effect_1.Effect.GOLDEN_EGGS) &&
-                nbOfGoldenEggsOnBench === 0 &&
-                (0, random_1.chance)(playerGoldenEggChanceStacked)) {
-                goldenEggFound = true;
-            }
-        }
-        else if (!isPVE) {
-            player.eggChance = 0;
-            player.goldenEggChance = 0;
-        }
-        if (this.state.specialGameRule === SpecialGameRule_1.SpecialGameRule.OMELETTE_COOK &&
-            [2, 3, 4].includes(this.state.stageLevel)) {
-            nbEggsFound = 1;
-        }
-        for (let i = 0; i < nbEggsFound; i++) {
-            if ((0, board_1.getFreeSpaceOnBench)(player.board) === 0)
-                continue;
-            const isGoldenEgg = goldenEggFound && i === 0 && nbOfGoldenEggsOnBench === 0;
-            const egg = (0, egg_factory_1.createRandomEgg)(isGoldenEgg, player);
-            const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
-            egg.positionX = x !== undefined ? x : -1;
-            egg.positionY = 0;
-            player.board.set(egg.id, egg);
-            if (player.effects.has(Effect_1.Effect.HATCHER)) {
-                player.eggChance = 0;
-            }
-            if (player.effects.has(Effect_1.Effect.GOLDEN_EGGS) && isGoldenEgg) {
-                player.goldenEggChance = 0;
-            }
-        }
     }
 }
 exports.OnUpdatePhaseCommand = OnUpdatePhaseCommand;

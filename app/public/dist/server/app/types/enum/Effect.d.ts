@@ -107,8 +107,9 @@ export declare enum Effect {
     NIGHT = "NIGHT",
     WINDY = "WINDY",
     BLOODMOON = "BLOODMOON",
-    SMOG = "SMOG",
-    SMOKE = "SMOKE",
+    HYDRATATION = "HYDRATATION",
+    COOL_BREEZE = "COOL_BREEZE",
+    GAS = "GAS",
     POISON_GAS = "POISON_GAS",
     SHINING_RAY = "SHINING_RAY",
     LIGHT_PULSE = "LIGHT_PULSE",
@@ -116,7 +117,6 @@ export declare enum Effect {
     MAX_ILLUMINATION = "MAX_ILLUMINATION",
     STEALTH_ROCKS = "STEALTH_ROCKS",
     SPIKES = "SPIKES",
-    TOXIC_SPIKES = "TOXIC_SPIKES",
     IMMUNITY_BURN = "IMMUNITY_BURN",
     IMMUNITY_CONFUSION = "IMMUNITY_CONFUSION",
     IMMUNITY_FREEZE = "IMMUNITY_FREEZE",
@@ -132,16 +132,11 @@ export declare enum Effect {
     BERSERK = "BERSERK",
     STICKY_WEB = "STICKY_WEB",
     HAIL = "HAIL",
-    EMBER = "EMBER",
     FLUID = "FLUID",
     SHAPELESS = "SHAPELESS",
     ETHEREAL = "ETHEREAL",
     ZEN_MODE = "ZEN_MODE",
-    LIGHTNING_STRIKE = "LIGHTNING_STRIKE",
-    VICTINI_PASSIVE = "VICTINI_PASSIVE",
-    GOOD_LUCK = "GOOD_LUCK",
-    BAD_LUCK = "BAD_LUCK",
-    WONDER_ROOM = "WONDER_ROOM"
+    LIGHTNING_STRIKE = "LIGHTNING_STRIKE"
 }
-export declare const BoardEffects: readonly [Effect.LIGHTNING_STRIKE, Effect.SMOKE, Effect.POISON_GAS, Effect.STEALTH_ROCKS, Effect.SPIKES, Effect.TOXIC_SPIKES, Effect.STICKY_WEB, Effect.HAIL, Effect.EMBER];
+export declare const BoardEffects: readonly [Effect.LIGHTNING_STRIKE, Effect.GAS, Effect.POISON_GAS, Effect.STEALTH_ROCKS, Effect.SPIKES, Effect.STICKY_WEB, Effect.HAIL];
 export type BoardEffect = (typeof BoardEffects)[number];

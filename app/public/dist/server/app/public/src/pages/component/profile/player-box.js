@@ -11,7 +11,7 @@ const precomputed_pokemon_data_1 = require("../../../../../models/precomputed/pr
 const types_1 = require("../../../../../types");
 const Pokemon_1 = require("../../../../../types/enum/Pokemon");
 const hooks_1 = require("../../../hooks");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const synergy_icon_1 = __importDefault(require("../icons/synergy-icon"));
 const elo_badge_1 = require("./elo-badge");
 const role_badge_1 = require("./role-badge");
@@ -50,7 +50,7 @@ function PlayerBox(props) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between"
-                }, children: (0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "0.5em" }, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getAvatarSrc)(props.user.avatar), className: "pokemon-portrait" }), props.user.title && ((0, jsx_runtime_1.jsx)("p", { className: "player-title", children: t(`title.${props.user.title}`) })), (0, jsx_runtime_1.jsx)(role_badge_1.RoleBadge, { role: props.user.role }), (0, jsx_runtime_1.jsx)("p", { style: {
+                }, children: (0, jsx_runtime_1.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "0.5em" }, children: [(0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getAvatarSrc)(props.user.avatar), className: "pokemon-portrait" }), props.user.title && ((0, jsx_runtime_1.jsx)("p", { className: "player-title", children: t(`title.${props.user.title}`) })), (0, jsx_runtime_1.jsx)(role_badge_1.RoleBadge, { role: props.user.role }), (0, jsx_runtime_1.jsx)("p", { style: {
                                 overflow: "hidden",
                                 whiteSpace: "nowrap",
                                 textOverflow: "ellipsis"
@@ -62,6 +62,6 @@ function PlayerBox(props) {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between"
-                }, children: [(0, jsx_runtime_1.jsxs)("p", { children: [" ", t("favorites"), ":"] }), (0, jsx_runtime_1.jsx)("p", { children: favoriteSynergies.map((type) => ((0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }, "fav_" + type))) }), (0, jsx_runtime_1.jsx)("p", { children: favoritePokemons.map((name) => ((0, jsx_runtime_1.jsx)("img", { src: (0, avatar_1.getAvatarSrc)(Pokemon_1.PkmIndex[name] + "/Normal"), className: "pokemon-portrait" }, name))) })] }), (role === types_1.Role.ADMIN || role === types_1.Role.MODERATOR) && ((0, jsx_runtime_1.jsxs)("p", { style: { color: "#aaa", fontSize: "60%" }, children: [t("user_id"), ": ", props.user.uid] }))] }));
+                }, children: [(0, jsx_runtime_1.jsxs)("p", { children: [" ", t("favorites"), ":"] }), (0, jsx_runtime_1.jsx)("p", { children: favoriteSynergies.map((type) => ((0, jsx_runtime_1.jsx)(synergy_icon_1.default, { type: type }, "fav_" + type))) }), (0, jsx_runtime_1.jsx)("p", { children: favoritePokemons.map((name) => ((0, jsx_runtime_1.jsx)("img", { src: (0, utils_1.getAvatarSrc)(Pokemon_1.PkmIndex[name] + "/Normal"), className: "pokemon-portrait" }, name))) })] }), (role === types_1.Role.ADMIN || role === types_1.Role.MODERATOR) && ((0, jsx_runtime_1.jsxs)("p", { style: { color: "#aaa", fontSize: "60%" }, children: [t("user_id"), ": ", props.user.uid] }))] }));
 }
 //# sourceMappingURL=player-box.js.map

@@ -46,5 +46,5 @@ export default class GameState extends Schema {
     pveRewardsPropositions: Item[];
     minRank: EloRank | null;
     maxRank: EloRank | null;
-    constructor(preparationId: string, name: string, noElo: boolean, gameMode: GameMode, minRank: EloRank | null, maxRank: EloRank | null, specialGameRule: SpecialGameRule | null);
+    constructor(preparationId: string, name: string, noElo: boolean, gameMode: GameMode, minRank: EloRank | null, maxRank: EloRank | null);
 }

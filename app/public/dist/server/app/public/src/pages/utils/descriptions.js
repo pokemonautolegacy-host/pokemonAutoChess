@@ -89,7 +89,7 @@ function addIconsToDescription(description, stats) {
                 d = ((0, jsx_runtime_1.jsxs)("span", { className: (0, jsx_1.cc)("description-icon", { "scales-ap": scaleType === "AP", "scales-luck": scaleType === "LUCK" }), children: [scaleType === "AP" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/AP.png", alt: "Ability Power", title: "Scales with Ability Power" })), scaleType === "LUCK" && ((0, jsx_runtime_1.jsx)("img", { src: "assets/icons/LUCK.png", alt: "Luck", title: "Scales with Luck" })), array.map((v, j) => {
                             var _a, _b;
                             const separator = j < array.length - 1 ? "/" : "";
-                            let scaleValue = 0;
+                            let scaleValue = 1;
                             if (scaleType === "AP")
                                 scaleValue = (_a = stats === null || stats === void 0 ? void 0 : stats.ap) !== null && _a !== void 0 ? _a : 0;
                             if (scaleType === "LUCK")

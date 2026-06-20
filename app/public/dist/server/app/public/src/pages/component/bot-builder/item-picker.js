@@ -20,9 +20,19 @@ function ItemPicker(props) {
         { label: (0, i18next_1.t)("berries"), key: "berries", items: Item_1.Berries },
         { label: (0, i18next_1.t)("artificial_items"), key: "artificial", items: Item_1.ArtificialItems },
         {
+            label: (0, i18next_1.t)("weather_rocks"),
+            key: "weather_rocks",
+            items: Item_1.WeatherRocks
+        },
+        {
             label: (0, i18next_1.t)("shiny_items"),
             key: "shiny_items",
             items: Item_1.ShinyItems
+        },
+        {
+            label: (0, i18next_1.t)("special_items"),
+            key: "special_items",
+            items: Item_1.SpecialItems
         }
     ];
     return ((0, jsx_runtime_1.jsxs)(react_tabs_1.Tabs, { className: "my-box", id: "item-picker", children: [(0, jsx_runtime_1.jsx)(react_tabs_1.TabList, { children: tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.Tab, { children: t.label }, t.key))) }), tabs.map((t) => ((0, jsx_runtime_1.jsx)(react_tabs_1.TabPanel, { children: t.items.map((item) => ((0, jsx_runtime_1.jsx)("img", { src: "assets/item/" + Item_1.Item[item] + ".png", className: (0, jsx_1.cc)("item", { selected: item === props.selected }), "data-tooltip-id": "detail-item", onMouseOver: () => setItemHovered(item), onClick: () => props.selectEntity(item), draggable: true, onDragStart: (e) => handleOnDragStart(e, item) }, item))) }, t.key))), itemHovered && (0, jsx_runtime_1.jsx)(react_tooltip_1.Tooltip, { id: "detail-item", className: "custom-theme-tooltip item-detail-tooltip", children: (0, jsx_runtime_1.jsx)(item_detail_1.ItemDetailTooltip, { item: itemHovered }) })] }));

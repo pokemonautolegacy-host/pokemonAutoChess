@@ -7,7 +7,6 @@ exports.DebugScene = void 0;
 const pokemon_factory_1 = __importDefault(require("../../../../models/pokemon-factory"));
 const Animation_1 = require("../../../../types/Animation");
 const Dungeon_1 = require("../../../../types/enum/Dungeon");
-const Game_1 = require("../../../../types/enum/Game");
 const Pokemon_1 = require("../../../../types/enum/Pokemon");
 const Status_1 = require("../../../../types/enum/Status");
 const logger_1 = require("../../../../utils/logger");
@@ -17,7 +16,6 @@ const audio_1 = require("../../pages/utils/audio");
 const utils_1 = require("../../pages/utils/utils");
 const animation_manager_1 = __importDefault(require("../animation-manager"));
 const abilities_animations_1 = require("../components/abilities-animations");
-const boosts_animations_1 = require("../components/boosts-animations");
 const loading_manager_1 = __importDefault(require("../components/loading-manager"));
 const pokemon_1 = __importDefault(require("../components/pokemon"));
 class DebugScene extends Phaser.Scene {
@@ -125,7 +123,6 @@ class DebugScene extends Phaser.Scene {
             this.pokemon.removeParalysis();
             this.pokemon.removePokerus();
             this.pokemon.removeLocked();
-            this.pokemon.removeBlinded();
             this.pokemon.removeArmorReduction();
             this.pokemon.removeCharm();
             this.pokemon.removeRuneProtect();
@@ -197,9 +194,6 @@ class DebugScene extends Phaser.Scene {
             if (status == Status_1.Status.LOCKED) {
                 this.pokemon.addLocked();
             }
-            if (status == Status_1.Status.BLINDED) {
-                this.pokemon.addBlinded();
-            }
             if (status == Status_1.Status.SPIKE_ARMOR) {
                 this.pokemon.addSpikeArmor();
             }
@@ -217,24 +211,6 @@ class DebugScene extends Phaser.Scene {
             }
             if (status == Status_1.Status.FAIRY_FIELD) {
                 this.pokemon.addFairyField();
-            }
-            if (status === "BOOST/ATK") {
-                this.displayBoost(Game_1.Stat.ATK);
-            }
-            if (status === "BOOST/AP") {
-                this.displayBoost(Game_1.Stat.AP);
-            }
-            if (status === "BOOST/DEF") {
-                this.displayBoost(Game_1.Stat.DEF);
-            }
-            if (status === "BOOST/SPE_DEF") {
-                this.displayBoost(Game_1.Stat.SPE_DEF);
-            }
-            if (status === "BOOST/SHIELD") {
-                this.displayBoost(Game_1.Stat.SHIELD);
-            }
-            if (status === "BOOST/ATK_SPEED") {
-                this.displayBoost(Game_1.Stat.ATK_SPEED);
             }
         }
     }
@@ -266,10 +242,6 @@ class DebugScene extends Phaser.Scene {
         };
         showAbilityAnim();
         this.attackAnimInterval = setInterval(showAbilityAnim, 2000);
-    }
-    displayBoost(stat) {
-        const coords = (0, utils_1.transformAttackCoordinate)(this.pokemon.positionX, this.pokemon.positionY, false);
-        (0, boosts_animations_1.displayBoost)(this, coords[0], coords[1], stat);
     }
 }
 exports.DebugScene = DebugScene;

@@ -32,5 +32,5 @@ export declare enum Synergy {
     AMORPHOUS = "AMORPHOUS"
 }
 export declare const SynergyEffects: {
-    [key in Synergy]: readonly Effect[];
+    [key in Synergy]: Effect[];
 };

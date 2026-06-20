@@ -15,23 +15,13 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -164,7 +154,6 @@ function zeroPad(num) {
 }
 function splitIndex(index) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c;
         const pathIndex = index.replace("-", "/");
         const shinyPad = pathIndex.length == 4 ? `${pathIndex}/0000/0001` : `${pathIndex}/0001`;
         const allPads = [pathIndex, shinyPad];
@@ -175,26 +164,17 @@ function splitIndex(index) {
                 const xmlFile = fs_1.default.readFileSync(expandHomeDir(`${path}/sprite/${pad}/AnimData.xml`));
                 const parser = new fast_xml_parser_1.XMLParser();
                 const xmlData = parser.parse(xmlFile);
-                let attackMetadata = xmlData.AnimData.Anims.Anim.find((m) => m.Name === Pokemon_1.AnimationConfig[mapName.get(index)].attack);
+                const attackMetadata = xmlData.AnimData.Anims.Anim.find((m) => m.Name === Pokemon_1.AnimationConfig[mapName.get(index)].attack);
                 if (attackMetadata) {
-                    if (attackMetadata && attackMetadata.CopyOf) {
-                        attackMetadata =
-                            (_a = xmlData.AnimData.Anims.Anim.find((m) => m.Name == (attackMetadata === null || attackMetadata === void 0 ? void 0 : attackMetadata.CopyOf))) !== null && _a !== void 0 ? _a : attackMetadata;
-                    }
-                    if (!((_b = attackMetadata === null || attackMetadata === void 0 ? void 0 : attackMetadata.Durations) === null || _b === void 0 ? void 0 : _b.Duration)) {
-                        logger_1.logger.error("no duration found for attack metadata", attackMetadata);
-                    }
-                    else {
-                        const attackDurations = attackMetadata.Durations.Duration.length !== undefined
-                            ? [...attackMetadata.Durations.Duration]
-                            : [attackMetadata.Durations.Duration];
-                        delays[index] = {
-                            d: attackDurations
-                                .slice(0, attackMetadata.HitFrame)
-                                .reduce((prev, curr) => prev + curr, 0),
-                            t: attackDurations.reduce((prev, curr) => prev + curr, 0)
-                        };
-                    }
+                    const attackDurations = attackMetadata.Durations.Duration.length !== undefined
+                        ? [...attackMetadata.Durations.Duration]
+                        : [attackMetadata.Durations.Duration];
+                    delays[index] = {
+                        d: attackDurations
+                            .slice(0, attackMetadata.HitFrame)
+                            .reduce((prev, curr) => prev + curr, 0),
+                        t: attackDurations.reduce((prev, curr) => prev + curr, 0)
+                    };
                 }
                 for (let k = 0; k < Object.values(Game_1.SpriteType).length; k++) {
                     const anim = Object.values(Game_1.SpriteType)[k];
@@ -227,51 +207,46 @@ function splitIndex(index) {
                             const img = metadata && metadata.CopyOf
                                 ? yield jimp_1.Jimp.read(expandHomeDir(`${path}/sprite/${pad}/${metadata.CopyOf}-${anim}.png`))
                                 : yield jimp_1.Jimp.read(expandHomeDir(`${path}/sprite/${pad}/${action}-${anim}.png`));
-                            if (metadata === null || metadata === void 0 ? void 0 : metadata.CopyOf) {
+                            if (metadata && metadata.CopyOf) {
                                 metadata = xmlData.AnimData.Anims.Anim.find((m) => m.Name == (metadata === null || metadata === void 0 ? void 0 : metadata.CopyOf));
                             }
-                            if (!((_c = metadata === null || metadata === void 0 ? void 0 : metadata.Durations) === null || _c === void 0 ? void 0 : _c.Duration)) {
-                                logger_1.logger.error("no duration found for metadata", metadata);
-                            }
-                            else {
-                                durations[`${index}/${shiny}/${action}/${anim}`] =
-                                    (metadata === null || metadata === void 0 ? void 0 : metadata.Durations.Duration.length) !== undefined
-                                        ? [...metadata.Durations.Duration]
-                                        : [metadata.Durations.Duration];
-                                const frameHeight = metadata === null || metadata === void 0 ? void 0 : metadata.FrameHeight;
-                                const frameWidth = metadata === null || metadata === void 0 ? void 0 : metadata.FrameWidth;
-                                if (frameWidth && frameHeight) {
-                                    const width = img.width / frameWidth;
-                                    const height = img.height / frameHeight;
-                                    for (let x = 0; x < width; x++) {
-                                        for (let y = 0; y < height; y++) {
-                                            const cropImg = img.clone();
-                                            if (anim == Game_1.SpriteType.SHADOW) {
-                                                const shadow = xmlData.AnimData.ShadowSize;
-                                                if (shadow == 0) {
-                                                    removeRed(cropImg);
-                                                    removeBlue(cropImg);
-                                                }
-                                                else if (shadow == 1) {
-                                                    removeBlue(cropImg);
-                                                }
-                                                cropImg.scan(0, 0, cropImg.bitmap.width, cropImg.bitmap.height, (x, y, idx) => {
-                                                    if (cropImg.bitmap.data[idx + 3] != 0) {
-                                                        cropImg.bitmap.data[idx] = 0;
-                                                        cropImg.bitmap.data[idx + 1] = 0;
-                                                        cropImg.bitmap.data[idx + 2] = 0;
-                                                    }
-                                                });
+                            durations[`${index}/${shiny}/${action}/${anim}`] =
+                                (metadata === null || metadata === void 0 ? void 0 : metadata.Durations.Duration.length) !== undefined
+                                    ? [...metadata === null || metadata === void 0 ? void 0 : metadata.Durations.Duration]
+                                    : [metadata === null || metadata === void 0 ? void 0 : metadata.Durations.Duration];
+                            const frameHeight = metadata === null || metadata === void 0 ? void 0 : metadata.FrameHeight;
+                            const frameWidth = metadata === null || metadata === void 0 ? void 0 : metadata.FrameWidth;
+                            if (frameWidth && frameHeight) {
+                                const width = img.width / frameWidth;
+                                const height = img.height / frameHeight;
+                                for (let x = 0; x < width; x++) {
+                                    for (let y = 0; y < height; y++) {
+                                        const cropImg = img.clone();
+                                        if (anim == Game_1.SpriteType.SHADOW) {
+                                            const shadow = xmlData.AnimData.ShadowSize;
+                                            if (shadow == 0) {
+                                                removeRed(cropImg);
+                                                removeBlue(cropImg);
                                             }
-                                            cropImg.crop({
-                                                x: x * frameWidth,
-                                                y: y * frameHeight,
-                                                w: frameWidth,
-                                                h: frameHeight
+                                            else if (shadow == 1) {
+                                                removeBlue(cropImg);
+                                            }
+                                            cropImg.scan(0, 0, cropImg.bitmap.width, cropImg.bitmap.height, (x, y, idx) => {
+                                                if (cropImg.bitmap.data[idx + 3] != 0) {
+                                                    cropImg.bitmap.data[idx] = 0;
+                                                    cropImg.bitmap.data[idx + 1] = 0;
+                                                    cropImg.bitmap.data[idx + 2] = 0;
+                                                }
                                             });
-                                            yield (0, fs_extra_1.ensureDir)(`split/${index}/${shiny}/${action}/${anim}/${y}`);
-                                            yield cropImg.write(`split/${index}/${shiny}/${action}/${anim}/${y}/${zeroPad(x)}.png`);
                                         }
+                                        cropImg.crop({
+                                            x: x * frameWidth,
+                                            y: y * frameHeight,
+                                            w: frameWidth,
+                                            h: frameHeight
+                                        });
+                                        yield (0, fs_extra_1.ensureDir)(`split/${index}/${shiny}/${action}/${anim}/${y}`);
+                                        yield cropImg.write(`split/${index}/${shiny}/${action}/${anim}/${y}/${zeroPad(x)}.png`);
                                     }
                                 }
                             }
@@ -285,7 +260,7 @@ function splitIndex(index) {
                 }
             }
             catch (error) {
-                logger_1.logger.warn("pokemon with index", index, "not found", mapName.get(index), "path: ", `${path}/sprite/${pad}/AnimData.xml`, error);
+                logger_1.logger.warn("pokemon with index", index, "not found", mapName.get(index), "path: ", `${path}/sprite/${pad}/AnimData.xml`);
                 missing += `${mapName.get(index)},${pad}/AnimData.xml\n`;
             }
         }

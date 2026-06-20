@@ -1,6 +1,6 @@
 import Phaser, { GameObjects } from "phaser";
 import type MoveTo from "phaser3-rex-plugins/plugins/moveto";
-import { AttackSprite, type Emotion, type IPokemon, type IPokemonEntity } from "../../../../types";
+import { type AttackSprite, type Emotion, type IPokemon, type IPokemonEntity } from "../../../../types";
 import { Ability } from "../../../../types/enum/Ability";
 import { type AttackType, Orientation, PokemonActionState, type Rarity } from "../../../../types/enum/Game";
 import type { Passive } from "../../../../types/enum/Passive";
@@ -55,7 +55,7 @@ export default class PokemonSprite extends DraggableObject {
     luck: number;
     powerbar: PowerBar | undefined;
     sprite: GameObjects.Sprite;
-    shadow?: GameObjects.Sprite;
+    shadow: GameObjects.Sprite;
     wound: GameObjects.Sprite | undefined;
     burn: GameObjects.Sprite | undefined;
     sleep: GameObjects.Sprite | undefined;
@@ -66,11 +66,11 @@ export default class PokemonSprite extends DraggableObject {
     paralysis: GameObjects.Sprite | undefined;
     pokerus: GameObjects.Sprite | undefined;
     locked: GameObjects.Sprite | undefined;
-    blinded: GameObjects.Sprite | undefined;
     armorReduction: GameObjects.Sprite | undefined;
     charm: GameObjects.Sprite | undefined;
     flinch: GameObjects.Sprite | undefined;
     curse: GameObjects.Sprite | undefined;
+    magmaStorm: GameObjects.Sprite | undefined;
     poison: GameObjects.Sprite | undefined;
     protect: GameObjects.Sprite | undefined;
     resurection: GameObjects.Sprite | undefined;
@@ -133,8 +133,6 @@ export default class PokemonSprite extends DraggableObject {
     removePokerus(): void;
     addLocked(): void;
     removeLocked(): void;
-    addBlinded(): void;
-    removeBlinded(): void;
     addArmorReduction(): void;
     removeArmorReduction(): void;
     addCharm(): void;

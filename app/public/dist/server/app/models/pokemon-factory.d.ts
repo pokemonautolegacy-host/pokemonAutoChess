@@ -5,6 +5,7 @@ import { Pokemon } from "./colyseus-models/pokemon";
 import { PVEStage } from "./pve-stages";
 export default class PokemonFactory {
     static makePveBoard(pveStage: PVEStage, shinyEncounter: boolean): MapSchema<Pokemon>;
+    static transformPokemon(before: Pokemon, afterName: Pkm, player?: IPlayer): Pokemon;
     static getPokemonBaseEvolution(name: Pkm): Pkm;
     static createPokemonFromName(name: Pkm, config?: IPlayer | {
         selectedShiny?: boolean;

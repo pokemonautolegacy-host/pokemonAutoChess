@@ -5,6 +5,7 @@ const schema_1 = require("@colyseus/schema");
 const Config_1 = require("../types/Config");
 const Ability_1 = require("../types/enum/Ability");
 const Effect_1 = require("../types/enum/Effect");
+const Passive_1 = require("../types/enum/Passive");
 const Synergy_1 = require("../types/enum/Synergy");
 const board_1 = require("../utils/board");
 class Effects extends schema_1.SetSchema {
@@ -33,6 +34,9 @@ class Effects extends schema_1.SetSchema {
                 }
                 if (p.skill === Ability_1.Ability.PSYCHIC_SURGE) {
                     this.add(Effect_1.Effect.PSYCHIC_TERRAIN);
+                }
+                if (p.passive === Passive_1.Passive.HYDRATATION) {
+                    this.add(Effect_1.Effect.HYDRATATION);
                 }
             }
         });

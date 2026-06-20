@@ -24,8 +24,8 @@ const bot_v2_1 = require("../../models/mongo-models/bot-v2");
 const tournament_2 = require("../../models/mongo-models/tournament");
 const user_metadata_1 = __importDefault(require("../../models/mongo-models/user-metadata"));
 const precomputed_emotions_1 = require("../../models/precomputed/precomputed-emotions");
-const precomputed_pokemon_data_1 = require("../../models/precomputed/precomputed-pokemon-data");
 const precomputed_rarity_1 = require("../../models/precomputed/precomputed-rarity");
+const utils_1 = require("../../public/src/utils");
 const bots_1 = require("../../services/bots");
 const discord_1 = require("../../services/discord");
 const pastebin_1 = require("../../services/pastebin");
@@ -37,11 +37,9 @@ const Game_1 = require("../../types/enum/Game");
 const Pokemon_1 = require("../../types/enum/Pokemon");
 const Starters_1 = require("../../types/enum/Starters");
 const array_1 = require("../../utils/array");
-const avatar_1 = require("../../utils/avatar");
 const elo_1 = require("../../utils/elo");
 const logger_1 = require("../../utils/logger");
 const profanity_filter_1 = require("../../utils/profanity-filter");
-const promise_1 = require("../../utils/promise");
 const random_1 = require("../../utils/random");
 const schemas_1 = require("../../utils/schemas");
 class OnJoinCommand extends command_1.Command {
@@ -409,7 +407,7 @@ class ChangeAvatarCommand extends command_1.Command {
                 if (config) {
                     const emotionsToCheck = shiny ? config.shinyEmotions : config.emotions;
                     if (emotionsToCheck.includes(emotion)) {
-                        const portrait = (0, avatar_1.getPortraitSrc)(index, shiny, emotion)
+                        const portrait = (0, utils_1.getPortraitSrc)(index, shiny, emotion)
                             .replace(types_1.CDN_PORTRAIT_URL, "")
                             .replace(".png", "");
                         user.avatar = portrait;
@@ -522,20 +520,16 @@ class BuyBoosterCommand extends command_1.Command {
         return __awaiter(this, arguments, void 0, function* ({ client, index }) {
             try {
                 const user = this.room.users.get(client.auth.uid);
+                const BOOSTER_COST = 500;
                 if (!user)
                     return;
-                const pkm = Pokemon_1.PkmByIndex[index];
-                if (!pkm)
-                    return;
-                const rarity = (0, precomputed_pokemon_data_1.getPokemonData)(pkm).rarity;
-                const boosterCost = Config_1.BoosterPriceByRarity[rarity];
                 const mongoUser = yield user_metadata_1.default.findOneAndUpdate({
                     uid: client.auth.uid,
-                    [`pokemonCollection.${index}.dust`]: { $gte: boosterCost }
+                    [`pokemonCollection.${index}.dust`]: { $gte: BOOSTER_COST }
                 }, {
                     $inc: {
                         booster: 1,
-                        [`pokemonCollection.${index}.dust`]: -boosterCost
+                        [`pokemonCollection.${index}.dust`]: -BOOSTER_COST
                     }
                 }, { new: true });
                 if (!mongoUser)
@@ -789,53 +783,21 @@ class JoinOrOpenRoomCommand extends command_1.Command {
                     break;
                 }
                 case Game_1.GameMode.RANKED: {
-                    const userRank = (0, elo_1.getRank)(user.elo);
-                    let minRank = EloRank_1.EloRank.LEVEL_BALL;
-                    let maxRank = EloRank_1.EloRank.BEAST_BALL;
-                    switch (userRank) {
-                        case EloRank_1.EloRank.LEVEL_BALL:
-                        case EloRank_1.EloRank.NET_BALL:
-                            minRank = EloRank_1.EloRank.LEVEL_BALL;
-                            maxRank = EloRank_1.EloRank.NET_BALL;
-                            break;
-                        case EloRank_1.EloRank.SAFARI_BALL:
-                        case EloRank_1.EloRank.LOVE_BALL:
-                        case EloRank_1.EloRank.PREMIER_BALL:
-                            minRank = EloRank_1.EloRank.SAFARI_BALL;
-                            maxRank = EloRank_1.EloRank.PREMIER_BALL;
-                            break;
-                        case EloRank_1.EloRank.QUICK_BALL:
-                        case EloRank_1.EloRank.POKE_BALL:
-                        case EloRank_1.EloRank.SUPER_BALL:
-                            minRank = EloRank_1.EloRank.QUICK_BALL;
-                            maxRank = EloRank_1.EloRank.SUPER_BALL;
-                            break;
-                        case EloRank_1.EloRank.ULTRA_BALL:
-                        case EloRank_1.EloRank.MASTER_BALL:
-                        case EloRank_1.EloRank.BEAST_BALL:
-                            minRank = EloRank_1.EloRank.ULTRA_BALL;
-                            maxRank = EloRank_1.EloRank.BEAST_BALL;
-                            break;
-                    }
+                    let userRank = (0, elo_1.getRank)(user.elo);
+                    if (userRank === EloRank_1.EloRank.MASTERBALL)
+                        userRank = EloRank_1.EloRank.ULTRABALL;
                     const existingRanked = (_c = this.room.rooms) === null || _c === void 0 ? void 0 : _c.find((room) => {
                         var _a, _b;
                         return room.name === "preparation" &&
                             ((_a = room.metadata) === null || _a === void 0 ? void 0 : _a.gameMode) === Game_1.GameMode.RANKED &&
-                            ((_b = room.metadata) === null || _b === void 0 ? void 0 : _b.minRank) === minRank &&
+                            ((_b = room.metadata) === null || _b === void 0 ? void 0 : _b.minRank) === userRank &&
                             room.clients < Config_1.MAX_PLAYERS_PER_GAME;
                     });
                     if (existingRanked) {
                         client.send(types_1.Transfer.REQUEST_ROOM, existingRanked.roomId);
                     }
                     else {
-                        return [
-                            new OpenGameCommand().setPayload({
-                                gameMode,
-                                client,
-                                minRank,
-                                maxRank
-                            })
-                        ];
+                        return [new OpenGameCommand().setPayload({ gameMode, client })];
                     }
                     break;
                 }
@@ -861,15 +823,27 @@ class JoinOrOpenRoomCommand extends command_1.Command {
 exports.JoinOrOpenRoomCommand = JoinOrOpenRoomCommand;
 class OpenGameCommand extends command_1.Command {
     execute(_a) {
-        return __awaiter(this, arguments, void 0, function* ({ gameMode, client, minRank, maxRank }) {
+        return __awaiter(this, arguments, void 0, function* ({ gameMode, client }) {
             const user = this.room.users.get(client.auth.uid);
             if (!user)
                 return;
             let roomName = `${user.displayName}'${user.displayName.endsWith("s") ? "" : "s"} room`;
+            let minRank = null;
+            let maxRank = null;
             let noElo = false;
             let password = null;
             let ownerId = null;
             if (gameMode === Game_1.GameMode.RANKED) {
+                let rank = (0, elo_1.getRank)(user.elo);
+                if (rank === EloRank_1.EloRank.MASTERBALL || rank === EloRank_1.EloRank.ULTRABALL) {
+                    rank = EloRank_1.EloRank.ULTRABALL;
+                    minRank = EloRank_1.EloRank.ULTRABALL;
+                    maxRank = EloRank_1.EloRank.MASTERBALL;
+                }
+                else {
+                    minRank = rank;
+                    maxRank = rank;
+                }
                 roomName = "Ranked Match";
             }
             else if (gameMode === Game_1.GameMode.SCRIBBLE) {
@@ -1017,7 +991,6 @@ class CreateTournamentLobbiesCommand extends command_1.Command {
                         tournamentId,
                         bracketId
                     });
-                    yield (0, promise_1.wait)(1000);
                 }
                 const mongoTournament = yield tournament_2.Tournament.findById(tournamentId);
                 if (mongoTournament) {

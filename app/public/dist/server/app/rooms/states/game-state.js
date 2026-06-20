@@ -23,7 +23,7 @@ const SpecialGameRule_1 = require("../../types/enum/SpecialGameRule");
 const Weather_1 = require("../../types/enum/Weather");
 const random_1 = require("../../utils/random");
 class GameState extends schema_1.Schema {
-    constructor(preparationId, name, noElo, gameMode, minRank, maxRank, specialGameRule) {
+    constructor(preparationId, name, noElo, gameMode, minRank, maxRank) {
         super();
         this.afterGameId = "";
         this.roundTime = Config_1.StageDuration[1];
@@ -64,9 +64,6 @@ class GameState extends schema_1.Schema {
         this.weather = Weather_1.Weather.NEUTRAL;
         if (gameMode === Game_1.GameMode.SCRIBBLE) {
             this.specialGameRule = (0, random_1.pickRandomIn)(Object.values(SpecialGameRule_1.SpecialGameRule));
-        }
-        else {
-            this.specialGameRule = specialGameRule;
         }
     }
 }

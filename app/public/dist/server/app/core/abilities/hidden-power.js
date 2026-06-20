@@ -68,7 +68,10 @@ class HiddenPowerCStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         board.forEach((x, y, pokemon) => {
             if (pokemon && unown.team === pokemon.team) {
-                pokemon.addItem(Item_1.Item.AMULET_COIN);
+                if (pokemon.items.size < 3) {
+                    pokemon.items.add(Item_1.Item.AMULET_COIN);
+                    pokemon.simulation.applyItemEffect(pokemon, Item_1.Item.AMULET_COIN);
+                }
             }
         });
     }
@@ -78,7 +81,7 @@ class HiddenPowerDStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
         const player = unown.player;
-        if (player && !unown.isGhostOpponent) {
+        if (player) {
             const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
             if (x !== undefined) {
                 const ditto = pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.DITTO, player);
@@ -95,7 +98,7 @@ class HiddenPowerEStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         const egg = (0, egg_factory_1.createRandomEgg)(false);
         const player = unown.player;
-        if (player && !unown.isGhostOpponent) {
+        if (player) {
             const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
             if (x !== undefined) {
                 egg.positionX = x;
@@ -112,7 +115,7 @@ class HiddenPowerFStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         const nbFishes = 3;
         const player = unown.player;
-        if (player && !unown.isGhostOpponent) {
+        if (player) {
             for (let i = 0; i < nbFishes; i++) {
                 const fish = unown.simulation.room.state.shop.pickFish(player, Item_1.Item.SUPER_ROD);
                 unown.simulation.room.spawnOnBench(player, fish, "fishing");
@@ -124,7 +127,7 @@ exports.HiddenPowerFStrategy = HiddenPowerFStrategy;
 class HiddenPowerGStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
-        if (unown.player && !unown.isGhostOpponent) {
+        if (unown.player) {
             unown.player.addMoney(5, true, unown);
         }
     }
@@ -144,7 +147,7 @@ exports.HiddenPowerHStrategy = HiddenPowerHStrategy;
 class HiddenPowerIStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
-        if (unown.player && !unown.isGhostOpponent) {
+        if (unown.player) {
             unown.player.items.push((0, random_1.pickRandomIn)(Item_1.ItemComponents));
         }
     }
@@ -157,7 +160,8 @@ class HiddenPowerJStrategy extends HiddenPowerStrategy {
         for (let i = 0; i < numberToSpawn; i++) {
             const coord = unown.simulation.getClosestAvailablePlaceOnBoardToPokemon(unown, unown.team);
             const sharpedo = unown.simulation.addPokemon(pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.SHARPEDO, unown.player), coord.x, coord.y, unown.team, false);
-            sharpedo.addItem(Item_1.Item.RAZOR_CLAW);
+            sharpedo.items.add(Item_1.Item.RAZOR_CLAW);
+            sharpedo.simulation.applyItemsEffects(sharpedo);
         }
     }
 }
@@ -167,7 +171,8 @@ class HiddenPowerKStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         const coord = unown.simulation.getClosestAvailablePlaceOnBoardToPokemon(unown, unown.team);
         const hitmonlee = unown.simulation.addPokemon(pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.HITMONLEE, unown.player), coord.x, coord.y, unown.team, false);
-        hitmonlee.addItem(Item_1.Item.RED_ORB);
+        hitmonlee.items.add(Item_1.Item.RED_ORB);
+        hitmonlee.simulation.applyItemsEffects(hitmonlee);
         hitmonlee.pp = hitmonlee.maxPP - 1;
     }
 }
@@ -223,7 +228,10 @@ class HiddenPowerOStrategy extends HiddenPowerStrategy {
         super.process(pokemon, state, board, target, crit);
         board.forEach((x, y, value) => {
             if (value && pokemon.team === value.team) {
-                value.addItem(Item_1.Item.ORAN_BERRY);
+                if (value.items.size < 3) {
+                    value.items.add(Item_1.Item.ORAN_BERRY);
+                    value.simulation.applyItemEffect(value, Item_1.Item.ORAN_BERRY);
+                }
             }
         });
     }
@@ -257,7 +265,7 @@ exports.HiddenPowerQStrategy = HiddenPowerQStrategy;
 class HiddenPowerRStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
-        if (unown.player && !unown.isGhostOpponent) {
+        if (unown.player) {
             unown.player.shopFreeRolls += 6;
         }
     }
@@ -277,12 +285,9 @@ exports.HiddenPowerSStrategy = HiddenPowerSStrategy;
 class HiddenPowerTStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
-        if (unown.player && !unown.isGhostOpponent) {
-            const player = unown.player;
-            (0, random_1.pickNRandomIn)(Item_1.Berries, 3).forEach((item) => {
-                player.items.push(item);
-            });
-        }
+        (0, random_1.pickNRandomIn)(Item_1.Berries, 3).forEach((item) => {
+            unown.player && unown.player.items.push(item);
+        });
     }
 }
 exports.HiddenPowerTStrategy = HiddenPowerTStrategy;
@@ -291,7 +296,8 @@ class HiddenPowerUStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         const coord = unown.simulation.getClosestAvailablePlaceOnBoardToPokemon(unown, unown.team);
         const uxie = unown.simulation.addPokemon(pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.UXIE, unown.player), coord.x, coord.y, unown.team, false);
-        uxie.addItem(Item_1.Item.AQUA_EGG);
+        uxie.items.add(Item_1.Item.AQUA_EGG);
+        uxie.simulation.applyItemsEffects(uxie);
         uxie.pp = uxie.maxPP - 1;
     }
 }
@@ -320,7 +326,7 @@ class HiddenPowerWStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
         const player = unown.player;
-        if (player && !unown.isGhostOpponent) {
+        if (player) {
             const x = (0, board_1.getFirstAvailablePositionInBench)(player.board);
             if (x !== undefined) {
                 const synergiesSortedByLevel = Array.from(player.synergies).sort(([s1, v1], [s2, v2]) => v2 - v1);
@@ -350,7 +356,10 @@ class HiddenPowerXStrategy extends HiddenPowerStrategy {
         super.process(unown, state, board, target, crit);
         board.forEach((x, y, pokemon) => {
             if (pokemon && unown.team === pokemon.team) {
-                pokemon.addItem(Item_1.Item.XRAY_VISION);
+                if (pokemon.items.size < 3) {
+                    pokemon.items.add(Item_1.Item.XRAY_VISION);
+                    pokemon.simulation.applyItemEffect(pokemon, Item_1.Item.XRAY_VISION);
+                }
             }
         });
     }
@@ -363,7 +372,8 @@ class HiddenPowerYStrategy extends HiddenPowerStrategy {
         for (let i = 0; i < numberToSpawn; i++) {
             const coord = unown.simulation.getClosestAvailablePlaceOnBoardToPokemon(unown, unown.team);
             const meditite = unown.simulation.addPokemon(pokemon_factory_1.default.createPokemonFromName(Pokemon_1.Pkm.MEDITITE, unown.player), coord.x, coord.y, unown.team, false);
-            meditite.addItem(Item_1.Item.SOUL_DEW);
+            meditite.items.add(Item_1.Item.SOUL_DEW);
+            meditite.simulation.applyItemsEffects(meditite);
         }
     }
 }
@@ -383,7 +393,7 @@ class HiddenPowerQMStrategy extends HiddenPowerStrategy {
     process(unown, state, board, target, crit) {
         super.process(unown, state, board, target, crit);
         const player = unown.player;
-        if (player && !unown.isGhostOpponent) {
+        if (player) {
             const stageLevel = unown.simulation.stageLevel;
             const candidates = (0, Pokemon_1.getUnownsPoolPerStage)(stageLevel).filter((u) => u !== Pokemon_1.Pkm.UNOWN_QUESTION);
             const nbUnownsObtained = 4;
@@ -404,20 +414,23 @@ exports.HiddenPowerQMStrategy = HiddenPowerQMStrategy;
 class HiddenPowerEMStrategy extends HiddenPowerStrategy {
     process(pokemon, state, board, target, crit) {
         super.process(pokemon, state, board, target, crit);
-        const corners = [
-            [0, 0],
-            [board.columns - 1, 0],
-            [0, board.rows - 1],
-            [board.columns - 1, board.rows - 1]
-        ];
-        const stageLevel = pokemon.simulation.stageLevel;
-        const candidates = (0, Pokemon_1.getUnownsPoolPerStage)(stageLevel).filter((u) => u !== Pokemon_1.Pkm.UNOWN_EXCLAMATION);
-        corners.forEach(([x, y]) => {
-            const unownName = (0, random_1.pickRandomIn)(candidates);
-            const unown = pokemon_factory_1.default.createPokemonFromName(unownName, pokemon.player);
-            const coord = pokemon.simulation.getClosestAvailablePlaceOnBoardTo(x, y, pokemon.team);
-            pokemon.simulation.addPokemon(unown, coord.x, coord.y, pokemon.team, false);
-        });
+        const player = pokemon.player;
+        if (player) {
+            const corners = [
+                [0, 0],
+                [board.columns - 1, 0],
+                [0, board.rows - 1],
+                [board.columns - 1, board.rows - 1]
+            ];
+            const stageLevel = pokemon.simulation.stageLevel;
+            const candidates = (0, Pokemon_1.getUnownsPoolPerStage)(stageLevel).filter((u) => u !== Pokemon_1.Pkm.UNOWN_EXCLAMATION);
+            corners.forEach(([x, y]) => {
+                const unownName = (0, random_1.pickRandomIn)(candidates);
+                const unown = pokemon_factory_1.default.createPokemonFromName(unownName, player);
+                const coord = pokemon.simulation.getClosestAvailablePlaceOnBoardTo(x, y, pokemon.team);
+                pokemon.simulation.addPokemon(unown, coord.x, coord.y, pokemon.team, false);
+            });
+        }
     }
 }
 exports.HiddenPowerEMStrategy = HiddenPowerEMStrategy;

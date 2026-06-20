@@ -49,9 +49,11 @@ class PreparationRoom extends colyseus_1.Room {
             (0, colyseus_1.updateLobby)(this);
         });
     }
-    setNoElo(noElo) {
+    toggleElo(noElo) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.setMetadata({ noElo });
+            yield this.setMetadata({
+                noElo: noElo
+            });
             (0, colyseus_1.updateLobby)(this);
         });
     }
@@ -97,12 +99,7 @@ class PreparationRoom extends colyseus_1.Room {
         if (options.autoStartDelayInSeconds) {
             this.clock.setTimeout(() => {
                 var _a, _b, _c;
-                if (this.state.gameStartedAt != null) {
-                    logger_1.logger.debug("game has started but the prep room is still open, forcing close");
-                    this.disconnect(CloseCodes_1.CloseCodes.NORMAL_CLOSURE);
-                    return;
-                }
-                else if (this.state.users.size < 2) {
+                if (this.state.users.size < 2) {
                     if ((_a = this.metadata) === null || _a === void 0 ? void 0 : _a.tournamentId) {
                         this.presence.publish("tournament-match-end", {
                             tournamentId: (_b = this.metadata) === null || _b === void 0 ? void 0 : _b.tournamentId,
@@ -196,25 +193,10 @@ class PreparationRoom extends colyseus_1.Room {
                 logger_1.logger.error(error);
             }
         });
-        this.onMessage(types_1.Transfer.CHANGE_SPECIAL_RULE, (client, specialRule) => {
-            logger_1.logger.info(types_1.Transfer.CHANGE_SPECIAL_RULE, this.roomName, specialRule);
+        this.onMessage(types_1.Transfer.TOGGLE_NO_ELO, (client, message) => {
+            logger_1.logger.info(types_1.Transfer.TOGGLE_NO_ELO, this.roomName);
             try {
-                this.dispatcher.dispatch(new preparation_commands_1.OnRoomChangeSpecialRule(), {
-                    client,
-                    specialRule
-                });
-            }
-            catch (error) {
-                logger_1.logger.error(error);
-            }
-        });
-        this.onMessage(types_1.Transfer.CHANGE_NO_ELO, (client, message) => {
-            logger_1.logger.info(types_1.Transfer.CHANGE_NO_ELO, this.roomName);
-            try {
-                this.dispatcher.dispatch(new preparation_commands_1.OnChangeNoEloCommand(), {
-                    client,
-                    message
-                });
+                this.dispatcher.dispatch(new preparation_commands_1.OnToggleEloCommand(), { client, message });
             }
             catch (error) {
                 logger_1.logger.error(error);
@@ -295,8 +277,12 @@ class PreparationRoom extends colyseus_1.Room {
         this.presence.subscribe("game-started", this.onGameStart);
     }
     onAuth(client, options, request) {
+        const _super = Object.create(null, {
+            onAuth: { get: () => super.onAuth }
+        });
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                _super.onAuth.call(this, client, options, request);
                 const token = yield firebase_admin_1.default.auth().verifyIdToken(options.idToken);
                 const user = yield firebase_admin_1.default.auth().getUser(token.uid);
                 const isBanned = yield banned_user_1.default.findOne({ uid: user.uid });
@@ -304,11 +290,8 @@ class PreparationRoom extends colyseus_1.Room {
                 client.send(types_1.Transfer.USER_PROFILE, userProfile);
                 const isAlreadyInRoom = this.state.users.has(user.uid);
                 const numberOfHumanPlayers = (0, schemas_1.values)(this.state.users).filter((u) => !u.isBot).length;
-                if (numberOfHumanPlayers >= Config_1.MAX_PLAYERS_PER_GAME) {
+                if (numberOfHumanPlayers >= Config_1.MAX_PLAYERS_PER_GAME && !isAlreadyInRoom) {
                     throw "Room is full";
-                }
-                else if (isAlreadyInRoom) {
-                    throw "Already joined";
                 }
                 else if (this.state.gameStartedAt != null) {
                     throw "Game already started";
@@ -332,30 +315,22 @@ class PreparationRoom extends colyseus_1.Room {
         });
     }
     onJoin(client, options, auth) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (auth) {
-                yield this.dispatcher.dispatch(new preparation_commands_1.OnJoinCommand(), {
-                    client,
-                    options,
-                    auth
-                });
-            }
-        });
+        if (client && client.auth && client.auth.displayName) {
+            this.dispatcher.dispatch(new preparation_commands_1.OnJoinCommand(), { client, options, auth });
+        }
     }
     onLeave(client, consented) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            if (client.auth && client.auth.displayName) {
+            if (client && client.auth && client.auth.displayName) {
             }
             try {
-                (_a = this.state.abortOnPlayerLeave) === null || _a === void 0 ? void 0 : _a.abort();
                 if (consented) {
                     throw new Error("consented leave");
                 }
                 yield this.allowReconnection(client, 10);
             }
             catch (e) {
-                if (client.auth && client.auth.displayName) {
+                if (client && client.auth && client.auth.displayName) {
                 }
                 this.dispatcher.dispatch(new preparation_commands_1.OnLeaveCommand(), { client, consented });
             }

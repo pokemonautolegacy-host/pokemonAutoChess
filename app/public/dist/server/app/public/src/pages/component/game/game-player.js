@@ -8,7 +8,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_circular_progressbar_1 = require("react-circular-progressbar");
 const react_tooltip_1 = require("react-tooltip");
 const hooks_1 = require("../../../hooks");
-const avatar_1 = require("../../../../../utils/avatar");
+const utils_1 = require("../../../utils");
 const jsx_1 = require("../../utils/jsx");
 const game_player_detail_1 = __importDefault(require("./game-player-detail"));
 require("react-circular-progressbar/dist/styles.css");
@@ -21,7 +21,7 @@ function GamePlayer(props) {
     }
     return ((0, jsx_runtime_1.jsxs)("div", { style: {
             top: `${1 + props.index * 12.5}%`,
-            backgroundImage: `url('${(0, avatar_1.getAvatarSrc)(props.player.avatar)}')`
+            backgroundImage: `url('${(0, utils_1.getAvatarSrc)(props.player.avatar)}')`
         }, className: (0, jsx_1.cc)("game-player", {
             spectated: spectatedPlayerId === props.player.id,
             self: selfPlayerId === props.player.id,

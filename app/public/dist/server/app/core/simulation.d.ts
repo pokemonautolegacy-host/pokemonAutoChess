@@ -32,13 +32,12 @@ export default class Simulation extends Schema implements ISimulation {
     bluePlayer: Player | undefined;
     redPlayer: Player | undefined;
     stormLightningTimer: number;
-    tidalWaveTimer: number;
-    tidalWaveCounter: number;
+    tidalwaveTimer: number;
     constructor(id: string, room: GameRoom, blueBoard: MapSchema<Pokemon>, redBoard: MapSchema<Pokemon>, bluePlayer: Player, redPlayer: Player | undefined, stageLevel: number, weather: Weather, isGhostBattle?: boolean);
-    getEffects(playerId: string): Set<Effect>;
-    getDpsMeter(playerId: string): MapSchema<Dps, string>;
-    getTeam(playerId: string): MapSchema<IPokemonEntity, string>;
-    getOpponentTeam(playerId: string): MapSchema<IPokemonEntity, string>;
+    getEffects(playerId: string): Set<Effect> | undefined;
+    getDpsMeter(playerId: string): MapSchema<Dps, string> | undefined;
+    getTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
+    getOpponentTeam(playerId: string): MapSchema<IPokemonEntity, string> | undefined;
     addPokemon(pokemon: Pokemon, x: number, y: number, team: Team, isClone?: boolean): PokemonEntity;
     getFirstAvailablePlaceOnBoard(team: Team): {
         x: number;
@@ -54,9 +53,10 @@ export default class Simulation extends Schema implements ISimulation {
     };
     applyItemsEffects(pokemon: PokemonEntity): void;
     applyItemEffect(pokemon: PokemonEntity, item: Item): void;
-    applySynergyEffects(pokemon: PokemonEntity, singleType?: Synergy): void;
+    applySynergyEffects(pokemon: PokemonEntity): void;
+    applyWeatherEffects(pokemon: IPokemonEntity, player: Player | undefined, opponentPlayer: Player | undefined): void;
     applyPostEffects(blueBoard: MapSchema<Pokemon>, redBoard: MapSchema<Pokemon>): void;
-    applyEffect(pokemon: PokemonEntity, types: SetSchema<Synergy>, effect: Effect, activeSynergies: number): void;
+    applyEffects(pokemon: PokemonEntity, types: SetSchema<Synergy>, allyEffects: Set<Effect>, activeSynergies: number): void;
     update(dt: number): void;
     stop(): void;
     onFinish(): void;

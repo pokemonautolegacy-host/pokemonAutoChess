@@ -9,7 +9,6 @@ export type Keybindings = {
 export interface IPreferencesState {
     musicVolume: number;
     sfxVolume: number;
-    playInBackground: boolean;
     showDpsMeter: boolean;
     showDetailsOnHover: boolean;
     showDamageNumbers: boolean;

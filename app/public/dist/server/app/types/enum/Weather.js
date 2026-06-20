@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SynergyAssociatedToWeather = exports.WeatherAssociatedToSynergy = exports.PassivesAssociatedToWeather = exports.WeatherEffects = exports.Weather = void 0;
+exports.SynergyAssociatedToWeather = exports.WeatherAssociatedToSynergy = exports.PassivesAssociatedToWeather = exports.Weather = void 0;
 const map_1 = require("../../utils/map");
-const Effect_1 = require("./Effect");
 const Passive_1 = require("./Passive");
 const Synergy_1 = require("./Synergy");
 var Weather;
@@ -19,12 +18,6 @@ var Weather;
     Weather["SMOG"] = "SMOG";
     Weather["NEUTRAL"] = "NEUTRAL";
 })(Weather || (exports.Weather = Weather = {}));
-exports.WeatherEffects = new Map([
-    [Weather.WINDY, Effect_1.Effect.WINDY],
-    [Weather.SMOG, Effect_1.Effect.SMOG],
-    [Weather.NIGHT, Effect_1.Effect.NIGHT],
-    [Weather.MISTY, Effect_1.Effect.MISTY]
-]);
 exports.PassivesAssociatedToWeather = new Map([
     [Weather.SUN, [Passive_1.Passive.SUN]],
     [Weather.RAIN, [Passive_1.Passive.RAIN]],

@@ -20,6 +20,13 @@ class PokemonFactory {
         });
         return pokemons;
     }
+    static transformPokemon(before, afterName, player) {
+        const transformation = this.createPokemonFromName(afterName, player);
+        transformation.positionX = before.positionX;
+        transformation.positionY = before.positionY;
+        transformation.items = before.items;
+        return transformation;
+    }
     static getPokemonBaseEvolution(name) {
         switch (name) {
             case Pokemon_1.Pkm.VAPOREON:
@@ -40,9 +47,6 @@ class PokemonFactory {
             case Pokemon_1.Pkm.WORMADAM_TRASH:
                 return Pokemon_1.Pkm.BURMY_TRASH;
             default:
-                if (Pokemon_1.PkmFamily[name] == Pokemon_1.Pkm.UNOWN_A) {
-                    return name;
-                }
                 return Pokemon_1.PkmFamily[name];
         }
     }

@@ -20,7 +20,6 @@ const store_1 = require("./pages/utils/store");
 const defaultPreferences = {
     musicVolume: 30,
     sfxVolume: 30,
-    playInBackground: false,
     showDpsMeter: false,
     showDetailsOnHover: false,
     showDamageNumbers: true,

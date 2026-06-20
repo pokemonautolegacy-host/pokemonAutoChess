@@ -28,12 +28,7 @@ class ItemContainer extends draggable_object_1.default {
             this.circle.setFrame(this.cellIndex * 3 + (playerId === currentPlayerUid ? 0 : 2));
         }
         this.add(this.circle);
-        const spriteName = Item_1.TMs.includes(item)
-            ? "TM"
-            : Item_1.HMs.includes(item)
-                ? "HM"
-                : item;
-        this.sprite = new phaser_1.GameObjects.Image(scene, 0, 0, "item", spriteName + ".png").setScale(pokemonId === null ? 0.5 : 0.25);
+        this.sprite = new phaser_1.GameObjects.Image(scene, 0, 0, "item", item + ".png").setScale(pokemonId === null ? 0.5 : 0.25);
         this.add(this.sprite);
         this.setInteractive();
         this.updateDropZone(true);
@@ -50,8 +45,6 @@ class ItemContainer extends draggable_object_1.default {
             return 4;
         if (Item_1.SpecialItems.includes(this.name))
             return 5;
-        if (Item_1.TMs.includes(this.name) || Item_1.HMs.includes(this.name))
-            return 6;
         return 0;
     }
     updateDropZone(value) {

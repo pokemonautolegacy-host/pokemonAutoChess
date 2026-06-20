@@ -2,7 +2,6 @@ import { Command } from "@colyseus/command";
 import { Client } from "colyseus";
 import { IUserMetadata } from "../../models/mongo-models/user-metadata";
 import { Emotion, IPlayer, Role, Title } from "../../types";
-import { EloRank } from "../../types/enum/EloRank";
 import { GameMode } from "../../types/enum/Game";
 import { Language } from "../../types/enum/Language";
 import CustomLobbyRoom from "../custom-lobby-room";
@@ -223,19 +222,15 @@ export declare class JoinOrOpenRoomCommand extends Command<CustomLobbyRoom, {
     execute({ client, gameMode }: {
         client: Client;
         gameMode: GameMode;
-    }): Promise<OpenGameCommand[]>;
+    }): Promise<OpenGameCommand[] | undefined>;
 }
 export declare class OpenGameCommand extends Command<CustomLobbyRoom, {
     gameMode: GameMode;
     client: Client;
-    minRank?: EloRank;
-    maxRank?: EloRank;
 }> {
-    execute({ gameMode, client, minRank, maxRank }: {
+    execute({ gameMode, client }: {
         gameMode: GameMode;
         client: Client;
-        minRank?: EloRank;
-        maxRank?: EloRank;
     }): Promise<void>;
 }
 export declare class OnCreateTournamentCommand extends Command<CustomLobbyRoom, {

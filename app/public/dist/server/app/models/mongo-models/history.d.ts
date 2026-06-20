@@ -41,6 +41,6 @@ declare const _default: import("mongoose").Model<{
 } & {
     _id: import("mongoose").Types.ObjectId;
 } & {
-    __v: number;
+    __v?: number;
 }, any>;
 export default _default;

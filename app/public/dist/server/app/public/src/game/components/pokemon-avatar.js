@@ -12,7 +12,7 @@ const function_1 = require("../../../../utils/function");
 const audio_1 = require("../../pages/utils/audio");
 const stores_1 = __importDefault(require("../../stores"));
 const NetworkStore_1 = require("../../stores/NetworkStore");
-const avatar_1 = require("../../../../utils/avatar");
+const utils_1 = require("../../utils");
 const emote_menu_1 = __importDefault(require("./emote-menu"));
 const life_bar_1 = __importDefault(require("./life-bar"));
 const pokemon_1 = __importDefault(require("./pokemon"));
@@ -177,7 +177,7 @@ class PokemonAvatar extends pokemon_1.default {
         const emotions = this.shiny ? pConfig.shinyEmotions : pConfig.emotions;
         const unlocked = pConfig && emotions.includes(emotion);
         if (unlocked) {
-            stores_1.default.dispatch((0, NetworkStore_1.showEmote)((0, avatar_1.getAvatarString)(this.index, this.shiny, emotion)));
+            stores_1.default.dispatch((0, NetworkStore_1.showEmote)((0, utils_1.getAvatarString)(this.index, this.shiny, emotion)));
             this.hideEmoteMenu();
         }
     }
@@ -213,7 +213,7 @@ class EmoteBubble extends phaser_1.GameObjects.DOMElement {
         this.dom.className =
             "game-emote-bubble " + (isOpponent ? "opponent" : "current");
         const emoteImg = document.createElement("img");
-        emoteImg.src = (0, avatar_1.getAvatarSrc)(emoteAvatar);
+        emoteImg.src = (0, utils_1.getAvatarSrc)(emoteAvatar);
         this.dom.appendChild(emoteImg);
         this.setElement(this.dom);
     }

@@ -5,6 +5,7 @@ const Passive_1 = require("../types/enum/Passive");
 const Weather_1 = require("../types/enum/Weather");
 const Item_1 = require("../types/enum/Item");
 const Config_1 = require("../types/Config");
+const schemas_1 = require("../utils/schemas");
 function getWeather(bluePlayer, redPlayer, redPlayerBoard) {
     var _a;
     function getDominantWeather(count, weathers = [...count.keys()]) {
@@ -43,7 +44,13 @@ function getWeather(bluePlayer, redPlayer, redPlayerBoard) {
                         playerWeatherScore.set(weather, ((_b = playerWeatherScore.get(weather)) !== null && _b !== void 0 ? _b : 0) + 100);
                     }
                 }
-                pkm.types.forEach((type) => {
+                const types = [
+                    ...(0, schemas_1.values)(pkm.types),
+                    ...(0, schemas_1.values)(pkm.items)
+                        .filter((item) => item in Item_1.SynergyGivenByItem)
+                        .map((item) => Item_1.SynergyGivenByItem[item])
+                ];
+                types.forEach((type) => {
                     var _a, _b, _c, _d, _e, _f, _g, _h;
                     if (Weather_1.WeatherAssociatedToSynergy.has(type)) {
                         const weather = Weather_1.WeatherAssociatedToSynergy.get(type);

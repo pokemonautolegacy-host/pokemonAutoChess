@@ -88,7 +88,6 @@ export declare function getBotScore(value: number): {
 };
 export declare function getCategory(pkm: Pkm): string;
 export declare function getPowerScore(board: IDetailledPokemon[]): number;
-export declare function getUnitPowerScore(pkm: Pkm): number;
 export declare function getPowerEvaluation(powerScore: number, stage: number): number;
 export declare function getMaxItemComponents(stage: number): number;
 export declare function getNbComponentsOnBoard(board: IDetailledPokemon[]): number;
