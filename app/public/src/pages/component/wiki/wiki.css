@@ -338,6 +338,10 @@
   width: 10ch;
 }
 
+.about-box {
+  margin: 4px;
+}
+
 @media (width <= 960px) {
   #wiki-items {
     display: block;

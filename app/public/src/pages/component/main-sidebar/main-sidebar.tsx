@@ -79,7 +79,7 @@ export function MainSidebar(props: MainSidebarProps) {
     <Sidebar collapsed={collapsed} className="sidebar" ref={sidebarRef}>
       <Menu>
         <div className="sidebar-logo" onClick={() => setCollapsed(!collapsed)}>
-          <img src={`assets/ui/colyseus-icon.png`} />
+          <img src={`assets/ui/pal_logo.png`} />
           <div>
             <h1>Pokemon Auto Chess</h1>
             <small>v{version}</small>
@@ -166,17 +166,23 @@ export function MainSidebar(props: MainSidebarProps) {
           </NavLink>
         )}
 
-        {page !== "game" && ((!GADGETS.BOT_BUILDER.disabled && profileLevel >= GADGETS.BOT_BUILDER.levelRequired) || profile?.role === Role.ADMIN) && (
-          <NavLink svg="bot" onClick={() => navigate("/bot-builder")}>
-            {t("bot_builder")}
-          </NavLink>
-        )}
+        {page !== "game" &&
+          ((!GADGETS.BOT_BUILDER.disabled &&
+            profileLevel >= GADGETS.BOT_BUILDER.levelRequired) ||
+            profile?.role === Role.ADMIN) && (
+            <NavLink svg="bot" onClick={() => navigate("/bot-builder")}>
+              {t("bot_builder")}
+            </NavLink>
+          )}
 
-        {page !== "game" && ((!GADGETS.GAMEBOY.disabled && profileLevel >= GADGETS.GAMEBOY.levelRequired) || profile?.role === Role.ADMIN) && (
-          <NavLink svg="gameboy" onClick={() => navigate("/gameboy")}>
-            {t("gadget.gameboy")}
-          </NavLink>
-        )}
+        {page !== "game" &&
+          ((!GADGETS.GAMEBOY.disabled &&
+            profileLevel >= GADGETS.GAMEBOY.levelRequired) ||
+            profile?.role === Role.ADMIN) && (
+            <NavLink svg="gameboy" onClick={() => navigate("/gameboy")}>
+              {t("gadget.gameboy")}
+            </NavLink>
+          )}
 
         {page !== "game" && profile?.role === Role.ADMIN && (
           <>
@@ -213,12 +219,11 @@ export function MainSidebar(props: MainSidebarProps) {
           {t("options")}
         </NavLink>
 
-        {page === "game" && document.fullscreenEnabled && <NavLink
-          svg="fullscreen"
-          onClick={toggleFullScreen}
-        >
-          {t("toggle_fullscreen")}
-        </NavLink>}
+        {page === "game" && document.fullscreenEnabled && (
+          <NavLink svg="fullscreen" onClick={toggleFullScreen}>
+            {t("toggle_fullscreen")}
+          </NavLink>
+        )}
 
         <div className="spacer"></div>
 
@@ -226,7 +231,8 @@ export function MainSidebar(props: MainSidebarProps) {
           <NavLink
             svg="players"
             className="community-servers"
-            location="servers" handleClick={changeModal}
+            location="servers"
+            handleClick={changeModal}
           >
             {t("community_servers")}
           </NavLink>
@@ -396,7 +402,8 @@ function Modals({
         onClose={closeModal}
         show={modal === "servers"}
         className="servers-modal"
-        header={t("community_servers")}>
+        header={t("community_servers")}
+      >
         <ServersList />
       </Modal>
       <TeamBuilderModal

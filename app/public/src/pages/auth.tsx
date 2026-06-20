@@ -19,7 +19,7 @@ export default function Auth() {
     window.matchMedia("(orientation: portrait)").matches
   const [modal, setModal] = React.useState<string | null>(null)
   const dispatch = useAppDispatch()
-  const networkError = useAppSelector(state => state.network.error)
+  const networkError = useAppSelector((state) => state.network.error)
   const discordUrl = process.env.DISCORD_SERVER
 
   return (
@@ -27,7 +27,7 @@ export default function Auth() {
       {isSupposedlyMobile && (
         <p className="mobile-warning">{t("mobile_warning")}</p>
       )}
-      <img className="logo" src="assets/ui/pokemon_autochess_final.svg" />
+      <img className="logo" src="assets/ui/pal_logo.svg" />
       <header>
         <h1>{t("pokemon_auto_chess")}</h1>
         <div className="disclaimer">
@@ -62,14 +62,16 @@ export default function Auth() {
         onClose={() => setModal(null)}
         show={modal === "wiki"}
         className="wiki-modal"
-        header={t("wiki_label")}>
+        header={t("wiki_label")}
+      >
         <Wiki inGame={false} />
       </Modal>
       <Modal
         onClose={() => setModal(null)}
         show={modal === "servers"}
         className="servers-modal"
-        header={t("community_servers")}>
+        header={t("community_servers")}
+      >
         <ServersList />
       </Modal>
       <Modal
