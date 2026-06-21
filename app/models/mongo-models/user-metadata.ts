@@ -54,7 +54,7 @@ const userMetadataSchema = new Schema({
   },
   level: {
     type: Number,
-    default: 0
+    default: 100
   },
   elo: {
     type: Number,
@@ -62,7 +62,7 @@ const userMetadataSchema = new Schema({
   },
   booster: {
     type: Number,
-    default: 0
+    default: 10
   },
   title: {
     type: String
