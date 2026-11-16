@@ -35,7 +35,7 @@ export const DEPTH = {
   BOARD_EFFECT_AIR_LEVEL: 38,
 
   // 41-50: weather / environment
-  WEATHER_FX: 40,
+  WEATHER_FX: 41,
 
   // 51-60: Ingame texts/indicators
   DAMAGE_PORTRAIT: 51,
@@ -47,11 +47,12 @@ export const DEPTH = {
   INDICATOR: 57,
 
   // 61-70: HUD / Popup
+  TRADE_CONTROLS: 60,
   DPS_METER: 61,
   SYNERGIES_CONTAINER: 62,
-  PLAYER_ICON: 63,
   GAME_SHOP: 65,
   SPECTATE_PLAYER_INFO: 65,
+  PLAYER_ICON: 66,
 
   // 70: Tooltips / HUD
 

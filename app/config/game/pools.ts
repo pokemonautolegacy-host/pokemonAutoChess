@@ -122,7 +122,14 @@ export const UniquePool = new Array<PkmProposition>(
   Pkm.EISCUE_NOICE,
   Pkm.KOMALA,
   Pkm.SLITHER_WING,
-  Pkm.VESPIQUEN
+  Pkm.VESPIQUEN,
+  Pkm.ORICORIO_BAILE,
+  Pkm.ORICORIO_PA_U,
+  Pkm.ORICORIO_POMPOM,
+  Pkm.ORICORIO_SENSU,
+  Pkm.PASSIMIAN,
+  Pkm.BOMBIRDIER,
+  Pkm.SANDY_SHOCKS
 )
 
 export const LegendaryPool = new Array<PkmProposition>(

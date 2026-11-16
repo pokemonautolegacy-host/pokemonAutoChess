@@ -1,32 +1,34 @@
 import { EffectEnum } from "../../types/enum/Effect"
-import { shuffleArray } from "../../utils/random"
+import { AttackType } from "../../types/enum/Game"
 import type { Board } from "../board"
+import { OnAttackEffect } from "../effects/effect"
 import type { PokemonEntity } from "../pokemon-entity"
 import { AbilityStrategy } from "./ability-strategy"
 
 export class TeleportStrategy extends AbilityStrategy {
   requiresTarget = false
   process(pokemon: PokemonEntity, board: Board, target: null, crit: boolean) {
-    super.process(pokemon, board, target, false) // crit is handled with TELEPORT_NEXT_ATTACK effect
-
-    const potentialCells = [
-      [0, 0],
-      [0, board.rows - 1],
-      [board.columns - 1, board.rows - 1],
-      [board.columns - 1, 0]
-    ]
-    shuffleArray(potentialCells)
-
-    for (let i = 0; i < potentialCells.length; i++) {
-      const entity = board.getEntityOnCell(
-        potentialCells[i][0],
-        potentialCells[i][1]
+    super.process(pokemon, board, target, crit)
+    const damage = [15, 30, 60, 120][pokemon.stars - 1]
+    const safeCell = board.getFlyAwayCell(pokemon)
+    if (safeCell) {
+      pokemon.moveTo(safeCell.x, safeCell.y, board, false)
+      const nextAttackBoostEffect = new OnAttackEffect(
+        ({ pokemon, target }) => {
+          target?.handleSpecialDamage(
+            damage,
+            board,
+            AttackType.SPECIAL,
+            pokemon,
+            crit,
+            true
+          )
+          pokemon.effectsSet.delete(nextAttackBoostEffect)
+          pokemon.effects.delete(EffectEnum.TELEPORT_NEXT_ATTACK)
+        }
       )
-      if (entity === undefined) {
-        pokemon.moveTo(potentialCells[i][0], potentialCells[i][1], board, false)
-        pokemon.effects.add(EffectEnum.TELEPORT_NEXT_ATTACK)
-        break
-      }
+      pokemon.effectsSet.add(nextAttackBoostEffect)
+      pokemon.effects.add(EffectEnum.TELEPORT_NEXT_ATTACK)
     }
   }
 }

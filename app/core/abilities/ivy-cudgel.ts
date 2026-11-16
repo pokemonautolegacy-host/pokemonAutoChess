@@ -40,7 +40,7 @@ export class IvyCudgelStrategy extends AbilityStrategy {
               pokemon,
               crit
             )
-            cell.value.status.triggerBurn(5000, pokemon, cell.value)
+            cell.value.status.triggerBurn(5000, cell.value, pokemon)
           }
         })
     } else if (pokemon.passive === Passive.OGERPON_CORNERSTONE) {
@@ -48,14 +48,15 @@ export class IvyCudgelStrategy extends AbilityStrategy {
         .getAdjacentCells(pokemon.positionX, pokemon.positionY, false)
         .forEach((cell) => {
           if (cell.value && cell.value.team !== pokemon.team) {
-            cell.value.status.triggerFlinch(5000, pokemon, cell.value)
+            cell.value.status.triggerFlinch(5000, cell.value, pokemon)
           }
         })
-      const factor = 0.5
+      const flatDuration = 1000
+      const durationWithAP = flatDuration * (2 + pokemon.ap / 100)
+      const critScalingFactor = 0.5
       const protectDuration = Math.round(
-        2000 *
-          (1 + (pokemon.ap / 100) * factor) *
-          (crit ? 1 + (pokemon.critPower - 1) * factor : 1)
+        durationWithAP *
+          (crit ? 1 + (pokemon.critPower - 1) * critScalingFactor : 1)
       )
       pokemon.status.triggerProtect(protectDuration)
     }

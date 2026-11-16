@@ -1,8 +1,22 @@
 import { Ability } from "../../types/enum/Ability"
+import { EffectConfigs } from "./effects"
+
+const unownSTidalWaveLevel = 2
+const tidalWave = EffectConfigs.TIDAL_WAVE
+
+export const AbilityConfigs = {
+  [Ability.HIDDEN_POWER_S]: {
+    tidalWaveLevel: unownSTidalWaveLevel,
+    healingPercent: unownSTidalWaveLevel * tidalWave.healingPercentPerLevel,
+    damagePercent: unownSTidalWaveLevel * tidalWave.damagePercentPerLevel
+  },
+  [Ability.STICKY_WEB]: EffectConfigs.STICKY_WEB
+} satisfies Partial<Record<Ability, Readonly<Record<string, number>>>>
 
 export const InimitableAbilities: Ability[] = [
   Ability.ASSIST,
   Ability.AURA_WHEEL,
+  Ability.DARK_AURA,
   Ability.ENCORE,
   Ability.HIDDEN_POWER_A,
   Ability.HIDDEN_POWER_B,
@@ -36,7 +50,12 @@ export const InimitableAbilities: Ability[] = [
   Ability.MAGNET_PULL,
   Ability.METRONOME,
   Ability.MIMIC,
+  Ability.ORDER_UP,
+  Ability.REVELATION_DANCE,
   Ability.SHADOW_FORCE,
   Ability.SKETCH,
-  Ability.SKILL_SWAP
+  Ability.SKILL_SWAP,
+  Ability.SWARM,
+  Ability.TRANSE,
+  Ability.UNBOUND
 ]

@@ -1,10 +1,11 @@
 import { t } from "i18next"
 import type React from "react"
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs"
-import type { PkmWithCustom } from "../../../../../types"
+import { Dishes, type PkmWithCustom } from "../../../../../types"
 import {
   Berries,
   CraftableItems,
+  Gifts,
   Item,
   ItemComponents,
   MemoryDiscs,
@@ -17,30 +18,33 @@ import {
 import { isIn } from "../../../../../utils/array"
 import { ItemDetailTooltip } from "../../../game/components/item-detail"
 import { cc } from "../../utils/jsx"
+import {
+  type TierListSymbol,
+  TierListSymbols
+} from "../tier-list/tier-list-symbols"
 
 export default function ItemPicker(props: {
   selected?: PkmWithCustom | Item
   selectEntity?: React.Dispatch<React.SetStateAction<PkmWithCustom | Item>>
   origin: "tier-list" | "bot-builder" | "team-planner"
 }) {
-  function handleOnDragStart(e: React.DragEvent, item: Item) {
+  function handleOnDragStart(e: React.DragEvent, item: Item | TierListSymbol) {
     e.stopPropagation()
     e.dataTransfer.setData("text/plain", `item,${item}`)
   }
 
-  const tabs = [
+  const tabs: {
+    label: string
+    key: string
+    items: readonly (Item | TierListSymbol)[]
+    hidden?: boolean
+  }[] = [
     { label: t("components"), key: "components", items: ItemComponents },
     { label: t("craftable_items"), key: "craftable", items: CraftableItems },
     {
       label: t("food"),
       key: "food",
-      items: [
-        ...Berries,
-        Item.TART_APPLE,
-        Item.SWEET_APPLE,
-        Item.SIRUPY_APPLE,
-        Item.CHEF_HAT
-      ]
+      items: [Item.CHEF_HAT, ...Berries, ...Dishes]
     },
 
     { label: t("tools"), key: "tools", items: Tools },
@@ -61,9 +65,16 @@ export default function ItemPicker(props: {
       hidden: props.origin === "team-planner" || props.origin === "bot-builder"
     },
     {
+      label: t("gifts"),
+      key: "gifts",
+      items: Gifts,
+      hidden: props.origin === "team-planner" || props.origin === "bot-builder"
+    },
+    {
       label: t("special_items"),
       key: "special_items",
       items: [
+        Item.TRASH,
         Item.RUSTED_SWORD,
         Item.TEAL_MASK,
         Item.WELLSPRING_MASK,
@@ -71,6 +82,12 @@ export default function ItemPicker(props: {
         Item.HEARTHFLAME_MASK,
         ...MemoryDiscs
       ]
+    },
+    {
+      label: t("tier_list.symbols"),
+      key: "symbols",
+      items: TierListSymbols,
+      hidden: props.origin !== "tier-list"
     }
   ].filter((tab) => !tab.hidden)
 
@@ -91,20 +108,34 @@ export default function ItemPicker(props: {
       </TabList>
       {tabs.map((t) => (
         <TabPanel key={t.key}>
-          {t.items.map((item) => (
-            <img
-              key={item}
-              src={"assets/item/" + Item[item] + ".png"}
-              className={cc("item", {
-                selected: item === props.selected
-              })}
-              data-tooltip-id="item-detail-tooltip"
-              data-tooltip-content={item}
-              onClick={() => props.selectEntity?.(item)}
-              draggable
-              onDragStart={(e) => handleOnDragStart(e, item)}
-            />
-          ))}
+          {t.items.map((item) => {
+            if (isIn(TierListSymbols, item)) {
+              return (
+                <img
+                  key={item}
+                  src={"assets/ui/" + item.toLowerCase() + ".svg"}
+                  className={"symbol"}
+                  draggable
+                  onDragStart={(e) => handleOnDragStart(e, item)}
+                />
+              )
+            } else {
+              return (
+                <img
+                  key={item}
+                  src={"assets/item/" + Item[item] + ".png"}
+                  className={cc("item", {
+                    selected: item === props.selected
+                  })}
+                  data-tooltip-id="item-detail-tooltip"
+                  data-tooltip-content={item}
+                  onClick={() => props.selectEntity?.(item)}
+                  draggable
+                  onDragStart={(e) => handleOnDragStart(e, item)}
+                />
+              )
+            }
+          })}
         </TabPanel>
       ))}
       <ItemDetailTooltip />

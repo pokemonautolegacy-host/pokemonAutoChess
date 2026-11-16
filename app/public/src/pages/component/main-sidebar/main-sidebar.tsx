@@ -1,4 +1,3 @@
-import { createSelector } from "@reduxjs/toolkit"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Menu, MenuItem, type MenuItemProps, Sidebar } from "react-pro-sidebar"
@@ -6,11 +5,7 @@ import { useNavigate } from "react-router"
 import pkg from "../../../../../../package.json"
 import { GADGETS } from "../../../../../config/game/gadgets"
 import { Role } from "../../../../../types"
-import {
-  selectConnectedPlayer,
-  useAppDispatch,
-  useAppSelector
-} from "../../../hooks"
+import { useAppDispatch, useAppSelector } from "../../../hooks"
 import { usePreferences } from "../../../preferences"
 import { setSearchedUser } from "../../../stores/LobbyStore"
 import { toggleFullScreen } from "../../utils/fullscreen"
@@ -40,16 +35,15 @@ export type Page = "main_lobby" | "preparation" | "game"
 
 interface MainSidebarProps {
   page: Page
-  leave: () => void
+  onClickLeave: () => void
   leaveLabel: string
 }
 
 export function MainSidebar(props: MainSidebarProps) {
-  const { page, leave, leaveLabel } = props
+  const { page, onClickLeave, leaveLabel } = props
   const [collapsed, setCollapsed] = useState(true)
   const navigate = useNavigate()
   const [modal, setModal] = useState<Modals>()
-  const [showSurrenderConfirm, setShowSurrenderConfirm] = useState(false)
   const changeModal = useCallback(
     (nextModal: Modals) => setModal(nextModal),
     []
@@ -123,20 +117,6 @@ export function MainSidebar(props: MainSidebarProps) {
       window.removeEventListener("keydown", handleKeydown)
     }
   }, [preferences.keybindings, profileLevel])
-
-  const player = useAppSelector(selectConnectedPlayer)
-  const playersAlive = useAppSelector(
-    createSelector([(state) => state.game.players], (players) =>
-      players.filter((p) => p.life > 0)
-    )
-  )
-  function onClickLeave() {
-    if (player && player.life > 0 && playersAlive.length > 1) {
-      setShowSurrenderConfirm(true)
-    } else {
-      leave()
-    }
-  }
 
   return (
     <Sidebar
@@ -237,6 +217,15 @@ export function MainSidebar(props: MainSidebarProps) {
           </NavLink>
         )}
 
+        {page === "main_lobby" &&
+          ((!GADGETS.recorder.disabled &&
+            profileLevel >= GADGETS.recorder.levelRequired) ||
+            profile?.role === Role.ADMIN) && (
+            <NavLink svg="recorder" onClick={() => navigate("/replay")}>
+              {t("replay.nav")}
+            </NavLink>
+          )}
+
         {page !== "game" &&
           ((!GADGETS.pokeguesser.disabled &&
             profileLevel >= GADGETS.pokeguesser.levelRequired) ||
@@ -267,7 +256,7 @@ export function MainSidebar(props: MainSidebarProps) {
             profileLevel >= GADGETS.bot_builder.levelRequired) ||
             profile?.role === Role.ADMIN) && (
             <NavLink svg="bot" onClick={() => navigate("/bot-builder")}>
-              {t("bot_builder")}
+              {t("gadget.bot_builder")}
             </NavLink>
           )}
 
@@ -382,27 +371,6 @@ export function MainSidebar(props: MainSidebarProps) {
       </Menu>
 
       <Modals modal={modal} setModal={setModal} page={page} />
-      <Modal
-        show={showSurrenderConfirm}
-        header={t("game-surrender-modal-title")}
-        body={t("game-surrender-modal-body")}
-        onClose={() => setShowSurrenderConfirm(false)}
-        footer={
-          <>
-            <button className="bubbly green" onClick={leave}>
-              {t("yes")}
-            </button>
-            <button
-              className="bubbly red"
-              onClick={() => {
-                setShowSurrenderConfirm(false)
-              }}
-            >
-              {t("no")}
-            </button>
-          </>
-        }
-      ></Modal>
     </Sidebar>
   )
 }

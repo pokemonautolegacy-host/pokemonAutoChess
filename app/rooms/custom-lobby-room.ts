@@ -7,7 +7,7 @@ import {
   subscribeLobby
 } from "colyseus"
 import { CronJob } from "cron"
-import admin from "firebase-admin"
+import { getAuth, type UserRecord } from "firebase-admin/auth"
 import {
   INACTIVITY_TIMEOUT,
   MAX_CONCURRENT_PLAYERS_ON_LOBBY,
@@ -36,6 +36,7 @@ import {
   ChangeAvatarCommand,
   ChangeNameCommand,
   ChangeTitleCommand,
+  ChoosePalCommand,
   DeleteAccountCommand,
   DeleteRoomCommand,
   GiveBoostersCommand,
@@ -45,7 +46,6 @@ import {
   OnJoinCommand,
   OnLeaveCommand,
   OnNewMessageCommand,
-  OnSearchByIdCommand,
   RemoveMessageCommand,
   SelectLanguageCommand,
   UnbanUserCommand
@@ -73,6 +73,12 @@ export default class CustomLobbyRoom extends Room {
   constructor() {
     super()
     this.dispatcher = new Dispatcher(this)
+  }
+
+  messages = {
+    "search-by-id": async (client: Client, uid: string) => {
+      return await UserMetadata.findOne({ uid })
+    }
   }
 
   removeRoom(index: number, roomId: string) {
@@ -165,6 +171,16 @@ export default class CustomLobbyRoom extends Room {
         this.dispatcher.dispatch(new SelectLanguageCommand(), {
           client,
           message
+        })
+      }
+    )
+
+    this.onMessage(
+      Transfer.SELECT_PAL,
+      async (client, playerUid: string | null) => {
+        this.dispatcher.dispatch(new ChoosePalCommand(), {
+          client,
+          playerUid
         })
       }
     )
@@ -319,10 +335,6 @@ export default class CustomLobbyRoom extends Room {
       this.dispatcher.dispatch(new ChangeTitleCommand(), { client, title })
     })
 
-    this.onMessage(Transfer.SEARCH_BY_ID, (client, uid: string) => {
-      this.dispatcher.dispatch(new OnSearchByIdCommand(), { client, uid })
-    })
-
     // Handle notification acknowledgment from client
     this.onMessage(
       Transfer.NOTIFICATION_SEEN,
@@ -387,6 +399,23 @@ export default class CustomLobbyRoom extends Room {
     )
 
     this.presence.subscribe(
+      "pending-game-changed",
+      ({ userId, gameId }: { userId: string; gameId: string | null }) => {
+        this.clients.forEach((c) => {
+          if (c.auth?.uid === userId) {
+            /*
+            If a user connected to the lobby has left a game without surrendering,
+            the pending game is stored by pending-game-manager and the user gets
+            a reconnection prompt modal
+            If gameId is null, that prompt is removed
+            */
+            c.send(Transfer.RECONNECT_PROMPT, gameId)
+          }
+        })
+      }
+    )
+
+    this.presence.subscribe(
       "maintenance",
       ({ userId, order }: { userId: string; order: MaintenanceOrder }) => {
         const client = this.clients.find((c) => c.auth && c.auth.uid === userId)
@@ -414,15 +443,11 @@ export default class CustomLobbyRoom extends Room {
     this.fetchTournaments()
   }
 
-  async onAuth(
-    client: Client,
-    options,
-    context
-  ): Promise<admin.auth.UserRecord> {
+  async onAuth(client: Client, options, context): Promise<UserRecord> {
     try {
       super.onAuth(client, options, context)
-      const token = await admin.auth().verifyIdToken(options.idToken)
-      const user = await admin.auth().getUser(token.uid)
+      const token = await getAuth().verifyIdToken(options.idToken)
+      const user = await getAuth().getUser(token.uid)
 
       if (!user.displayName) {
         logger.error("No display name for this account", user.uid)
@@ -439,8 +464,12 @@ export default class CustomLobbyRoom extends Room {
   }
 
   async onJoin(client: Client) {
-    const leanUser = await UserMetadata.findOne({ uid: client.auth.uid }).lean()
-    const user = leanUser ? toLeanUserMetadata(leanUser) : null
+    // onReconnect replays this hook. The room already holds the user's document from
+    // the original join (cleared again by OnLeaveCommand), so reuse it rather than
+    // re-fetching the full profile - pokemonCollection included - on every refresh.
+    const user =
+      this.users.get(client.auth.uid) ??
+      (await this.loadUserMetadata(client.auth.uid))
     try {
       if (user?.banned) {
         throw new Error("Account banned")
@@ -461,6 +490,13 @@ export default class CustomLobbyRoom extends Room {
     }
 
     this.dispatcher.dispatch(new OnJoinCommand(), { client, user })
+  }
+
+  private async loadUserMetadata(
+    uid: string
+  ): Promise<IUserMetadataMongo | null> {
+    const leanUser = await UserMetadata.findOne({ uid }).lean()
+    return leanUser ? toLeanUserMetadata(leanUser) : null
   }
 
   async onDrop(client: Client, code: number) {

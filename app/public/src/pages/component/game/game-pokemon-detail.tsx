@@ -24,8 +24,11 @@ import { Synergy } from "../../../../../types/enum/Synergy"
 import { getPortraitSrc } from "../../../../../utils/avatar"
 import { roundToNDigits } from "../../../../../utils/number"
 import { schemaValues } from "../../../../../utils/schemas"
+import { isEntity } from "../../../game/components/pokemon-sprite"
+import { getDescriptionConfig } from "../../utils/description-config"
 import { addIconsToDescription } from "../../utils/descriptions"
 import { cc } from "../../utils/jsx"
+import { useKeyPress } from "../../utils/keyboard"
 import { AbilityTooltip } from "../ability/ability-tooltip"
 import SynergyIcon from "../icons/synergy-icon"
 import PokemonPortrait from "../pokemon-portrait"
@@ -50,11 +53,13 @@ export function GamePokemonDetail(props: {
     | "wiki"
     | "patchnotes"
     | "after"
+    | "history"
   shiny?: boolean
   emotion?: Emotion
   isAlly?: boolean
 }) {
   const { t } = useTranslation()
+  const ctrlKeyPressed = useKeyPress("Ctrl")
   const pokemon = useMemo<IPokemon | IPokemonEntity | null>(() => {
     if (!props.pokemon) {
       return null
@@ -133,9 +138,6 @@ export function GamePokemonDetail(props: {
     props.origin
   ])
 
-  const isEntity = (
-    obj: IPokemonEntity | IPokemon | Pkm | null | undefined
-  ): obj is IPokemonEntity => obj != null && obj.hasOwnProperty("simulation")
   const isInFight = isEntity(props.pokemon)
 
   const getStatWithItemBonus = (stat: Stat): number | undefined => {
@@ -240,24 +242,40 @@ export function GamePokemonDetail(props: {
 
   const stars =
     pokemon.stars + (pokemon.items.has(Item.STAR_PIECE) && !isInFight ? 1 : 0)
+  const passivePath = `passive_description.${pokemon.passive}` as const
 
   return (
     <div className="game-pokemon-detail">
-      <PokemonPortrait
-        className="game-pokemon-detail-portrait"
-        style={{ borderColor: RarityColor[pokemon.rarity] }}
-        portrait={{
-          index: pokemon.index,
-          shiny: props.shiny ?? pokemon.shiny,
-          emotion: props.emotion ?? pokemon.emotion
-        }}
-      />
+      <div className="game-pokemon-detail-portrait-wrap">
+        <PokemonPortrait
+          className="game-pokemon-detail-portrait"
+          style={{ borderColor: RarityColor[pokemon.rarity] }}
+          portrait={{
+            index: pokemon.index,
+            shiny: props.shiny ?? pokemon.shiny,
+            emotion: props.emotion ?? pokemon.emotion
+          }}
+        />
+        {getPokemonData(pokemon.name).regional && (
+          <img
+            src="assets/ui/pinpoint.svg"
+            alt=""
+            className="game-pokemon-detail-regional-icon"
+          />
+        )}
+      </div>
       {pokemon.index === PkmIndex[Pkm.EGG] &&
         "evolution" in pokemon &&
         pokemon.evolution != null && (
           <img
             className="game-pokemon-detail-portrait-hint"
-            src={getPortraitSrc(PkmIndex[pokemon.evolution])}
+            src={getPortraitSrc(
+              PkmIndex[
+                pokemon.evolution === Pkm.DEFAULT
+                  ? Pkm.SCORBUNNY
+                  : pokemon.evolution
+              ]
+            )}
           />
         )}
       <div className="game-pokemon-detail-entry">
@@ -293,7 +311,9 @@ export function GamePokemonDetail(props: {
           maxValue={props.origin === "team" ? hp! : pokemon.maxHP}
           graduationStep={10}
         />
-        <GameTooltipBar type="PP" value={pp} maxValue={pokemon.maxPP} />
+        {pokemon.maxPP > 0 && (
+          <GameTooltipBar type="PP" value={pp} maxValue={pokemon.maxPP} />
+        )}
       </div>
       <div className="game-pokemon-detail-stats">
         {pokemonStats.map(({ stat, value, baseValue, formatter }) => (
@@ -336,7 +356,7 @@ export function GamePokemonDetail(props: {
         <div className="game-pokemon-detail-passive">
           <p>
             {addIconsToDescription(
-              t(`passive_description.${pokemon.passive}`, {
+              t(passivePath, {
                 stacks: pokemon.stacks
               }),
               {
@@ -344,7 +364,8 @@ export function GamePokemonDetail(props: {
                 luck: pokemon.luck,
                 stars,
                 stages: getPokemonData(pokemon.name).stages,
-                showAbilityTiers: props.origin === "wiki"
+                showAbilityTiers: props.origin === "wiki",
+                config: getDescriptionConfig(passivePath)
               }
             )}
           </p>
@@ -376,7 +397,10 @@ export function GamePokemonDetail(props: {
                 luck: getStatWithItemBonus(Stat.LUCK) ?? pokemon.luck,
                 stars,
                 stages: getPokemonData(pokemon.name).stages,
-                showAbilityTiers: props.origin === "wiki"
+                showAbilityTiers:
+                  props.origin === "wiki" ||
+                  props.origin === "planner" ||
+                  ctrlKeyPressed
               }}
               key={pokemon.id}
             />
@@ -449,7 +473,7 @@ export class GamePokemonDetailDOMWrapper extends GameObjects.DOMElement {
 }
 
 export function GamePokemonDetailTooltip(props: {
-  origin: "wiki" | "patchnotes" | "after" | "planner"
+  origin: "wiki" | "patchnotes" | "after" | "planner" | "history"
   isOpen?: boolean
 }) {
   return (
