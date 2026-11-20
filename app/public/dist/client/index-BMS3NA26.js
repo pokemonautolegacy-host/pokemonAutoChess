@@ -50594,7 +50594,7 @@ Check @type() annotation`);
   var package_default = {
     name: "pokemon-auto-chess",
     version: "6.12.0",
-    assetsVersion: "6.12.0.2026-11-17.0",
+    assetsVersion: "6.12.0.2026-11-20.0",
     translationsVersion: "6.12-2026-10-27.2",
     description: "Pokemon Auto Chess Game. Made by fans for fans. Open source, non profit. All rights to the Pokemon Company.",
     keywords: [],
@@ -221229,6 +221229,7 @@ void main() {
       this.rarity = "HATCH" /* HATCH */;
       this.stars = 1;
       this.evolution = "GROTLE" /* GROTLE */;
+      this.evolutionRule = { type: "hatch" /* HATCH */ };
       this.hp = 80;
       this.atk = 5;
       this.speed = 43;
@@ -221237,6 +221238,7 @@ void main() {
       this.maxPP = 100;
       this.range = 1;
       this.skill = "BULLDOZE" /* BULLDOZE */;
+      this.passive = "HATCH" /* HATCH */;
     }
   };
   var Grotle = class extends Pokemon {
@@ -221250,6 +221252,7 @@ void main() {
       this.rarity = "HATCH" /* HATCH */;
       this.stars = 2;
       this.evolution = "TORTERRA" /* TORTERRA */;
+      this.evolutionRule = { type: "hatch" /* HATCH */ };
       this.hp = 150;
       this.atk = 9;
       this.speed = 43;
@@ -221258,6 +221261,7 @@ void main() {
       this.maxPP = 100;
       this.range = 1;
       this.skill = "BULLDOZE" /* BULLDOZE */;
+      this.passive = "HATCH" /* HATCH */;
     }
   };
   var Torterra = class extends Pokemon {
@@ -230493,7 +230497,6 @@ void main() {
       this.rarity = "RARE" /* RARE */;
       this.stars = 1;
       this.evolution = "SERVINE" /* SERVINE */;
-      this.evolutionRule = { type: "hatch" /* HATCH */ };
       this.hp = 75;
       this.atk = 6;
       this.speed = 61;
@@ -230502,7 +230505,6 @@ void main() {
       this.maxPP = 100;
       this.range = 3;
       this.skill = "MAGICAL_LEAF" /* MAGICAL_LEAF */;
-      this.passive = "HATCH" /* HATCH */;
     }
   };
   var Servine = class extends Pokemon {
@@ -230512,7 +230514,6 @@ void main() {
       this.rarity = "RARE" /* RARE */;
       this.stars = 2;
       this.evolution = "SERPERIOR" /* SERPERIOR */;
-      this.evolutionRule = { type: "hatch" /* HATCH */ };
       this.hp = 150;
       this.atk = 12;
       this.speed = 61;
@@ -230521,7 +230522,6 @@ void main() {
       this.maxPP = 100;
       this.range = 3;
       this.skill = "MAGICAL_LEAF" /* MAGICAL_LEAF */;
-      this.passive = "HATCH" /* HATCH */;
     }
   };
   var Serperior = class extends Pokemon {
@@ -289466,7 +289466,7 @@ void main() {
 
   // app/public/src/assets/atlas.json
   var atlas_default = {
-    version: "6.12.0.2026-11-17.0",
+    version: "6.12.0.2026-11-20.0",
     packs: {
       abilities: {
         name: "abilities",
@@ -349912,7 +349912,7 @@ ${text}`
         children: [
           /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)(Menu, { children: [
             /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { className: "sidebar-logo", onClick: () => setCollapsed(!collapsed), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("img", { src: `assets/ui/colyseus-icon.png` }),
+              /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("img", { src: `assets/ui/pal-log.png` }),
               /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("div", { children: [
                 /* @__PURE__ */ (0, import_jsx_runtime153.jsx)("h1", { children: "Pokemon Auto Chess" }),
                 /* @__PURE__ */ (0, import_jsx_runtime153.jsxs)("small", { children: [
@@ -380585,7 +380585,7 @@ const ui = initializeUI(...);
     }, [dispatch2, shouldRefreshProfile, uid]);
     return /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)("div", { className: "auth-page", children: [
       isSupposedlyMobile && /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("p", { className: "mobile-warning", children: t5("auth.mobile_warning") }),
-      /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("img", { className: "logo", src: "assets/ui/pokemon_autochess_final.svg" }),
+      /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("img", { className: "logo", src: "assets/ui/pal_logo.svg" }),
       /* @__PURE__ */ (0, import_jsx_runtime170.jsxs)("header", { children: [
         /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("h1", { children: t5("auth.pokemon_auto_chess") }),
         /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("div", { className: "disclaimer", children: /* @__PURE__ */ (0, import_jsx_runtime170.jsx)("p", { children: t5("auth.nintendo_warning") }) })
