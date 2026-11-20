@@ -2051,6 +2051,7 @@ export class Turtwig extends Pokemon {
   rarity = Rarity.HATCH
   stars = 1
   evolution = Pkm.GROTLE
+  evolutionRule = { type: EvolutionRuleType.HATCH } satisfies HatchEvolutionRule
   hp = 80
   atk = 5
   speed = 43
@@ -2059,6 +2060,7 @@ export class Turtwig extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.BULLDOZE
+  passive = Passive.HATCH
 }
 
 export class Grotle extends Pokemon {
@@ -2070,6 +2072,7 @@ export class Grotle extends Pokemon {
   rarity = Rarity.HATCH
   stars = 2
   evolution = Pkm.TORTERRA
+  evolutionRule = { type: EvolutionRuleType.HATCH } satisfies HatchEvolutionRule
   hp = 150
   atk = 9
   speed = 43
@@ -2078,6 +2081,7 @@ export class Grotle extends Pokemon {
   maxPP = 100
   range = 1
   skill = Ability.BULLDOZE
+  passive = Passive.HATCH
 }
 
 export class Torterra extends Pokemon {
@@ -10563,7 +10567,6 @@ export class Snivy extends Pokemon {
   rarity = Rarity.RARE
   stars = 1
   evolution = Pkm.SERVINE
-  evolutionRule = { type: EvolutionRuleType.HATCH } satisfies HatchEvolutionRule
   hp = 75
   atk = 6
   speed = 61
@@ -10572,7 +10575,6 @@ export class Snivy extends Pokemon {
   maxPP = 100
   range = 3
   skill = Ability.MAGICAL_LEAF
-  passive = Passive.HATCH
 }
 
 export class Servine extends Pokemon {
@@ -10580,7 +10582,6 @@ export class Servine extends Pokemon {
   rarity = Rarity.RARE
   stars = 2
   evolution = Pkm.SERPERIOR
-  evolutionRule = { type: EvolutionRuleType.HATCH } satisfies HatchEvolutionRule
   hp = 150
   atk = 12
   speed = 61
@@ -10589,7 +10590,6 @@ export class Servine extends Pokemon {
   maxPP = 100
   range = 3
   skill = Ability.MAGICAL_LEAF
-  passive = Passive.HATCH
 }
 
 export class Serperior extends Pokemon {
